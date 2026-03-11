@@ -135,6 +135,60 @@
     }
 
     /* ═══════════════════════════════════════════════
+       API KEY — single-use, never persisted
+    ═══════════════════════════════════════════════ */
+    .key-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1.1rem 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .key-panel-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--orange);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
+    .key-row {
+      display: flex;
+      gap: 0.55rem;
+      align-items: center;
+    }
+
+    .key-input {
+      flex: 1;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.62rem 0.9rem;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .key-input:focus { border-color: var(--border-hi); }
+
+    .key-notice {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-top: 0.6rem;
+      line-height: 1.6;
+    }
+
+    .key-notice a { color: var(--orange); text-decoration: none; }
+    .key-notice a:hover { text-decoration: underline; }
+
+    /* ═══════════════════════════════════════════════
        INPUT PANEL — Tabs
     ═══════════════════════════════════════════════ */
     .input-panel {
@@ -564,6 +618,26 @@
       </p>
     </header>
 
+    <!-- ─── API KEY (single-use, never saved) ────── -->
+    <div class="key-panel">
+      <p class="key-panel-label">Your Anthropic API Key</p>
+      <div class="key-row">
+        <input
+          type="password"
+          class="key-input"
+          id="apiKeyInput"
+          placeholder="sk-ant-..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <p class="key-notice">
+        Your key is used for this single analysis only and is immediately discarded.
+        It is never saved, stored, or sent anywhere except directly to
+        <a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic's API</a>.
+      </p>
+    </div>
+
     <!-- ─── INPUT PANEL ──────────────────────────── -->
     <div class="input-panel">
       <div class="tabs" role="tablist">
@@ -636,6 +710,9 @@ Tip: copy everything from the abstract through the references. The more complete
   (function () {
     'use strict';
 
+    const MODEL     = 'claude-sonnet-4-20250514';
+    const MAX_TOKENS = 8192;
+
     let activeTab   = 'paste';
     let pdfText     = '';
     let rawResponse = '';
@@ -643,6 +720,7 @@ Tip: copy everything from the abstract through the references. The more complete
 
     const $ = id => document.getElementById(id);
 
+    const apiKeyInput   = $('apiKeyInput');
     const paperText     = $('paperText');
     const pdfInput      = $('pdfInput');
     const uploadZone    = $('uploadZone');
@@ -661,6 +739,25 @@ Tip: copy everything from the abstract through the references. The more complete
 
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    function hasKey() {
+      const k = apiKeyInput.value.trim();
+      return k.startsWith('sk-ant-') && k.length > 20;
+    }
+
+    function hasContent() {
+      if (activeTab === 'paste')  return paperText.value.trim().length > 100;
+      if (activeTab === 'upload') return pdfText.length > 100;
+      return false;
+    }
+
+    function checkReady() {
+      analyzeBtn.disabled = isLoading || !hasKey() || !hasContent();
+    }
+
+    apiKeyInput.addEventListener('input', checkReady);
+    paperText.addEventListener('input', checkReady);
+    checkReady();
 
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -716,44 +813,132 @@ Tip: copy everything from the abstract through the references. The more complete
       }
     }
 
-    function hasContent() {
-      if (activeTab === 'paste')  return paperText.value.trim().length > 100;
-      if (activeTab === 'upload') return pdfText.length > 100;
-      return false;
-    }
-
-    function checkReady() {
-      analyzeBtn.disabled = isLoading || !hasContent();
-    }
-
-    paperText.addEventListener('input', checkReady);
-    checkReady();
-
     analyzeBtn.addEventListener('click', analyze);
 
     async function analyze() {
+      const apiKey = apiKeyInput.value.trim();
+      if (!apiKey) { showError('Enter your Anthropic API key above.'); return; }
+
       const content = activeTab === 'paste' ? paperText.value.trim() : pdfText.trim();
       if (content.length < 100) { showError('No paper content found. Paste text or upload a PDF.'); return; }
+
+      apiKeyInput.value = '';
+      checkReady();
+
+      const truncated = content.length > 280000
+        ? content.slice(0, 280000) + '\n\n[… content truncated for context window …]'
+        : content;
 
       setLoading(true);
       rawResponse = '';
       clearResults();
       showStream(true);
 
+      const prompt =
+`You are an expert scientific literature analyst. Carefully read the research paper below and provide a thorough, detailed structured analysis with all 15 sections below.
+
+Use EXACTLY these section headers (bold, on their own line) in this order:
+
+**TL;DR**
+Summarize the entire paper in 2–3 plain-language sentences accessible to any reader. What was studied, how, and what was found?
+
+**The Problem**
+What specific knowledge gap, unsolved question, or real-world need drove this research? Why did it need to be studied?
+
+**Background & Context**
+What prior work, foundational concepts, or theoretical framework does the reader need to understand this study? What is the field's current state of knowledge?
+
+**Hypothesis / Research Question**
+State the specific claim being tested, the research question posed, or the central prediction of the study.
+
+**Study Design**
+Describe the overall experimental or computational approach: observational, interventional, in-vitro, in-vivo, computational, clinical? Why was this design chosen over alternatives?
+
+**Methods**
+Detailed breakdown of the specific tools, models, protocols, software, datasets, or procedures used. Include organism/subject details, sample sizes, conditions, and key technical parameters.
+
+**Data & Materials**
+What was measured, collected, or used as input? Describe stimuli, recordings, biological samples, datasets, or any other raw material the analysis relied on.
+
+**Results**
+Present the raw findings objectively without interpretation. What were the actual numbers, observations, or outputs? Include key statistics, effect sizes, or quantitative outcomes where reported.
+
+**Statistical Analysis**
+How was significance determined? What statistical tests were used, what confidence levels or p-values were reported, and were multiple-comparison corrections applied?
+
+**Key Figures Explained**
+Describe what the most important graphs, images, diagrams, or tables show and why they matter to the paper's central argument.
+
+**Author Interpretation**
+How do the authors explain what their results mean? What conclusions do they draw and what mechanisms or models do they propose?
+
+**Limitations**
+What weaknesses, confounds, caveats, or unexplored questions do the authors acknowledge? What are apparent limitations not mentioned by the authors?
+
+**Implications**
+What does this finding mean for the broader field, clinical practice, or real-world application? How does it change or reinforce our current understanding?
+
+**Future Directions**
+What questions does this study open up? What do the authors suggest as next steps, and what obvious follow-up experiments or studies are needed?
+
+**Verdict**
+An honest, critical assessment of the paper. How strong is the evidence? How novel and significant is the contribution? How credible are the methods and conclusions? Identify any red flags or concerns. Give your overall judgment of the paper's quality and impact.
+
+---
+
+Paper content:
+
+${truncated}`;
+
       try {
-        const response = await fetch('/api/analyze', {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: content }),
+          headers: {
+            'Content-Type':      'application/json',
+            'x-api-key':         apiKey,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true',
+          },
+          body: JSON.stringify({
+            model:      MODEL,
+            max_tokens: MAX_TOKENS,
+            stream:     true,
+            messages:   [{ role: 'user', content: prompt }],
+          }),
         });
 
-        const result = await response.json();
-
         if (!response.ok) {
-          throw new Error(result.error || `HTTP ${response.status}`);
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error?.message || `HTTP ${response.status}`);
         }
 
-        rawResponse = result.text || '';
+        const reader  = response.body.getReader();
+        const decoder = new TextDecoder();
+        let   buffer  = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            const data = line.slice(6).trim();
+            if (data === '[DONE]') continue;
+            try {
+              const ev = JSON.parse(data);
+              if (ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta') {
+                rawResponse += ev.delta.text;
+                updateStream(rawResponse);
+              }
+              if (ev.type === 'message_stop') break;
+            } catch (_) { /* partial JSON */ }
+          }
+        }
+
         setLoading(false);
         showStream(false);
         renderResults(rawResponse);

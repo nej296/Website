@@ -4,10 +4,5 @@
   "outputDirectory": ".",
   "rewrites": [
     { "source": "/tool", "destination": "/tool.html" }
-  ],
-  "functions": {
-    "api/analyze.py": {
-      "maxDuration": 120
-    }
-  }
+  ]
 }
