@@ -1314,57 +1314,50 @@ ${truncated}`;
     }
 
     function renderMarkdown(raw) {
-      const lines = raw.split('\n');
-      let html = '';
-      let inUl = false, inOl = false;
+      var safe = escapeHtml(raw);
+      safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      safe = safe.replace(/__(.+?)__/g, '<strong>$1</strong>');
+      safe = safe.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+
+      var lines = safe.split('\n');
+      var html = '';
+      var inUl = false, inOl = false;
 
       function closeLists() {
         if (inUl) { html += '</ul>'; inUl = false; }
         if (inOl) { html += '</ol>'; inOl = false; }
       }
 
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
 
-        const ulMatch = line.match(/^\s*[-•]\s+(.*)/);
-        const starBullet = line.match(/^\s*\*\s+(?!\*)(.*)/);
-        const olMatch = line.match(/^\s*(\d+)[.)]\s+(.*)/);
+        var ulMatch = line.match(/^\s*[-•]\s+(.*)/);
+        var olMatch = line.match(/^\s*(\d+)[.)]\s+(.*)/);
 
-        if (ulMatch || starBullet) {
+        if (ulMatch) {
           if (inOl) { html += '</ol>'; inOl = false; }
           if (!inUl) { html += '<ul>'; inUl = true; }
-          const content = ulMatch ? ulMatch[1] : starBullet[1];
-          html += '<li>' + inlineFormat(escapeHtml(content)) + '</li>';
+          html += '<li>' + ulMatch[1] + '</li>';
           continue;
         }
 
         if (olMatch) {
           if (inUl) { html += '</ul>'; inUl = false; }
           if (!inOl) { html += '<ol>'; inOl = true; }
-          html += '<li>' + inlineFormat(escapeHtml(olMatch[2])) + '</li>';
+          html += '<li>' + olMatch[2] + '</li>';
           continue;
         }
 
         closeLists();
 
-        const trimmed = line.trim();
-        if (trimmed === '' || trimmed === '---' || trimmed === '***') {
-          continue;
-        }
+        var trimmed = line.trim();
+        if (trimmed === '' || trimmed === '---') continue;
 
-        html += '<p>' + inlineFormat(escapeHtml(trimmed)) + '</p>';
+        html += '<p>' + trimmed + '</p>';
       }
 
       closeLists();
       return html;
-    }
-
-    function inlineFormat(text) {
-      return text
-        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/__(.+?)__/g, '<strong>$1</strong>')
-        .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
-        .replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
     }
 
   })();
