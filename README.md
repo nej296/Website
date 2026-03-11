@@ -10,16 +10,13 @@ A Flask-powered portfolio featuring an interactive 3D neuron animation (action p
 
 ## Structure
 
-```
-├── api/
-│   ├── index.py              # Flask application — all routes and Gemini API proxy
-│   └── templates/
-│       ├── index.html         # Portfolio page (hero, projects, contact)
-│       └── tool.html          # Scientific Article Tool
-├── requirements.txt           # Python dependencies (Flask, requests)
-├── vercel.json                # Vercel deployment configuration
-└── README.md
-```
+| File | Language | Description |
+|------|----------|-------------|
+| `api/index.py` | **Python** | Flask application — serves all pages and proxies the Gemini API |
+| `api/templates/index.html` | **HTML / CSS / JavaScript** | Portfolio page — hero section, 3D neuron canvas animation, projects, contact |
+| `api/templates/tool.html` | **HTML / CSS / JavaScript** | Scientific Article Tool — multi-provider AI paper analysis with streaming |
+| `requirements.txt` | Config | Python dependencies (`flask`, `requests`) |
+| `vercel.json` | **JSON** | Vercel deployment and routing configuration |
 
 ## Flask Application (`api/index.py`)
 
