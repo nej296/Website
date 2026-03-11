@@ -1,13 +1,7 @@
 {
-  "framework": null,
-  "buildCommand": "",
-  "outputDirectory": ".",
-  "functions": {
-    "api/gemini.js": {
-      "maxDuration": 120
-    }
-  },
   "rewrites": [
-    { "source": "/tool", "destination": "/tool.html" }
+    { "source": "/api/gemini", "destination": "/api/index" },
+    { "source": "/tool", "destination": "/api/index" },
+    { "source": "/", "destination": "/api/index" }
   ]
 }
