@@ -47,12 +47,14 @@
     ═══════════════════════════════════════════════ */
     #neural-canvas {
       position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 0;
       pointer-events: auto;
       cursor: grab;
+      will-change: transform;
     }
 
     #neural-canvas:active { cursor: grabbing; }
@@ -1244,10 +1246,16 @@
     });
 
     // ── Resize ────────────────────────────────────────
+    let lastW = 0, lastH = 0;
+
     function resize() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-      projCenterX   = canvas.width > 600 ? 0.68 : 0.5;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w === lastW && h === lastH) return;
+      lastW = w; lastH = h;
+      canvas.width  = w;
+      canvas.height = h;
+      projCenterX   = w > 600 ? 0.68 : 0.5;
       worldScale    = 1;
       build();
       fitNeuron();
