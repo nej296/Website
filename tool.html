@@ -791,7 +791,9 @@ Tip: copy everything from the abstract through the references. The more complete
     const PROVIDER_UI = {
       groq: {
         needsKey: false,
-        notice: 'Powered by Llama 3.3 70B via Groq — completely free, no API key needed.',
+        notice: 'Powered by Llama 3.3 70B via Groq — completely free, no API key needed. ' +
+                'Long papers are automatically truncated to fit the free-tier limit. ' +
+                'For full-length papers, use Claude or ChatGPT with your own key.',
       },
       anthropic: {
         needsKey: true,
@@ -1001,6 +1003,13 @@ ${truncated}`;
       if (!response.ok) {
         const err = await response.json().catch(() => ({}));
         throw new Error(err.error || `Server returned HTTP ${response.status}`);
+      }
+
+      if (response.headers.get('X-Paper-Truncated') === 'true') {
+        rawResponse += '**Note:** Your paper was truncated to fit the free-tier token limit. ' +
+          'The analysis below covers the beginning of the paper. For full-length analysis, ' +
+          'use Claude or ChatGPT with your own API key.\n\n---\n\n';
+        updateStream(rawResponse);
       }
 
       await streamOpenAICompat(response);
