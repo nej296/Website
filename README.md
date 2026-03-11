@@ -2,25 +2,31 @@
 
 Personal portfolio website for Nicholas Johnson, a Neuroscience student at George Mason University with a concentration in Computational Neuroscience.
 
-**Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app)
+**Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app) | **Tool:** [nicholas-johnson-website.vercel.app/tool](https://nicholas-johnson-website.vercel.app/tool)
+
+---
+
+## Source Code
+
+### [`api/index.py`](api/index.py) — Python (Flask Backend)
+The entire backend. Serves both pages and proxies the Gemini API for free AI analysis.
+
+### [`api/templates/index.html`](api/templates/index.html) — HTML / CSS / JavaScript (Portfolio Page)
+The main portfolio page with hero section, interactive 3D neuron animation rendered on HTML5 Canvas, project cards, and contact information.
+
+### [`api/templates/tool.html`](api/templates/tool.html) — HTML / CSS / JavaScript (Scientific Article Tool)
+AI-powered research paper analysis tool. Supports three providers (Gemini, Claude, ChatGPT), streams responses in real time, and renders formatted output with markdown.
+
+### [`requirements.txt`](requirements.txt) — Python Dependencies
+### [`vercel.json`](vercel.json) — Deployment Configuration
+
+---
 
 ## Overview
 
 A Flask-powered portfolio featuring an interactive 3D neuron animation (action potential propagation rendered on HTML5 Canvas), project cards, contact information, and a Scientific Article Tool that uses AI to produce structured 15-section breakdowns of research papers.
 
-## Structure
-
-| File | Language | Description |
-|------|----------|-------------|
-| `api/index.py` | **Python** | Flask application — serves all pages and proxies the Gemini API |
-| `api/templates/index.html` | **HTML / CSS / JavaScript** | Portfolio page — hero section, 3D neuron canvas animation, projects, contact |
-| `api/templates/tool.html` | **HTML / CSS / JavaScript** | Scientific Article Tool — multi-provider AI paper analysis with streaming |
-| `requirements.txt` | Config | Python dependencies (`flask`, `requests`) |
-| `vercel.json` | **JSON** | Vercel deployment and routing configuration |
-
-## Flask Application (`api/index.py`)
-
-The entire backend is a single Flask app with three routes:
+## Flask Routes (`api/index.py`)
 
 | Route | Method | Description |
 |-------|--------|-------------|
@@ -30,35 +36,28 @@ The entire backend is a single Flask app with three routes:
 
 The Gemini proxy keeps the API key secure on the server — frontend users never see or need it.
 
-## Pages
-
-### Portfolio (`index.html`)
+## Portfolio Page — `index.html`
 
 - **Hero section** — Name, university, degree, and bio on the left; interactive 3D neuron animation on the right. The neuron is rendered in JavaScript on a `<canvas>` element with perspective projection, depth sorting, click-and-drag rotation, and action potential cycling.
-- **Projects** — Card grid linking to project pages. New cards can be added by copying the `<article>` template.
-- **Contact** — Email links, GitHub card, and LinkedIn card.
+- **Projects** — Card grid linking to project pages.
+- **Contact** — Email, GitHub, and LinkedIn links.
 
-### Scientific Article Tool (`tool.html`)
+## Scientific Article Tool — `tool.html`
 
 - **Multi-provider AI analysis** — Paste text or upload a PDF of any research paper. Choose from three AI providers:
-  - **Gemini 2.5 Flash (Free)** — Default option, no API key needed. Powered by Google's Gemini with a 1M token context window for full-length papers. The API key is stored server-side.
-  - **Claude (Bring Your Own Key)** — Uses Anthropic's Claude API directly from the browser. Key is used once and immediately discarded.
-  - **ChatGPT (Bring Your Own Key)** — Uses OpenAI's API directly from the browser. Key is used once and immediately discarded.
+  - **Gemini 2.5 Flash (Free)** — Default option, no API key needed. 1M token context window handles full-length papers. API key stored server-side.
+  - **Claude (Bring Your Own Key)** — Anthropic's API, called directly from the browser. Key is ephemeral.
+  - **ChatGPT (Bring Your Own Key)** — OpenAI's API, called directly from the browser. Key is ephemeral.
 - **15-section structured output** — TL;DR, problem, background, hypothesis, study design, methods, data, results, statistics, key figures, author interpretation, limitations, implications, future directions, and verdict.
-- **Streaming** — Responses stream in real time with a live cursor display.
-- **Markdown rendering** — Results render with proper formatting: bold, italic, bullet points, numbered lists.
+- **Real-time streaming** with live cursor and **markdown rendering** (bold, italic, bullet points, numbered lists).
 
 ## Deployment
 
-The site is deployed on [Vercel](https://vercel.com) using the Python runtime (Flask).
+Hosted on [Vercel](https://vercel.com) using the Python serverless runtime.
 
-### Environment Variables
-
-| Variable | Description |
-|----------|-------------|
+| Environment Variable | Description |
+|----------------------|-------------|
 | `GEMINI_API_KEY` | Google Gemini API key for the free-tier analysis proxy |
-
-### Deploy
 
 ```bash
 npm i -g vercel
@@ -67,12 +66,14 @@ vercel --prod
 
 ## Technologies
 
-- **Python / Flask** — Backend server and API proxy
-- **HTML5 Canvas** — 3D neuron animation with perspective projection
-- **Vanilla JavaScript** — No frameworks
-- **CSS custom properties** — Design system with dark theme
-- **PDF.js** — Client-side PDF text extraction
-- **Google Gemini API** — Free-tier AI analysis (server-proxied)
-- **Anthropic Claude API** — Bring-your-own-key analysis (client-side)
-- **OpenAI ChatGPT API** — Bring-your-own-key analysis (client-side)
-- **Vercel** — Python serverless hosting
+| Technology | Role |
+|------------|------|
+| Python / Flask | Backend server and API proxy |
+| HTML5 Canvas | 3D neuron animation with perspective projection |
+| Vanilla JavaScript | All frontend logic — no frameworks |
+| CSS Custom Properties | Design system with dark theme |
+| PDF.js | Client-side PDF text extraction |
+| Google Gemini API | Free-tier AI analysis (server-proxied) |
+| Anthropic Claude API | Bring-your-own-key analysis (client-side) |
+| OpenAI ChatGPT API | Bring-your-own-key analysis (client-side) |
+| Vercel | Python serverless hosting |
