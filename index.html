@@ -54,7 +54,9 @@
       z-index: 0;
       pointer-events: auto;
       cursor: grab;
-      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
     }
 
     #neural-canvas:active { cursor: grabbing; }
@@ -1249,8 +1251,9 @@
     let lastW = 0, lastH = 0;
 
     function resize() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const vv = window.visualViewport;
+      const w = vv ? Math.round(vv.width) : window.innerWidth;
+      const h = vv ? Math.round(vv.height) : window.innerHeight;
       if (w === lastW && h === lastH) return;
       lastW = w; lastH = h;
       canvas.width  = w;
@@ -1261,10 +1264,15 @@
       fitNeuron();
     }
 
-    window.addEventListener('resize', () => {
+    function scheduleResize() {
       clearTimeout(window._nrt);
-      window._nrt = setTimeout(resize, 180);
-    });
+      window._nrt = setTimeout(resize, 200);
+    }
+
+    window.addEventListener('resize', scheduleResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', scheduleResize);
+    }
 
     // ── Boot ──────────────────────────────────────────
     resize();

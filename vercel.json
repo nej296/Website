@@ -3,7 +3,7 @@
   "buildCommand": "",
   "outputDirectory": ".",
   "functions": {
-    "api/groq.js": {
+    "api/gemini.js": {
       "maxDuration": 120
     }
   },

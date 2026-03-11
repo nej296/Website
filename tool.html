@@ -649,7 +649,7 @@
         Paste the text of any scientific paper — or upload a PDF — and get an AI-powered
         15-section structured breakdown: from TL;DR and study design through
         raw results, statistical analysis, key figures, limitations, and a final verdict.
-        Free to use with Llama — or bring your own Claude / ChatGPT key.
+        Free to use with Gemini — or bring your own Claude / ChatGPT key.
       </p>
     </header>
 
@@ -657,7 +657,7 @@
     <div class="key-panel">
       <p class="key-panel-label">AI Provider</p>
       <div class="provider-row">
-        <button class="provider-btn active" data-provider="groq">Llama 3.3 70B (Free)</button>
+        <button class="provider-btn active" data-provider="gemini">Gemini 2.5 Flash (Free)</button>
         <button class="provider-btn" data-provider="anthropic">Claude (Key)</button>
         <button class="provider-btn" data-provider="openai">ChatGPT (Key)</button>
       </div>
@@ -672,7 +672,7 @@
         >
       </div>
       <p class="key-notice" id="keyNotice">
-        Powered by Llama 3.3 70B via Groq — completely free, no API key needed.
+        Powered by Gemini 2.5 Flash — completely free, no API key needed. Handles full-length papers.
       </p>
     </div>
 
@@ -754,7 +754,7 @@ Tip: copy everything from the abstract through the references. The more complete
     };
     const MAX_TOKENS = 8192;
 
-    let provider    = 'groq';
+    let provider    = 'gemini';
     let activeTab   = 'paste';
     let pdfText     = '';
     let rawResponse = '';
@@ -789,11 +789,10 @@ Tip: copy everything from the abstract through the references. The more complete
     const providerBtns = document.querySelectorAll('.provider-btn');
 
     const PROVIDER_UI = {
-      groq: {
+      gemini: {
         needsKey: false,
-        notice: 'Powered by Llama 3.3 70B via Groq — completely free, no API key needed. ' +
-                'Long papers are automatically truncated to fit the free-tier limit. ' +
-                'For full-length papers, use Claude or ChatGPT with your own key.',
+        notice: 'Powered by Gemini 2.5 Flash — completely free, no API key needed. ' +
+                'Handles full-length papers with a 1M token context window.',
       },
       anthropic: {
         needsKey: true,
@@ -824,7 +823,7 @@ Tip: copy everything from the abstract through the references. The more complete
     providerBtns.forEach(b => b.addEventListener('click', () => setProvider(b.dataset.provider)));
 
     function hasKey() {
-      if (provider === 'groq') return true;
+      if (provider === 'gemini') return true;
       const k = apiKeyInput.value.trim();
       if (provider === 'anthropic') return k.startsWith('sk-ant-') && k.length > 20;
       return k.startsWith('sk-') && k.length > 20;
@@ -992,9 +991,9 @@ ${truncated}`;
       }
     }
 
-    // ── Groq streaming (via server proxy) ──────────
-    async function streamGroq(prompt) {
-      const response = await fetch('/api/groq', {
+    // ── Gemini streaming (via server proxy) ─────────
+    async function streamGemini(prompt) {
+      const response = await fetch('/api/gemini', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt }),
@@ -1005,14 +1004,36 @@ ${truncated}`;
         throw new Error(err.error || `Server returned HTTP ${response.status}`);
       }
 
-      if (response.headers.get('X-Paper-Truncated') === 'true') {
-        rawResponse += '**Note:** Your paper was truncated to fit the free-tier token limit. ' +
-          'The analysis below covers the beginning of the paper. For full-length analysis, ' +
-          'use Claude or ChatGPT with your own API key.\n\n---\n\n';
-        updateStream(rawResponse);
-      }
+      const reader  = response.body.getReader();
+      const decoder = new TextDecoder();
+      let   buffer  = '';
 
-      await streamOpenAICompat(response);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const data = line.slice(6).trim();
+          if (!data) continue;
+          try {
+            const ev = JSON.parse(data);
+            const parts = ev.candidates?.[0]?.content?.parts;
+            if (parts) {
+              for (const part of parts) {
+                if (part.text) {
+                  rawResponse += part.text;
+                  updateStream(rawResponse);
+                }
+              }
+            }
+          } catch (_) {}
+        }
+      }
     }
 
     // ── Anthropic streaming ────────────────────────
@@ -1096,10 +1117,10 @@ ${truncated}`;
     // ── Main analyze handler ──────────────────────
     analyzeBtn.addEventListener('click', analyze);
 
-    const MODEL_NAMES = { groq: 'Llama', anthropic: 'Claude', openai: 'ChatGPT' };
+    const MODEL_NAMES = { gemini: 'Gemini', anthropic: 'Claude', openai: 'ChatGPT' };
 
     async function analyze() {
-      if (provider !== 'groq') {
+      if (provider !== 'gemini') {
         const apiKey = apiKeyInput.value.trim();
         if (!apiKey) {
           showError(`Enter your ${provider === 'anthropic' ? 'Anthropic' : 'OpenAI'} API key above.`);
@@ -1111,7 +1132,7 @@ ${truncated}`;
       if (content.length < 100) { showError('No paper content found. Paste text or upload a PDF.'); return; }
 
       const apiKey = apiKeyInput.value.trim();
-      if (provider !== 'groq') {
+      if (provider !== 'gemini') {
         apiKeyInput.value = '';
       }
       checkReady();
@@ -1126,8 +1147,8 @@ ${truncated}`;
       showStream(true);
 
       try {
-        if (provider === 'groq') {
-          await streamGroq(prompt);
+        if (provider === 'gemini') {
+          await streamGemini(prompt);
         } else if (provider === 'anthropic') {
           await streamAnthropic(apiKey, prompt);
         } else {
