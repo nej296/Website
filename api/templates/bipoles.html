@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920">
+<title>BiPOLES — NEUR 327 Group 6 Presentation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #050a12;
+    --bg-card: rgba(10, 20, 40, 0.6);
+    --text: #f0f4ff;
+    --text-sec: #8aa4c8;
+    --text-muted: #4a6fa5;
+    --blue: #2196F3;
+    --blue-lt: #64B5F6;
+    --red: #b90f28;
+    --red-lt: #e87090;
+    --orange: #FF6B35;
+    --border: rgba(33,150,243,0.15);
+    --ff-d: 'Georgia', serif;
+    --ff-b: 'Trebuchet MS', sans-serif;
+  }
+
+  body {
+    background: var(--bg);
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: var(--ff-d);
+    color: var(--text);
+  }
+
+  /* ── Slide System ─────────────────────────────── */
+  #deck { width: 1920px; height: 1080px; position: relative; overflow: hidden; }
+
+  .slide {
+    position: absolute; inset: 0;
+    width: 1920px; height: 1080px;
+    background: var(--bg);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.45s ease, visibility 0.45s;
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; visibility: visible; z-index: 1; }
+
+  .slide:not([data-s="1"])::before {
+    content: ''; position: absolute; left: 0; top: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--blue), var(--red));
+    opacity: 0.45; z-index: 2;
+  }
+
+  .si {
+    position: relative; z-index: 1;
+    padding: 58px 80px 70px 80px;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+  }
+
+  /* ── Navigation ───────────────────────────────── */
+  .nav {
+    position: absolute; bottom: 26px; right: 80px;
+    display: flex; align-items: center; gap: 18px;
+    z-index: 100; opacity: 0.55; transition: opacity 0.3s;
+  }
+  .nav:hover { opacity: 1; }
+
+  .nb {
+    background: rgba(33,150,243,0.1);
+    border: 1px solid rgba(33,150,243,0.3);
+    color: var(--blue-lt); width: 38px; height: 38px;
+    border-radius: 4px; cursor: pointer; font-size: 17px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s; font-family: var(--ff-b);
+  }
+  .nb:hover { background: rgba(33,150,243,0.25); border-color: rgba(33,150,243,0.6); }
+
+  .sc {
+    font-family: var(--ff-b); font-size: 12px;
+    letter-spacing: 2px; color: var(--text-muted);
+  }
+
+  .prog {
+    position: absolute; bottom: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--red));
+    transition: width 0.4s ease; z-index: 100;
+  }
+
+  .fs-btn {
+    background: rgba(33,150,243,0.1);
+    border: 1px solid rgba(33,150,243,0.3);
+    color: var(--blue-lt); width: 38px; height: 38px;
+    border-radius: 4px; cursor: pointer; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s; font-family: var(--ff-b);
+  }
+  .fs-btn:hover { background: rgba(33,150,243,0.25); border-color: rgba(33,150,243,0.6); }
+
+  body.fullscreen #deck {
+    transform-origin: top left;
+  }
+
+  /* ── Typography ───────────────────────────────── */
+  .tb { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+
+  .sn {
+    font-family: var(--ff-b); font-size: 12px;
+    letter-spacing: 3px; color: var(--text-muted); font-weight: 700;
+  }
+
+  .st {
+    font-family: var(--ff-b); font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--blue); padding: 4px 12px;
+    background: rgba(33,150,243,0.1); border-radius: 3px;
+  }
+
+  .sh {
+    font-family: var(--ff-d); font-size: 48px;
+    font-weight: 700; color: var(--text);
+    line-height: 1.15; margin-bottom: 6px;
+  }
+
+  .ss {
+    font-family: var(--ff-b); font-size: 19px;
+    color: var(--blue-lt); margin-bottom: 16px; line-height: 1.4;
+  }
+
+  .tl {
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--red), transparent);
+    margin-bottom: 32px;
+  }
+  .slide.active .tl { animation: xLine 0.7s ease forwards 0.15s; }
+
+  /* ── Layout ───────────────────────────────────── */
+  .tc { display: flex; gap: 50px; flex: 1; min-height: 0; }
+  .cl { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .cr { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .cards { display: flex; gap: 24px; flex: 1; min-height: 0; }
+
+  .card {
+    flex: 1; background: var(--bg-card);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; display: flex; flex-direction: column;
+  }
+  .ci { font-size: 26px; margin-bottom: 14px; }
+  .ct {
+    font-family: var(--ff-b); font-size: 17px;
+    font-weight: 700; color: var(--blue-lt); margin-bottom: 12px;
+  }
+
+  /* ── Editable Areas ───────────────────────────── */
+  .ed {
+    border: 1px dashed rgba(100,181,246,0.2);
+    border-radius: 6px; padding: 18px 22px;
+    min-height: 50px; transition: all 0.3s; cursor: text;
+    font-family: var(--ff-b); font-size: 16px;
+    line-height: 1.7; color: var(--text-sec);
+  }
+  .ed:hover { border-color: rgba(100,181,246,0.45); background: rgba(33,150,243,0.03); }
+  .ed:focus { border-color: rgba(100,181,246,0.6); background: rgba(33,150,243,0.05); outline: none; }
+  .ed ul, .ed ol { padding-left: 22px; }
+  .ed li { margin-bottom: 6px; }
+  .ed p { margin-bottom: 10px; }
+
+  .eh { color: var(--text-muted); font-style: italic; font-size: 13px; opacity: 0.7; }
+
+  /* ── Figure Area ──────────────────────────────── */
+  .fa {
+    border: 1px dashed rgba(100,181,246,0.22);
+    border-radius: 8px; padding: 28px; flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 260px; background: rgba(10,20,40,0.35);
+    position: relative; cursor: text; transition: all 0.3s;
+  }
+  .fa:hover { border-color: rgba(100,181,246,0.45); background: rgba(10,20,40,0.55); }
+  .fa:focus { border-color: rgba(100,181,246,0.6); outline: none; }
+
+  .fl {
+    position: absolute; top: 10px; left: 14px;
+    font-family: var(--ff-b); font-size: 9px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-muted); opacity: 0.5;
+  }
+
+  .fh {
+    font-family: var(--ff-b); font-size: 14px;
+    color: var(--text-muted); text-align: center; font-style: italic;
+  }
+
+  /* ── Pills ────────────────────────────────────── */
+  .pill {
+    display: inline-block; padding: 5px 16px; border-radius: 3px;
+    font-family: var(--ff-b); font-size: 10px;
+    letter-spacing: 2px; font-weight: 700; text-transform: uppercase;
+  }
+  .pb { background: rgba(33,150,243,0.15); border: 1px solid rgba(33,150,243,0.5); color: var(--blue-lt); }
+  .pr { background: rgba(185,15,40,0.12); border: 1px solid rgba(185,15,40,0.45); color: var(--red-lt); }
+  .prow { display: flex; gap: 10px; margin-bottom: 20px; }
+
+  /* ── Key Point ────────────────────────────────── */
+  .kp {
+    background: rgba(33,150,243,0.08);
+    border-left: 3px solid var(--blue);
+    padding: 16px 22px; border-radius: 0 6px 6px 0;
+    margin-top: 16px; font-family: var(--ff-b);
+    font-size: 15px; color: var(--blue-lt); line-height: 1.6;
+  }
+
+  /* ── Advantage / Limitation Items ─────────────── */
+  .ai {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 13px 18px; background: rgba(10,20,40,0.5);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 6px 6px 0; margin-bottom: 7px;
+    font-family: var(--ff-b); font-size: 15px;
+    color: var(--text-sec); line-height: 1.5;
+  }
+  .ai .ic { color: var(--blue-lt); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+
+  .li {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 13px 18px; background: rgba(40,10,15,0.25);
+    border-left: 3px solid var(--red);
+    border-radius: 0 6px 6px 0; margin-bottom: 7px;
+    font-family: var(--ff-b); font-size: 15px;
+    color: var(--text-sec); line-height: 1.5;
+  }
+  .li .ic { color: var(--red-lt); font-size: 16px; flex-shrink: 0; }
+
+  /* ═══ TITLE SLIDE (1) ═════════════════════════ */
+  #s1 canvas { position: absolute; top: 0; left: 0; }
+
+  .vig {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 62% 50%, transparent 30%, rgba(5,10,18,0.72) 75%, rgba(5,10,18,0.95) 100%);
+    pointer-events: none;
+  }
+
+  .tp {
+    position: absolute; left: 80px; top: 50%;
+    transform: translateY(-50%); width: 620px; z-index: 2;
+  }
+
+  .slide[data-s="1"].active .c-tag  { animation: fUp .8s ease forwards .2s; }
+  .slide[data-s="1"].active .m-ttl  { animation: fUp .9s ease forwards .5s; }
+  .slide[data-s="1"].active .m-sub  { animation: fUp .9s ease forwards .8s; }
+  .slide[data-s="1"].active .t-div  { animation: xL 1s ease forwards 1s; }
+  .slide[data-s="1"].active .t-pills{ animation: fUp .7s ease forwards 1.2s; }
+  .slide[data-s="1"].active .t-auth { animation: fUp .7s ease forwards 1.4s; }
+  .slide[data-s="1"].active .wl-box { animation: fUp .8s ease forwards 1.6s; }
+
+  .c-tag,.m-ttl,.m-sub,.t-pills,.t-auth,.wl-box { opacity: 0; }
+
+  .c-tag {
+    font-family: var(--ff-b); font-size: 13px;
+    letter-spacing: 4px; color: var(--text-muted);
+    text-transform: uppercase; margin-bottom: 22px;
+  }
+  .m-ttl {
+    font-size: 110px; font-weight: 700;
+    letter-spacing: -3px; line-height: .92;
+    color: var(--text); margin-bottom: 28px;
+  }
+  .m-ttl .bi { color: var(--blue); }
+  .m-sub {
+    font-family: var(--ff-b); font-size: 18px;
+    color: var(--blue-lt); line-height: 1.5; margin-bottom: 36px;
+  }
+  .t-div {
+    width: 0; height: 1px;
+    background: linear-gradient(90deg, var(--blue), var(--orange), transparent);
+    margin-bottom: 30px;
+  }
+  .t-pills { display: flex; gap: 14px; margin-bottom: 42px; }
+  .t-auth {
+    font-family: var(--ff-b); font-size: 12px;
+    color: #3d5a7a; line-height: 1.7; font-style: italic;
+  }
+
+  .wl-box { position: absolute; right: 70px; bottom: 60px; text-align: right; z-index: 2; }
+  .wl-i {
+    font-family: var(--ff-b); font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 8px; display: flex;
+    align-items: center; gap: 10px; justify-content: flex-end;
+  }
+  .wl-d { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  /* ═══ KEYFRAMES ═══════════════════════════════ */
+  @keyframes fUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes xL {
+    from { width: 0; }
+    to   { width: 380px; }
+  }
+  @keyframes xLine {
+    from { width: 0; }
+    to   { width: 480px; }
+  }
+  @keyframes casL {
+    from { opacity: 0; transform: translateX(-28px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pulseG {
+    0%,100% { box-shadow: 0 0 30px rgba(33,150,243,.2); }
+    50%     { box-shadow: 0 0 55px rgba(33,150,243,.4), 0 0 75px rgba(185,15,40,.12); }
+  }
+  @keyframes beamUp {
+    0%   { opacity: 0; transform: translateY(100%); }
+    30%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-100%); }
+  }
+  @keyframes revI {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes dFloat {
+    0%,100% { transform: translate(0,0); opacity: .25; }
+    50%     { transform: translate(var(--dx,8px),var(--dy,-8px)); opacity: .6; }
+  }
+  @keyframes wormDraw {
+    from { stroke-dashoffset: 600; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes wormWig {
+    0%,100% { transform: translateY(0); }
+    50%     { transform: translateY(-6px); }
+  }
+
+  /* ═══ SLIDE 3 ANIM — cascade reveal ══════════ */
+  .slide[data-s="3"] .am { opacity: 0; }
+  .slide[data-s="3"].active .am { animation: casL .6s ease forwards; }
+  .slide[data-s="3"].active .am:nth-child(1) { animation-delay: .25s; }
+  .slide[data-s="3"].active .am:nth-child(2) { animation-delay: .55s; }
+  .slide[data-s="3"].active .am:nth-child(3) { animation-delay: .85s; }
+
+  /* ═══ SLIDE 5 ANIM — construct build ═════════ */
+  .slide[data-s="5"] .cp { opacity: 0; }
+  .slide[data-s="5"].active .cp { animation: fUp .65s ease forwards; }
+  .slide[data-s="5"].active .cp:nth-child(1) { animation-delay: .2s; }
+  .slide[data-s="5"].active .cp:nth-child(2) { animation-delay: .5s; }
+  .slide[data-s="5"].active .cp:nth-child(3) { animation-delay: .8s; }
+  .slide[data-s="5"].active .cp:nth-child(4) { animation-delay: 1.1s; }
+  .slide[data-s="5"].active .cp:nth-child(5) { animation-delay: 1.4s; }
+
+  .cblk {
+    padding: 18px 26px; border-radius: 6px;
+    font-family: var(--ff-b); font-size: 13px;
+    font-weight: 700; text-align: center; letter-spacing: 1px;
+  }
+  .clink { font-family: var(--ff-b); font-size: 20px; color: var(--text-muted); padding: 0 6px; }
+
+  /* ═══ SLIDE 8 ANIM — pulse glow ══════════════ */
+  .slide[data-s="8"].active .soma-g { animation: pulseG 3s ease-in-out infinite; }
+  .soma-g {
+    border-radius: 50%; width: 180px; height: 180px;
+    border: 2px solid rgba(33,150,243,.35);
+    display: flex; align-items: center; justify-content: center;
+    margin: 16px auto;
+  }
+  .soma-lbl { font-family: var(--ff-b); font-size: 13px; color: var(--blue-lt); text-align: center; letter-spacing: 1px; }
+
+  /* ═══ SLIDE 11 ANIM — light beams ════════════ */
+  .ld { display: flex; align-items: center; justify-content: center; gap: 70px; margin: 16px 0; }
+  .beam { width: 54px; height: 180px; border-radius: 27px; position: relative; overflow: hidden; }
+  .bb { background: rgba(33,150,243,.12); border: 1px solid rgba(33,150,243,.35); }
+  .br { background: rgba(185,15,40,.12); border: 1px solid rgba(185,15,40,.35); }
+  .bi-inner { position: absolute; inset: 0; border-radius: 27px; }
+  .slide[data-s="11"].active .bb .bi-inner {
+    background: linear-gradient(0deg, transparent, rgba(33,150,243,.55));
+    animation: beamUp 2.4s ease-in-out infinite;
+  }
+  .slide[data-s="11"].active .br .bi-inner {
+    background: linear-gradient(0deg, transparent, rgba(185,15,40,.55));
+    animation: beamUp 2.4s ease-in-out infinite 1.2s;
+  }
+  .blbl { text-align: center; margin-top: 12px; font-family: var(--ff-b); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+
+  /* ═══ SLIDE 14 ANIM — worm SVG ═══════════════ */
+  .slide[data-s="14"].active .worm-p {
+    stroke-dasharray: 600; stroke-dashoffset: 600;
+    animation: wormDraw 2s ease forwards, wormWig 2.5s ease-in-out infinite 2.2s;
+  }
+
+  /* ═══ SLIDE 17 ANIM — cascade advantages ═════ */
+  .slide[data-s="17"] .ai { opacity: 0; }
+  .slide[data-s="17"].active .ai { animation: revI .45s ease forwards; }
+  .slide[data-s="17"].active .ai:nth-child(1) { animation-delay: .15s; }
+  .slide[data-s="17"].active .ai:nth-child(2) { animation-delay: .35s; }
+  .slide[data-s="17"].active .ai:nth-child(3) { animation-delay: .55s; }
+  .slide[data-s="17"].active .ai:nth-child(4) { animation-delay: .75s; }
+  .slide[data-s="17"].active .ai:nth-child(5) { animation-delay: .95s; }
+  .slide[data-s="17"].active .ai:nth-child(6) { animation-delay: 1.15s; }
+
+  /* ═══ SLIDE 20 ANIM — floating dots ══════════ */
+  .slide[data-s="20"] .dot {
+    position: absolute; border-radius: 50%; opacity: 0;
+  }
+  .slide[data-s="20"].active .dot { animation: dFloat 5s ease-in-out infinite; }
+
+  .qc {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .qt {
+    font-family: var(--ff-d); font-size: 76px;
+    font-weight: 700; color: var(--text); margin-bottom: 18px;
+  }
+  .qs {
+    font-family: var(--ff-b); font-size: 21px;
+    color: var(--blue-lt); margin-bottom: 50px;
+  }
+
+  /* ═══ SYNC STATUS INDICATOR ═══════════════════ */
+  #syncStatus {
+    position: absolute; bottom: 26px; left: 80px; z-index: 100;
+    font-family: var(--ff-b); font-size: 11px; letter-spacing: 1.5px;
+    color: var(--text-muted); display: flex; align-items: center; gap: 8px;
+    opacity: 0.6; transition: opacity 0.3s;
+  }
+  #syncStatus:hover { opacity: 1; }
+  #syncDot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--text-muted); transition: background 0.3s;
+  }
+  #syncDot.live { background: #4caf50; }
+  #syncDot.saving { background: #ff9800; }
+  #syncDot.local { background: #9e9e9e; }
+  #syncDot.error { background: #f44336; }
+
+  /* ═══ SETUP BANNER ════════════════════════════ */
+  #setupBanner {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 150;
+    background: linear-gradient(90deg, rgba(33,150,243,0.15), rgba(185,15,40,0.1));
+    border-bottom: 1px solid rgba(33,150,243,0.3);
+    padding: 10px 80px; display: none; align-items: center; gap: 16px;
+    font-family: var(--ff-b); font-size: 13px; color: var(--text-sec);
+  }
+  #setupBanner a {
+    color: var(--blue-lt); text-decoration: underline; cursor: pointer;
+  }
+  #setupBanner .dismiss {
+    margin-left: auto; background: none; border: none;
+    color: var(--text-muted); cursor: pointer; font-size: 18px;
+    font-family: var(--ff-b);
+  }
+
+  /* ═══ SETUP MODAL ═════════════════════════════ */
+  #setupModal {
+    display: none; position: fixed; inset: 0; z-index: 300;
+    background: rgba(5,10,18,0.97); align-items: center; justify-content: center;
+  }
+  #setupModal.show { display: flex; }
+  .setup-box {
+    max-width: 750px; width: 90%; max-height: 90vh; overflow-y: auto;
+    background: #0a1428; border: 1px solid rgba(33,150,243,0.3);
+    border-radius: 12px; padding: 50px 60px;
+  }
+  .setup-box h2 {
+    font-family: var(--ff-d); font-size: 36px; color: var(--text);
+    margin-bottom: 10px;
+  }
+  .setup-box h3 {
+    font-family: var(--ff-b); font-size: 14px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--blue-lt); margin: 28px 0 12px;
+  }
+  .setup-box p, .setup-box li {
+    font-family: var(--ff-b); font-size: 15px; color: var(--text-sec);
+    line-height: 1.7; margin-bottom: 8px;
+  }
+  .setup-box ol { padding-left: 22px; }
+  .setup-box code {
+    background: rgba(33,150,243,0.1); padding: 2px 8px; border-radius: 3px;
+    font-size: 13px; color: var(--blue-lt);
+  }
+  .setup-box pre {
+    background: rgba(5,10,18,0.8); border: 1px solid rgba(33,150,243,0.2);
+    border-radius: 6px; padding: 20px; margin: 12px 0;
+    font-size: 13px; color: var(--blue-lt); overflow-x: auto;
+    line-height: 1.6;
+  }
+  .setup-close {
+    background: rgba(33,150,243,0.15); border: 1px solid rgba(33,150,243,0.4);
+    color: var(--blue-lt); padding: 10px 30px; border-radius: 4px;
+    cursor: pointer; font-family: var(--ff-b); font-size: 13px;
+    letter-spacing: 1px; margin-top: 20px; transition: all 0.25s;
+  }
+  .setup-close:hover { background: rgba(33,150,243,0.3); }
+
+  .ed.remote-update { outline: 2px solid rgba(76,175,80,0.4); outline-offset: -2px;
+    transition: outline 0.5s; }
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 1 — TITLE                                       ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide active" data-s="1" id="s1">
+  <canvas id="c" width="1920" height="1080"></canvas>
+  <div class="vig"></div>
+
+  <div class="tp">
+    <div class="c-tag" contenteditable="true">NEUR 327 &nbsp;&middot;&nbsp; Group 6 &nbsp;&middot;&nbsp; 2024</div>
+    <div class="m-ttl"><span class="bi">Bi</span><span>POLES</span></div>
+    <div class="m-sub">Bidirectional Dual-Color<br>Optogenetic Control of Neurons</div>
+    <div class="t-div"></div>
+    <div class="t-pills">
+      <span class="pill pb">&#11044; &nbsp;470 nm &nbsp;Inhibition</span>
+      <span class="pill pr">&#11044; &nbsp;595–635 nm &nbsp;Excitation</span>
+    </div>
+    <div class="t-auth" contenteditable="true">
+      Vierock, Rodriguez-Rozada et al.<br>
+      Nature Communications (2021) &nbsp;|&nbsp; 12:4527
+    </div>
+  </div>
+
+  <div class="wl-box">
+    <div class="wl-i" style="color:#4a6fa5">
+      <span>GtACR2 anion channel</span>
+      <span class="wl-d" style="background:#2196F3"></span>
+    </div>
+    <div class="wl-i" style="color:#7a3040">
+      <span>Chrimson cation channel</span>
+      <span class="wl-d" style="background:#b90f28"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 2 — What Is Optogenetics?                       ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="2">
+  <div class="si">
+    <div class="tb"><span class="sn">02</span><span class="st">Background</span></div>
+    <h2 class="sh">What Is Optogenetics?</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true">
+          <p class="eh">[Click to edit — Add your content here]</p>
+          <ul>
+            <li>Brief definition of optogenetics</li>
+            <li>Explanation of opsins (light-sensitive proteins derived from microbes)</li>
+            <li>How light can activate (depolarize) or inhibit (hyperpolarize) neurons</li>
+            <li>Why this technique is revolutionary for neuroscience research</li>
+          </ul>
+        </div>
+        <div class="kp" contenteditable="true">
+          <em>[Key takeaway — e.g., "Optogenetics gives researchers millisecond-precision control of specific neurons using light."]</em>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert diagram: Neuron responding to light stimulation — show opsin in membrane, light source, and resulting ion flow]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 3 — The Problem (ANIMATED)                      ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="3">
+  <div class="si">
+    <div class="tb"><span class="sn">03</span><span class="st">Motivation</span></div>
+    <h2 class="sh">The Problem: Why Bidirectional Control?</h2>
+    <div class="ss">To prove a neuron population is necessary <em>and</em> sufficient, you need both excitation and inhibition.</div>
+    <div class="tl"></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:18px;">
+      <div class="am" style="display:flex;gap:20px;align-items:stretch;">
+        <div style="width:6px;background:var(--blue);border-radius:3px;flex-shrink:0;"></div>
+        <div class="ed" style="flex:1;" contenteditable="true">
+          <p style="color:var(--blue-lt);font-weight:700;font-size:18px;margin-bottom:6px;">Necessity &amp; Sufficiency</p>
+          <p>[Click to edit — Explain why proving a neural circuit's role requires both activating and silencing the same population]</p>
+        </div>
+      </div>
+      <div class="am" style="display:flex;gap:20px;align-items:stretch;">
+        <div style="width:6px;background:var(--red);border-radius:3px;flex-shrink:0;"></div>
+        <div class="ed" style="flex:1;" contenteditable="true">
+          <p style="color:var(--red-lt);font-weight:700;font-size:18px;margin-bottom:6px;">Current Approach Limitations</p>
+          <p>[Click to edit — Separate experiments, co-expression of two opsins with mismatched trafficking, variable ratios, spectral overlap]</p>
+        </div>
+      </div>
+      <div class="am" style="display:flex;gap:20px;align-items:stretch;">
+        <div style="width:6px;background:linear-gradient(180deg,var(--blue),var(--red));border-radius:3px;flex-shrink:0;"></div>
+        <div class="ed" style="flex:1;" contenteditable="true">
+          <p style="color:var(--text);font-weight:700;font-size:18px;margin-bottom:6px;">The Core Challenge</p>
+          <p>[Click to edit — All opsins have some blue-light sensitivity, making truly independent dual-color control very difficult]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 4 — Previous Tools and Their Limitations         ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="4">
+  <div class="si">
+    <div class="tb"><span class="sn">04</span><span class="st">Background</span></div>
+    <h2 class="sh">Previous Tools &amp; Their Limitations</h2>
+    <div class="tl"></div>
+    <div class="cards">
+      <div class="card">
+        <div class="ci">&#128268;</div>
+        <div class="ct">Gene Fusion</div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit]</p>
+          <ul>
+            <li>ChR2 + NpHR/Arch fused together</li>
+            <li>Poor membrane trafficking</li>
+            <li>Limited potency for reliable neuronal control</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ci">&#9874;</div>
+        <div class="ct">Bicistronic (eNPAC)</div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit]</p>
+          <ul>
+            <li>2A ribosomal skip sequence</li>
+            <li>Variable expression ratios</li>
+            <li>No guaranteed co-localization</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ci">&#9889;</div>
+        <div class="ct">Ion Pumps</div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit]</p>
+          <ul>
+            <li>NpHR, Arch — one charge per photon</li>
+            <li>Weak at negative voltages</li>
+            <li>Don't work in invertebrates (Drosophila)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 5 — BiPOLES Design Logic (ANIMATED)             ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="5">
+  <div class="si">
+    <div class="tb"><span class="sn">05</span><span class="st">Design</span></div>
+    <h2 class="sh">The BiPOLES Strategy: Design Logic</h2>
+    <div class="ss">Inverting the color scheme — red excitation + blue inhibition in a single fusion protein.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true">
+          <p class="eh">[Click to edit — Explain the conceptual innovation]</p>
+          <ul>
+            <li>Red-light cation channel (<strong>Chrimson</strong>) for excitation</li>
+            <li>Blue-light anion channel (<strong>GtACR2</strong>) for inhibition</li>
+            <li>Single open reading frame ensures <strong>1:1 stoichiometry</strong></li>
+            <li>Inverted color scheme solves blue-light cross-talk</li>
+          </ul>
+        </div>
+        <div class="kp" contenteditable="true">
+          [Key insight — The inverted spectrum means Chrimson's blue-light sensitivity is cancelled by GtACR2's inhibitory current]
+        </div>
+      </div>
+      <div class="cr" style="justify-content:center;">
+        <p style="font-family:var(--ff-b);font-size:12px;letter-spacing:2px;color:var(--text-muted);text-transform:uppercase;margin-bottom:16px;">Fusion Construct Architecture</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;">
+          <div class="cp"><div class="cblk" style="background:rgba(33,150,243,.2);border:1px solid rgba(33,150,243,.5);color:var(--blue-lt);">GtACR2</div></div>
+          <div class="cp"><span class="clink">—</span></div>
+          <div class="cp"><div class="cblk" style="background:rgba(100,181,246,.1);border:1px solid rgba(100,181,246,.3);color:var(--text-sec);">TS + mCerulean + &beta;HK</div></div>
+          <div class="cp"><span class="clink">—</span></div>
+          <div class="cp"><div class="cblk" style="background:rgba(185,15,40,.2);border:1px solid rgba(185,15,40,.5);color:var(--red-lt);">Chrimson</div></div>
+        </div>
+        <div class="fa" contenteditable="true" style="margin-top:24px;min-height:180px;">
+          <span class="fl">Diagram</span>
+          <p class="fh">[Insert diagram of the fusion construct showing membrane topology, linker components, and both opsin domains]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 6 — Systematic Screen of Opsin Combinations     ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="6">
+  <div class="si">
+    <div class="tb"><span class="sn">06</span><span class="st">Engineering</span></div>
+    <h2 class="sh">Systematic Screen of Opsin Combinations</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true">
+          <p class="eh">[Click to edit — Describe the screening approach]</p>
+          <ul>
+            <li><strong>ACRs tested:</strong> GtACR1, GtACR2, iC++, Aurora</li>
+            <li><strong>CCRs tested:</strong> Chrimson, ChRmine, bReaChES, f-Chrimson, vf-Chrimson</li>
+            <li><strong>Linkers tested:</strong> L1, L2, L3, L4</li>
+          </ul>
+          <p style="margin-top:12px;"><strong>Key metrics evaluated:</strong></p>
+          <ul>
+            <li>Photocurrent density</li>
+            <li>Reversal potential</li>
+            <li>Spectral separation (&lambda;<sub>rev</sub>)</li>
+          </ul>
+        </div>
+        <div class="kp" contenteditable="true">
+          [Result — GtACR2-L2-Chrimson (BiPOLES) emerged as the best: largest photocurrents, ~150 nm spectral separation, reversal potentials matching individually expressed channels]
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure from paper: Screening results showing photocurrent densities and spectral separation for all tested combinations]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 7 — HEK Cell Characterization                   ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="7">
+  <div class="si">
+    <div class="tb"><span class="sn">07</span><span class="st">Results</span></div>
+    <h2 class="sh">HEK Cell Characterization</h2>
+    <div class="ss">Biophysical validation of BiPOLES in vitro.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="prow">
+          <span class="pill pb">490 nm &rarr; Cl<sup>&minus;</sup> outward</span>
+          <span class="pill pr">600 nm &rarr; cation inward</span>
+        </div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Describe the HEK cell data]</p>
+          <ul>
+            <li>Representative photocurrent traces at 490 nm vs. 600 nm</li>
+            <li>Current-voltage relationship: outward (Cl<sup>&minus;</sup>) currents with blue, inward (cation) currents with red</li>
+            <li>BiPOLES vs. eNPAC2.0: 2 orders of magnitude more light-sensitive for inhibition</li>
+            <li>Reversal potentials close to individually expressed channels</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure 1</span>
+          <p class="fh">[Insert simplified Figure 1 — photocurrent traces, I-V curves, comparison with eNPAC2.0]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 8 — somBiPOLES (ANIMATED)                       ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="8">
+  <div class="si">
+    <div class="tb"><span class="sn">08</span><span class="st">Optimization</span></div>
+    <h2 class="sh">somBiPOLES: Improved Membrane Trafficking</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true">
+          <p class="eh">[Click to edit — Explain the optimized variant]</p>
+          <ul>
+            <li>Addition of <strong>Kv2.1 soma-targeting sequence</strong></li>
+            <li>Improved membrane localization: soma + proximal dendrites</li>
+            <li>No intracellular accumulation</li>
+            <li>Absent from axon terminals (critical: Cl<sup>&minus;</sup> reversal potential in axons could make GtACR2 excitatory)</li>
+          </ul>
+        </div>
+        <div class="kp" contenteditable="true">
+          [Key point — Soma targeting avoids confounding effects from axonal chloride gradients where GtACR2 could be depolarizing instead of inhibitory]
+        </div>
+      </div>
+      <div class="cr" style="align-items:center;justify-content:center;">
+        <div class="soma-g">
+          <div class="soma-lbl">SOMA<br><span style="font-size:10px;color:var(--text-muted);">Kv2.1 targeted</span></div>
+        </div>
+        <div style="font-family:var(--ff-b);font-size:12px;color:var(--text-muted);text-align:center;margin-top:12px;letter-spacing:1px;">
+          &#8593; Pulsing glow = membrane localization
+        </div>
+        <div class="fa" contenteditable="true" style="margin-top:20px;min-height:160px;">
+          <span class="fl">Confocal</span>
+          <p class="fh">[Insert confocal images showing improved membrane localization vs. non-targeted variant]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 9 — Neuronal Excitation                         ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="9">
+  <div class="si">
+    <div class="tb"><span class="sn">09</span><span class="st">Characterization</span></div>
+    <h2 class="sh">Neuronal Excitation with somBiPOLES</h2>
+    <div class="ss">Red-light spiking performance matches Chrimson alone.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="prow"><span class="pill pr">595 nm &rarr; Excitation</span></div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Present the excitation data]</p>
+          <ul>
+            <li>AP probability in hippocampal CA1 neurons: <strong>100% at 0.5 mW/mm&sup2;</strong> (595 nm)</li>
+            <li>Comparable performance to Chrimson alone</li>
+            <li>Blue light <strong>never triggered APs</strong> in somBiPOLES neurons (unlike Chrimson alone, which spikes at 470 nm)</li>
+            <li>Light-ramp threshold data confirms similar sensitivity at orange wavelengths</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: AP probability curves, comparison with Chrimson alone, blue-light test showing no spiking]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 10 — Neuronal Inhibition                        ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="10">
+  <div class="si">
+    <div class="tb"><span class="sn">10</span><span class="st">Characterization</span></div>
+    <h2 class="sh">Neuronal Inhibition with somBiPOLES</h2>
+    <div class="ss">Blue-light silencing matches GtACR2 alone.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="prow"><span class="pill pb">490 nm &rarr; Inhibition</span></div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Present the inhibition data]</p>
+          <ul>
+            <li>Rheobase shift experiments in CA1 neurons</li>
+            <li>Blue light (490 nm) blocked spiking starting at <strong>0.1 mW/mm&sup2;</strong></li>
+            <li>Comparable to somGtACR2 alone</li>
+            <li>Silencing effective even at 100 mW/mm&sup2; — Chrimson cross-activation does <strong>not</strong> compromise inhibition</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: Rheobase shift data, AP blocking at various light intensities, comparison with somGtACR2]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 11 — Application 1: Bidirectional (ANIMATED)    ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="11">
+  <div class="si">
+    <div class="tb"><span class="sn">11</span><span class="st">Application 1</span></div>
+    <h2 class="sh">Bidirectional Control &amp; Optical Voltage Tuning</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true">
+          <p class="eh">[Click to edit — Describe bidirectional control results]</p>
+          <ul>
+            <li>Red light pulses reliably trigger APs</li>
+            <li>Concomitant blue light blocks them</li>
+            <li>Optical tuning of membrane voltage by varying blue/red ratio</li>
+            <li>Wavelength sweep: membrane potential smoothly transitions from Cl<sup>&minus;</sup> Nernst potential to AP threshold</li>
+          </ul>
+        </div>
+        <div class="kp" contenteditable="true">
+          [Key result — A single wavelength sweep across the spectrum can smoothly control membrane potential between inhibition and excitation]
+        </div>
+      </div>
+      <div class="cr" style="align-items:center;">
+        <div class="ld">
+          <div style="text-align:center;">
+            <div class="beam bb"><div class="bi-inner"></div></div>
+            <div class="blbl" style="color:var(--blue-lt);">470 nm<br>Inhibit</div>
+          </div>
+          <div style="font-family:var(--ff-b);font-size:36px;color:var(--text-muted);">&#8596;</div>
+          <div style="text-align:center;">
+            <div class="beam br"><div class="bi-inner"></div></div>
+            <div class="blbl" style="color:var(--red-lt);">635 nm<br>Excite</div>
+          </div>
+        </div>
+        <div class="fa" contenteditable="true" style="min-height:140px;">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: Voltage tuning traces, spectral sweep data]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 12 — Application 2: Dual-Population Control     ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="12">
+  <div class="si">
+    <div class="tb"><span class="sn">12</span><span class="st">Application 2</span></div>
+    <h2 class="sh">Dual-Population Control with a Second ChR</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Describe the dual-population experiment]</p>
+          <ul>
+            <li><strong>somBiPOLES</strong> in VIP interneurons</li>
+            <li><strong>CheRiff</strong> (blue-light ChR) in pyramidal neurons</li>
+            <li>Red light spikes <em>only</em> VIP cells</li>
+            <li>Blue light spikes <em>only</em> pyramidal cells</li>
+            <li>Postsynaptic recordings in OLM neurons confirm distinct EPSCs and IPSCs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: Circuit diagram showing VIP + pyramidal cell populations, color-coded stimulation, and postsynaptic recordings in OLM neurons]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 13 — Application 3: Two-Photon Holographic      ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="13">
+  <div class="si">
+    <div class="tb"><span class="sn">13</span><span class="st">Application 3</span></div>
+    <h2 class="sh">Two-Photon Holographic Control</h2>
+    <div class="ss">First demonstration of two-photon bidirectional control in the same neuron.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="prow">
+          <span class="pill pb">920 nm &rarr; 2P Inhibition</span>
+          <span class="pill pr">1100 nm &rarr; 2P Excitation</span>
+        </div>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Describe the two-photon results]</p>
+          <ul>
+            <li>920 nm two-photon for GtACR2 inhibition</li>
+            <li>1100 nm two-photon for Chrimson excitation</li>
+            <li>AP trains at 1100 nm shunted by co-incident 920 nm</li>
+            <li>Enabled by the 1:1 stoichiometry of the fusion protein</li>
+            <li>Single-cell resolution bidirectional control</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: Two-photon holographic stimulation data — AP trains with and without co-incident inhibition]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 14 — In Vivo: C. elegans (ANIMATED)             ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="14">
+  <div class="si">
+    <div class="tb"><span class="sn">14</span><span class="st">In Vivo</span></div>
+    <h2 class="sh">In Vivo: <em>C. elegans</em></h2>
+    <div class="ss">Cross-species utility demonstrated in invertebrates.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true">
+          <p class="eh">[Click to edit — Describe the C. elegans experiments]</p>
+          <ul>
+            <li>BiPOLES expressed in <strong>cholinergic motor neurons</strong></li>
+            <li>Red light &rarr; body contraction (excitation)</li>
+            <li>Blue light &rarr; body elongation (inhibition)</li>
+            <li>Previous tools (ChR2 + NpHR) could <em>not</em> achieve both in the same animal</li>
+          </ul>
+        </div>
+        <div class="kp" contenteditable="true">
+          [Key point — BiPOLES achieves bidirectional motor control in worms, something no prior tool could accomplish]
+        </div>
+      </div>
+      <div class="cr" style="align-items:center;justify-content:center;">
+        <svg width="500" height="200" viewBox="0 0 500 200" class="worm-svg">
+          <path class="worm-p" d="M 60 100 Q 140 60 220 100 Q 300 140 380 100 Q 420 80 460 100"
+                fill="none" stroke="url(#wg)" stroke-width="10" stroke-linecap="round"
+                stroke-dasharray="600" stroke-dashoffset="600"/>
+          <defs>
+            <linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#2196F3;stop-opacity:0.8"/>
+              <stop offset="100%" style="stop-color:#b90f28;stop-opacity:0.8"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div style="font-family:var(--ff-b);font-size:12px;color:var(--text-muted);text-align:center;letter-spacing:1px;">
+          <em>C. elegans</em> — animated worm body
+        </div>
+        <div class="fa" contenteditable="true" style="margin-top:20px;min-height:140px;">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: Body length quantification — contraction (red) vs. elongation (blue)]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 15 — In Vivo: Drosophila                        ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="15">
+  <div class="si">
+    <div class="tb"><span class="sn">15</span><span class="st">In Vivo</span></div>
+    <h2 class="sh">In Vivo: <em>Drosophila</em></h2>
+    <div class="ss">First bidirectional optogenetic tool that works in flies.</div>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Describe the Drosophila experiments]</p>
+          <ul>
+            <li><strong>Motor neuron control:</strong> body length changes with red/blue light</li>
+            <li><strong>Nociceptive circuit (Dp7 neurons):</strong></li>
+            <li style="margin-left:20px;">Blue light reduced rolling escape response</li>
+            <li style="margin-left:20px;">Red light enhanced rolling escape response</li>
+            <li>Rhodopsin pumps don't work in flies — BiPOLES provides the <em>first</em> bidirectional tool for <em>Drosophila</em></li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Figure</span>
+          <p class="fh">[Insert figure: Drosophila body length and nociceptive behavior data — blue vs. red light conditions]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 16 — In Vivo: Mouse and Ferret                  ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="16">
+  <div class="si">
+    <div class="tb"><span class="sn">16</span><span class="st">In Vivo</span></div>
+    <h2 class="sh">In Vivo: Mouse &amp; Ferret</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <p style="font-family:var(--ff-b);font-size:12px;letter-spacing:2px;color:var(--blue-lt);text-transform:uppercase;margin-bottom:12px;">Mouse — Locus Coeruleus</p>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit]</p>
+          <ul>
+            <li>somBiPOLES in locus coeruleus (TH-Cre)</li>
+            <li>Orange light triggered <strong>pupil dilation</strong> (arousal)</li>
+            <li>Blue light blocked or reversed dilation</li>
+          </ul>
+        </div>
+        <div class="fa" contenteditable="true" style="margin-top:14px;min-height:140px;">
+          <span class="fl">Mouse Figure</span>
+          <p class="fh">[Insert figure: Pupil dilation traces — orange vs. blue light]</p>
+        </div>
+      </div>
+      <div class="cr">
+        <p style="font-family:var(--ff-b);font-size:12px;letter-spacing:2px;color:var(--red-lt);text-transform:uppercase;margin-bottom:12px;">Ferret — Visual Cortex</p>
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit]</p>
+          <ul>
+            <li>BiPOLES in GABAergic neurons (mDlx promoter)</li>
+            <li>Blue light increased baseline activity (disinhibition)</li>
+            <li>Red light suppressed visually evoked responses</li>
+          </ul>
+        </div>
+        <div class="fa" contenteditable="true" style="margin-top:14px;min-height:140px;">
+          <span class="fl">Ferret Figure</span>
+          <p class="fh">[Insert figure: Visual cortex neural activity modulation data]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 17 — Summary of Advantages (ANIMATED)           ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="17">
+  <div class="si">
+    <div class="tb"><span class="sn">17</span><span class="st">Summary</span></div>
+    <h2 class="sh">Advantages Over Previous Tools</h2>
+    <div class="tl"></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:0;">
+      <div class="ai" contenteditable="true">
+        <span class="ic">&#10003;</span>
+        <span><strong>Channels, not pumps</strong> — Higher sensitivity, no disruption of ion gradients, moves multiple ions per photon</span>
+      </div>
+      <div class="ai" contenteditable="true">
+        <span class="ic">&#10003;</span>
+        <span><strong>Inverted color scheme</strong> — Exclusive red-light excitation, fully compatible with blue-light ChRs for dual-population experiments</span>
+      </div>
+      <div class="ai" contenteditable="true">
+        <span class="ic">&#10003;</span>
+        <span><strong>Fixed 1:1 stoichiometry</strong> — Single ORF ensures reliable and predictable expression ratio across all cells</span>
+      </div>
+      <div class="ai" contenteditable="true">
+        <span class="ic">&#10003;</span>
+        <span><strong>Soma targeting (somBiPOLES)</strong> — Avoids axonal artifacts where chloride gradients could invert GtACR2 function</span>
+      </div>
+      <div class="ai" contenteditable="true">
+        <span class="ic">&#10003;</span>
+        <span><strong>Cross-species utility</strong> — Validated in C. elegans, Drosophila, mice, and ferrets</span>
+      </div>
+      <div class="ai" contenteditable="true">
+        <span class="ic">&#10003;</span>
+        <span><strong>Single- and two-photon compatible</strong> — Works with standard widefield and advanced holographic stimulation</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 18 — Limitations and Considerations              ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="18">
+  <div class="si">
+    <div class="tb"><span class="sn">18</span><span class="st">Discussion</span></div>
+    <h2 class="sh">Limitations &amp; Considerations</h2>
+    <div class="tl"></div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:0;">
+      <div class="li" contenteditable="true">
+        <span class="ic">&#9888;</span>
+        <span><strong>Chloride-dependent</strong> — Won't work where Cl<sup>&minus;</sup> reversal potential is depolarized (immature neurons, axon terminals)</span>
+      </div>
+      <div class="li" contenteditable="true">
+        <span class="ic">&#9888;</span>
+        <span><strong>Not for presynaptic control</strong> — Soma-targeting excludes the tool from axon terminals by design</span>
+      </div>
+      <div class="li" contenteditable="true">
+        <span class="ic">&#9888;</span>
+        <span><strong>Limited spike frequency</strong> — Max reliable spiking ~10–20 Hz, not ideal for fast-spiking interneuron studies</span>
+      </div>
+      <div class="li" contenteditable="true">
+        <span class="ic">&#9888;</span>
+        <span><strong>Large construct size</strong> — May limit AAV packaging flexibility for certain viral delivery strategies</span>
+      </div>
+    </div>
+    <div class="ed" contenteditable="true" style="margin-top:18px;">
+      <p class="eh">[Click to edit — Add additional critical evaluation notes here]</p>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 19 — Future Directions                           ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="19">
+  <div class="si">
+    <div class="tb"><span class="sn">19</span><span class="st">Future</span></div>
+    <h2 class="sh">Future Directions &amp; Broader Impact</h2>
+    <div class="tl"></div>
+    <div class="tc">
+      <div class="cl">
+        <div class="ed" contenteditable="true" style="flex:1;">
+          <p class="eh">[Click to edit — Discuss future applications]</p>
+          <ul>
+            <li><strong>Optotagging + silencing</strong> — Tag and silence the same neurons during electrophysiology recordings</li>
+            <li><strong>Engram studies</strong> — Test necessity and sufficiency of memory engrams in a single experiment</li>
+            <li><strong>Multiplexing</strong> — Combine with fluorescent sensors or optogenetic cyclases</li>
+            <li><strong>Modular architecture</strong> — Swap channel components for tailored spectral or kinetic properties</li>
+            <li><strong>Clinical relevance</strong> — Understanding circuit-level dysfunction in neurological disorders</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cr">
+        <div class="fa" contenteditable="true">
+          <span class="fl">Summary Graphic</span>
+          <p class="fh">[Insert graphic showing future applications branching from BiPOLES — or a timeline of expected developments]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  SLIDE 20 — Questions / Discussion (ANIMATED)           ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+<div class="slide" data-s="20">
+  <!-- Floating particles -->
+  <div class="dot" style="width:7px;height:7px;background:var(--blue);top:15%;left:20%;--dx:12px;--dy:-14px;animation-delay:0s;"></div>
+  <div class="dot" style="width:5px;height:5px;background:var(--red);top:25%;right:25%;--dx:-10px;--dy:10px;animation-delay:.8s;"></div>
+  <div class="dot" style="width:6px;height:6px;background:var(--blue-lt);top:70%;left:15%;--dx:8px;--dy:-12px;animation-delay:1.6s;"></div>
+  <div class="dot" style="width:5px;height:5px;background:var(--red-lt);bottom:20%;right:18%;--dx:-14px;--dy:-8px;animation-delay:2.4s;"></div>
+  <div class="dot" style="width:8px;height:8px;background:var(--blue);top:40%;left:75%;--dx:6px;--dy:10px;animation-delay:3.2s;"></div>
+  <div class="dot" style="width:4px;height:4px;background:var(--red);top:60%;right:35%;--dx:-8px;--dy:-6px;animation-delay:4s;"></div>
+  <div class="dot" style="width:6px;height:6px;background:var(--blue-lt);bottom:35%;left:40%;--dx:10px;--dy:8px;animation-delay:1.2s;"></div>
+  <div class="dot" style="width:5px;height:5px;background:var(--red-lt);top:80%;right:60%;--dx:-6px;--dy:-10px;animation-delay:2s;"></div>
+
+  <div class="si">
+    <div class="qc">
+      <div class="qt">Questions?</div>
+      <div class="qs">Thank you for your attention</div>
+      <div style="display:flex;gap:20px;margin-bottom:40px;">
+        <span class="pill pb" style="font-size:12px;padding:8px 24px;">&#11044; &nbsp;GtACR2 — Blue Inhibition</span>
+        <span class="pill pr" style="font-size:12px;padding:8px 24px;">&#11044; &nbsp;Chrimson — Red Excitation</span>
+      </div>
+      <div class="ed" contenteditable="true" style="width:700px;text-align:center;">
+        <p class="eh">[Click to edit — Add summary graphic, key references, or group member credits]</p>
+        <p style="margin-top:10px;">Vierock, Rodriguez-Rozada et al. <em>Nature Communications</em> (2021) 12:4527</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Navigation ───────────────────────────────── -->
+<div class="nav">
+  <button class="nb" onclick="go(-1)" title="Previous (Left Arrow)">&#8592;</button>
+  <span class="sc" id="sc">01 / 20</span>
+  <button class="nb" onclick="go(1)" title="Next (Right Arrow)">&#8594;</button>
+  <button class="fs-btn" onclick="toggleFS()" id="fsBtn" title="Fullscreen (F)">&#x26F6;</button>
+</div>
+<div class="prog" id="prog" style="width:5%;"></div>
+
+<!-- Sync status -->
+<div id="syncStatus">
+  <span id="syncDot" class="local"></span>
+  <span id="syncText">Local Only</span>
+</div>
+
+<!-- Setup banner (shows when Firebase not configured) -->
+<div id="setupBanner">
+  <span>Team sync is not configured yet.</span>
+  <a onclick="document.getElementById('setupModal').classList.add('show')">Setup Guide (3 min)</a>
+  <button class="dismiss" onclick="this.parentElement.style.display='none'">&times;</button>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Setup instructions modal -->
+<div id="setupModal">
+  <div class="setup-box">
+    <h2>Enable Team Sync</h2>
+    <p>Follow these steps so all group members can see each other's edits in real time. This only needs to be done once.</p>
+
+    <h3>Step 1 — Create a Firebase Project</h3>
+    <ol>
+      <li>Go to <code>https://console.firebase.google.com</code></li>
+      <li>Click <strong>"Create a project"</strong> (or "Add project")</li>
+      <li>Name it anything (e.g. <code>bipoles-presentation</code>)</li>
+      <li>Disable Google Analytics (not needed) and click <strong>Create</strong></li>
+    </ol>
+
+    <h3>Step 2 — Create a Realtime Database</h3>
+    <ol>
+      <li>In your project, click <strong>"Build" &rarr; "Realtime Database"</strong> in the left sidebar</li>
+      <li>Click <strong>"Create Database"</strong></li>
+      <li>Choose any location, click <strong>Next</strong></li>
+      <li>Select <strong>"Start in test mode"</strong> and click <strong>Enable</strong></li>
+    </ol>
+
+    <h3>Step 3 — Get Your Config</h3>
+    <ol>
+      <li>Click the <strong>gear icon</strong> (top-left) &rarr; <strong>"Project settings"</strong></li>
+      <li>Scroll down to <strong>"Your apps"</strong> &rarr; click the <strong>Web icon</strong> (&lt;/&gt;)</li>
+      <li>Give it a nickname (anything), click <strong>Register app</strong></li>
+      <li>You'll see a <code>firebaseConfig</code> object — copy the whole thing</li>
+    </ol>
+
+    <h3>Step 4 — Paste Into This File</h3>
+    <p>Open <code>index.html</code> in any text editor. Near the bottom, find this block and replace the placeholder values:</p>
+    <pre>const FIREBASE_CONFIG = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
+  databaseURL: "https://PASTE_YOUR_PROJECT-default-rtdb.firebaseio.com",
+  projectId: "PASTE_YOUR_PROJECT",
+  storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};</pre>
+    <p>Save the file, refresh the page, and you're live. Share the updated file with your group — everyone will see edits in real time.</p>
+
+    <button class="setup-close" onclick="document.getElementById('setupModal').classList.remove('show')">Got it</button>
+  </div>
+</div>
+
+<script>
+/* ── Navigation ─────────────────────────────────── */
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let cur = 0;
+let animId = null;
+
+function go(d) {
+  const n = cur + d;
+  if (n < 0 || n >= total) return;
+  slides[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active');
+  document.getElementById('sc').textContent =
+    String(cur + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  if (cur === 0) startAnim(); else stopAnim();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.target.getAttribute('contenteditable') === 'true') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFS(); }
+  if (e.key === 'Escape' && document.fullscreenElement) { e.preventDefault(); }
+});
+
+function toggleFS() {
+  const deck = document.getElementById('deck');
+  if (!document.fullscreenElement) {
+    deck.requestFullscreen().then(scaleDeck).catch(() => {});
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+function scaleDeck() {
+  const deck = document.getElementById('deck');
+  const scaleX = window.innerWidth / 1920;
+  const scaleY = window.innerHeight / 1080;
+  const scale = Math.min(scaleX, scaleY);
+  deck.style.transform = `scale(${scale})`;
+  deck.style.transformOrigin = 'top left';
+  const offsetX = (window.innerWidth - 1920 * scale) / 2;
+  const offsetY = (window.innerHeight - 1080 * scale) / 2;
+  deck.style.marginLeft = offsetX + 'px';
+  deck.style.marginTop = offsetY + 'px';
+}
+
+function resetDeck() {
+  const deck = document.getElementById('deck');
+  deck.style.transform = '';
+  deck.style.marginLeft = '';
+  deck.style.marginTop = '';
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('fsBtn');
+  if (document.fullscreenElement) {
+    document.body.style.background = '#000';
+    document.body.style.overflow = 'hidden';
+    btn.innerHTML = '&#x2716;';
+    btn.title = 'Exit Fullscreen (Esc)';
+    scaleDeck();
+    window.addEventListener('resize', scaleDeck);
+  } else {
+    document.body.style.background = '';
+    document.body.style.overflow = '';
+    btn.innerHTML = '&#x26F6;';
+    btn.title = 'Fullscreen (F)';
+    resetDeck();
+    window.removeEventListener('resize', scaleDeck);
+  }
+});
+
+/* ── Canvas Neuron Animation (Slide 1) ──────────── */
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const W = 1920, H = 1080;
+
+class Branch {
+  constructor(x,y,a,d,mx,col,lw) {
+    this.x=x;this.y=y;this.a=a;this.d=d;this.mx=mx;this.col=col;this.bw=lw;
+    this.len=(60+Math.random()*80)*(1-d/mx*.6);
+    this.ch=[];this.gr=0;this.gs=.008+Math.random()*.012;
+    this.dl=d*.15+Math.random()*.3;this.age=0;
+    this.ex=x+Math.cos(a)*this.len;this.ey=y+Math.sin(a)*this.len;
+    if(d<mx){const nc=d<2?2:(Math.random()<.7?2:1);const sp=.4+Math.random()*.5;
+      for(let i=0;i<nc;i++){const ca=a+(i===0?-1:1)*sp*(.5+Math.random()*.5);
+        this.ch.push(new Branch(this.ex,this.ey,ca,d+1,mx,col,Math.max(lw*.65,.3)));}}
+  }
+  update(dt){this.age+=dt;if(this.age<this.dl)return;
+    if(this.gr<1)this.gr=Math.min(1,this.gr+this.gs);
+    if(this.gr>=.95)this.ch.forEach(c=>c.update(dt));}
+  draw(c){if(this.gr<=0||this.age<this.dl)return;
+    const cx=this.x+(this.ex-this.x)*this.gr,cy=this.y+(this.ey-this.y)*this.gr;
+    c.beginPath();c.moveTo(this.x,this.y);c.lineTo(cx,cy);
+    c.strokeStyle=this.col;c.lineWidth=this.bw*(1-this.d/this.mx*.4);
+    c.lineCap='round';c.stroke();
+    if(this.d>=this.mx-1&&this.gr>.9){const al=.4*this.gr;
+      c.beginPath();c.arc(cx,cy,this.bw*2.5,0,Math.PI*2);
+      c.fillStyle=this.col.replace(')',',' +al+')').replace('rgb','rgba');c.fill();}
+    this.ch.forEach(ch=>ch.draw(c));}
+}
+
+class Neuron {
+  constructor(x,y,col,gcol) {
+    this.x=x;this.y=y;this.col=col;this.gc=gcol;
+    this.sr=18+Math.random()*12;this.br=[];
+    this.pp=Math.random()*Math.PI*2;this.ps=.02+Math.random()*.015;
+    const aa=Math.PI*.5+(Math.random()-.5)*.8;
+    this.br.push(new Branch(x,y,aa,0,5,col,2.2));
+    const nd=4+Math.floor(Math.random()*4);
+    for(let i=0;i<nd;i++){const an=(Math.PI*2/nd)*i+Math.random()*.5;
+      this.br.push(new Branch(x,y,an,0,3+Math.floor(Math.random()*2),col,1.4));}
+  }
+  update(dt){this.pp+=this.ps;this.br.forEach(b=>b.update(dt));}
+  draw(c){const p=.5+.5*Math.sin(this.pp),gr=this.sr*(2.5+p*1.2);
+    const g=c.createRadialGradient(this.x,this.y,0,this.x,this.y,gr);
+    g.addColorStop(0,this.gc.replace('__A__',(.35+p*.2).toFixed(2)));
+    g.addColorStop(1,this.gc.replace('__A__','0'));
+    c.beginPath();c.arc(this.x,this.y,gr,0,Math.PI*2);c.fillStyle=g;c.fill();
+    const sg=c.createRadialGradient(this.x-this.sr*.3,this.y-this.sr*.3,1,this.x,this.y,this.sr);
+    sg.addColorStop(0,this.col.replace(')',',.9)').replace('rgb','rgba'));
+    sg.addColorStop(1,this.col.replace(')',',.2)').replace('rgb','rgba'));
+    c.beginPath();c.arc(this.x,this.y,this.sr,0,Math.PI*2);c.fillStyle=sg;c.fill();
+    c.beginPath();c.arc(this.x,this.y,this.sr*.48,0,Math.PI*2);
+    c.strokeStyle=this.col.replace(')',',.5)').replace('rgb','rgba');c.lineWidth=1;c.stroke();
+    this.br.forEach(b=>b.draw(c));}
+}
+
+class Spark {
+  constructor(){this.reset();}
+  reset(){this.x=700+Math.random()*1100;this.y=50+Math.random()*980;
+    this.vx=(Math.random()-.5)*.8;this.vy=(Math.random()-.5)*.8;
+    this.life=1;this.dec=.003+Math.random()*.005;this.r=1+Math.random()*2.5;
+    this.color=Math.random()<.55
+      ?`rgba(33,150,243,${(.3+Math.random()*.5).toFixed(2)})`
+      :`rgba(255,107,53,${(.25+Math.random()*.45).toFixed(2)})`;}
+  update(){this.x+=this.vx;this.y+=this.vy;this.life-=this.dec;if(this.life<=0)this.reset();}
+  draw(c){c.beginPath();c.arc(this.x,this.y,this.r*this.life,0,Math.PI*2);
+    c.fillStyle=this.color;c.globalAlpha=this.life;c.fill();c.globalAlpha=1;}
+}
+
+const bN=[
+  new Neuron(980,280,'rgb(33,150,243)','rgba(33,150,243,__A__)'),
+  new Neuron(1150,480,'rgb(50,170,255)','rgba(50,170,255,__A__)'),
+  new Neuron(820,540,'rgb(30,140,230)','rgba(30,140,230,__A__)'),
+  new Neuron(1050,720,'rgb(33,150,243)','rgba(33,150,243,__A__)'),
+  new Neuron(1280,300,'rgb(80,190,255)','rgba(80,190,255,__A__)'),
+];
+const oN=[
+  new Neuron(1480,250,'rgb(185,15,40)','rgba(185,15,40,__A__)'),
+  new Neuron(1650,500,'rgb(200,20,50)','rgba(200,20,50,__A__)'),
+  new Neuron(1380,600,'rgb(170,10,35)','rgba(170,10,35,__A__)'),
+  new Neuron(1760,320,'rgb(195,18,45)','rgba(195,18,45,__A__)'),
+  new Neuron(1580,780,'rgb(185,15,40)','rgba(185,15,40,__A__)'),
+];
+const sparks=Array.from({length:180},()=>new Spark());
+
+function drawConn(c,ns,col){
+  for(let i=0;i<ns.length;i++)for(let j=i+1;j<ns.length;j++){
+    const dx=ns[j].x-ns[i].x,dy=ns[j].y-ns[i].y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<380){const a=(1-d/380)*.08;c.beginPath();c.moveTo(ns[i].x,ns[i].y);
+      c.lineTo(ns[j].x,ns[j].y);c.strokeStyle=col.replace('__A__',a.toFixed(3));
+      c.lineWidth=.8;c.stroke();}}
+}
+
+let last=0;
+function animate(ts){
+  const dt=(ts-last)/16.67;last=ts;
+  ctx.fillStyle='#050a12';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(20,40,70,0.25)';ctx.lineWidth=.5;
+  for(let x=700;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=80){ctx.beginPath();ctx.moveTo(700,y);ctx.lineTo(W,y);ctx.stroke();}
+  const bg1=ctx.createRadialGradient(1100,480,0,1100,480,500);
+  bg1.addColorStop(0,'rgba(33,100,200,.07)');bg1.addColorStop(1,'rgba(33,100,200,0)');
+  ctx.fillStyle=bg1;ctx.fillRect(0,0,W,H);
+  const bg2=ctx.createRadialGradient(1580,520,0,1580,520,480);
+  bg2.addColorStop(0,'rgba(185,15,40,.06)');bg2.addColorStop(1,'rgba(200,80,30,0)');
+  ctx.fillStyle=bg2;ctx.fillRect(0,0,W,H);
+  drawConn(ctx,bN,'rgba(33,150,243,__A__)');
+  drawConn(ctx,oN,'rgba(255,107,53,__A__)');
+  for(const bn of bN)for(const on of oN){
+    const dx=on.x-bn.x,dy=on.y-bn.y,d=Math.sqrt(dx*dx+dy*dy);
+    if(d<460){const a=(1-d/460)*.04;ctx.beginPath();ctx.moveTo(bn.x,bn.y);ctx.lineTo(on.x,on.y);
+      const g=ctx.createLinearGradient(bn.x,bn.y,on.x,on.y);
+      g.addColorStop(0,`rgba(33,150,243,${a.toFixed(3)})`);
+      g.addColorStop(1,`rgba(185,15,40,${a.toFixed(3)})`);
+      ctx.strokeStyle=g;ctx.lineWidth=.6;ctx.stroke();}}
+  bN.forEach(n=>{n.update(dt);n.draw(ctx);});
+  oN.forEach(n=>{n.update(dt);n.draw(ctx);});
+  sparks.forEach(s=>{s.update();s.draw(ctx);});
+  const lf=ctx.createLinearGradient(600,0,800,0);
+  lf.addColorStop(0,'rgba(5,10,18,1)');lf.addColorStop(1,'rgba(5,10,18,0)');
+  ctx.fillStyle=lf;ctx.fillRect(0,0,800,H);
+  animId=requestAnimationFrame(animate);
+}
+
+function startAnim(){if(!animId)animId=requestAnimationFrame(animate);}
+function stopAnim(){if(animId){cancelAnimationFrame(animId);animId=null;}}
+
+startAnim();
+</script>
+
+<!-- Firebase SDK (compat for simpler syntax) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+<script>
+/* ══════════════════════════════════════════════════
+   TEAM SYNC — Firebase Realtime Database
+   Replace the placeholder values below with your
+   Firebase project config (see Setup Guide).
+   ══════════════════════════════════════════════════ */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCbFiUZLgpOerj1EJB8QenK8Wt_7Um2QGk",
+  authDomain: "cell-neuroscience-project.firebaseapp.com",
+  databaseURL: "https://cell-neuroscience-project-default-rtdb.firebaseio.com",
+  projectId: "cell-neuroscience-project",
+  storageBucket: "cell-neuroscience-project.firebasestorage.app",
+  messagingSenderId: "378183055234",
+  appId: "1:378183055234:web:c7633d3d1be41db8eac19b"
+};
+
+/* ── State ──────────────────────────────────────── */
+const dot = document.getElementById('syncDot');
+const txt = document.getElementById('syncText');
+const banner = document.getElementById('setupBanner');
+let db = null;
+let firebaseOK = false;
+let saveTimers = {};
+let suppressRemote = {};
+
+function setStatus(state, label) {
+  dot.className = state;
+  txt.textContent = label;
+}
+
+/* ── Assign unique IDs to every editable element ── */
+document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+  const slide = el.closest('.slide');
+  const sNum = slide ? slide.dataset.s : '0';
+  const siblings = Array.from(slide.querySelectorAll('[contenteditable="true"]'));
+  el.dataset.editId = 's' + sNum + '-' + siblings.indexOf(el);
+});
+
+/* ── Try to init Firebase ───────────────────────── */
+const isConfigured = !FIREBASE_CONFIG.apiKey.includes('PASTE_');
+
+if (isConfigured) {
+  try {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.database();
+    firebaseOK = true;
+    setStatus('live', 'Connected — Team Sync Active');
+
+    loadFromFirebase();
+    listenForChanges();
+  } catch (err) {
+    setStatus('error', 'Firebase Error');
+    loadFromLocal();
+  }
+} else {
+  banner.style.display = 'flex';
+  setStatus('local', 'Local Only — Setup Firebase for Team Sync');
+  loadFromLocal();
+}
+
+/* ── Save on edit (debounced) ───────────────────── */
+document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+  el.addEventListener('input', () => {
+    const id = el.dataset.editId;
+    clearTimeout(saveTimers[id]);
+
+    if (firebaseOK) setStatus('saving', 'Saving...');
+
+    saveTimers[id] = setTimeout(() => {
+      const content = el.innerHTML;
+
+      localStorage.setItem('bipoles-' + id, content);
+
+      if (firebaseOK) {
+        suppressRemote[id] = true;
+        db.ref('edits/' + id).set({
+          html: content,
+          ts: firebase.database.ServerValue.TIMESTAMP
+        }).then(() => {
+          setStatus('live', 'Saved — Team Sync Active');
+          setTimeout(() => { suppressRemote[id] = false; }, 1000);
+        }).catch(() => {
+          setStatus('error', 'Save Failed — Retrying...');
+          suppressRemote[id] = false;
+        });
+      } else {
+        setStatus('local', 'Saved Locally');
+      }
+    }, 800);
+  });
+});
+
+/* ── Load from Firebase ─────────────────────────── */
+function loadFromFirebase() {
+  db.ref('edits').once('value').then(snap => {
+    const data = snap.val();
+    if (!data) return;
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      const id = el.dataset.editId;
+      if (data[id] && data[id].html) {
+        el.innerHTML = data[id].html;
+        localStorage.setItem('bipoles-' + id, data[id].html);
+      }
+    });
+  });
+}
+
+/* ── Listen for real-time changes from teammates ── */
+function listenForChanges() {
+  document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+    const id = el.dataset.editId;
+    db.ref('edits/' + id).on('value', snap => {
+      if (!snap.val() || !snap.val().html) return;
+      if (suppressRemote[id]) return;
+      if (el === document.activeElement) return;
+
+      const incoming = snap.val().html;
+      if (el.innerHTML !== incoming) {
+        el.innerHTML = incoming;
+        localStorage.setItem('bipoles-' + id, incoming);
+
+        el.classList.add('remote-update');
+        setTimeout(() => el.classList.remove('remote-update'), 1500);
+      }
+    });
+  });
+}
+
+/* ── Load from localStorage (fallback) ──────────── */
+function loadFromLocal() {
+  document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+    const id = el.dataset.editId;
+    const saved = localStorage.getItem('bipoles-' + id);
+    if (saved) el.innerHTML = saved;
+  });
+}
+</script>
+</body>
+</html>
