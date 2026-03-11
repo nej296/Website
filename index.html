@@ -52,8 +52,11 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: grab;
     }
+
+    #neural-canvas:active { cursor: grabbing; }
 
     /* ═══════════════════════════════════════════════
        NAV
@@ -753,7 +756,13 @@
     let   curTiltX   = BASE_TILT; // updated each frame during drag
     let   projCenterX = 0.5;  // 0..1 horizontal anchor for projection
 
+    let isDragging    = false;
+    let dragLast      = { x: 0, y: 0 };
+    let manualRotY    = 0;
+    let manualRotX    = 0;
     let autoRotOffset = 0;
+    let lastInteract  = -999999;
+    const RESUME_DELAY = 2000;
 
     // ── Seeded RNG ──────────────────────────────────
     function makeRng(seed) {
@@ -1102,8 +1111,21 @@
     function render(ts) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const rotY = ts * ROT_SPEED + autoRotOffset;
-      curTiltX = BASE_TILT;
+      const sinceInteract = ts - lastInteract;
+      let rotY;
+      if (isDragging) {
+        rotY     = manualRotY;
+        curTiltX = BASE_TILT + manualRotX;
+      } else if (sinceInteract < RESUME_DELAY) {
+        const t     = sinceInteract / RESUME_DELAY;
+        const eased = t * t * (3 - 2 * t);
+        const autoY = ts * ROT_SPEED + autoRotOffset;
+        rotY        = manualRotY + (autoY - manualRotY) * eased;
+        curTiltX    = BASE_TILT + manualRotX * (1 - eased);
+      } else {
+        rotY     = ts * ROT_SPEED + autoRotOffset;
+        curTiltX = BASE_TILT;
+      }
 
       const elapsed  = ts - phaseStart;
       const progress = Math.min(1, elapsed / DUR[phase]);
@@ -1155,6 +1177,54 @@
 
       requestAnimationFrame(render);
     }
+
+    // ── Mouse drag rotation ───────────────────────────
+    canvas.addEventListener('mousedown', function (e) {
+      isDragging   = true;
+      dragLast     = { x: e.clientX, y: e.clientY };
+      lastInteract = performance.now();
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      manualRotY  += (e.clientX - dragLast.x) * 0.005;
+      manualRotX   = Math.max(-0.55, Math.min(0.55, manualRotX + (e.clientY - dragLast.y) * 0.004));
+      dragLast     = { x: e.clientX, y: e.clientY };
+      lastInteract = performance.now();
+    });
+
+    window.addEventListener('mouseup', function () {
+      if (!isDragging) return;
+      isDragging    = false;
+      autoRotOffset = manualRotY - performance.now() * ROT_SPEED;
+      lastInteract  = performance.now();
+    });
+
+    // ── Touch drag rotation ───────────────────────────
+    canvas.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1) return;
+      isDragging   = true;
+      dragLast     = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      lastInteract = performance.now();
+      e.preventDefault();
+    });
+
+    canvas.addEventListener('touchmove', function (e) {
+      if (!isDragging || e.touches.length !== 1) return;
+      manualRotY  += (e.touches[0].clientX - dragLast.x) * 0.005;
+      manualRotX   = Math.max(-0.55, Math.min(0.55, manualRotX + (e.touches[0].clientY - dragLast.y) * 0.004));
+      dragLast     = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      lastInteract = performance.now();
+      e.preventDefault();
+    });
+
+    window.addEventListener('touchend', function () {
+      if (!isDragging) return;
+      isDragging    = false;
+      autoRotOffset = manualRotY - performance.now() * ROT_SPEED;
+      lastInteract  = performance.now();
+    });
 
     // ── Project card navigation ────────────────────────
     document.querySelectorAll('.project-card[data-href]').forEach(card => {
