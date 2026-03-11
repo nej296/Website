@@ -2,6 +2,11 @@
   "framework": null,
   "buildCommand": "",
   "outputDirectory": ".",
+  "functions": {
+    "api/groq.js": {
+      "maxDuration": 120
+    }
+  },
   "rewrites": [
     { "source": "/tool", "destination": "/tool.html" }
   ]
