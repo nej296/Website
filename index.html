@@ -102,47 +102,71 @@
     .nav-links a:hover { color: var(--orange); }
     .nav-links a:hover::after { width: 100%; }
 
-    /* Identity block — top right */
-    .nav-identity {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.15rem;
-    }
-
-    .nid-name {
-      font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.01em;
-      line-height: 1;
-    }
-
-    .nid-school {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-    }
-
-    .nid-degree {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      color: var(--orange);
-      letter-spacing: 0.08em;
-    }
-
     /* ═══════════════════════════════════════════════
-       HERO — full viewport, neuron is the content
+       HERO — split layout: identity left, neuron right
     ═══════════════════════════════════════════════ */
     #hero {
       position: relative;
       z-index: 2;
       height: 100vh;
       background: transparent;
-      pointer-events: none; /* let canvas beneath receive mouse/touch events */
+      pointer-events: none;
     }
+
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 3rem;
+      transform: translateY(-50%);
+      max-width: 480px;
+      pointer-events: auto;
+      opacity: 0;
+      animation: fadeIn 0.8s var(--ease) 0.4s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--text);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-school {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 0.15rem;
+    }
+
+    .hero-degree {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--orange);
+      opacity: 0.4;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-about {
+      font-size: 0.95rem;
+      color: rgba(240, 240, 240, 0.72);
+      line-height: 1.85;
+      max-width: 440px;
+    }
+
+    .hero-about strong { color: var(--text); font-weight: 600; }
+    .hero-about .hl { color: var(--orange); }
 
     .scroll-cue {
       position: absolute;
@@ -341,80 +365,6 @@
 
     .project-card:hover .card-arrow { transform: translate(4px, -4px); }
 
-    /* ═══════════════════════════════════════════════
-       ABOUT
-    ═══════════════════════════════════════════════ */
-    #about { padding: 8rem 3rem; border-top: 1px solid var(--border); }
-
-    .about-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .about-body {
-      max-width: 680px;
-    }
-
-    .about-body p {
-      font-size: 1rem;
-      color: rgba(240, 240, 240, 0.78);
-      line-height: 1.85;
-      margin-bottom: 1.3rem;
-    }
-
-    .about-body strong { color: var(--text); font-weight: 600; }
-    .hl { color: var(--orange); }
-
-    /* Research interests list */
-    .interest-list {
-      list-style: none;
-      padding: 0;
-      margin: 0.6rem 0 1.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-    }
-
-    .interest-list li {
-      font-size: 0.92rem;
-      color: rgba(240, 240, 240, 0.72);
-      line-height: 1.5;
-      padding-left: 1.2rem;
-      position: relative;
-    }
-
-    .interest-list li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--orange);
-      font-family: var(--font-mono);
-    }
-
-    /* Skills list */
-    .skills-label {
-      font-family: var(--font-mono);
-      font-size: 0.58rem;
-      color: var(--text-dim);
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-top: 2rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .skills-cluster {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .skill-chip {
-      font-family: var(--font-body);
-      font-size: 1.05rem;
-      color: var(--text);
-      line-height: 1.5;
-    }
-
     /* Social preview cards (contact section) */
     .social-card {
       background: var(--surface);
@@ -587,17 +537,15 @@
     ═══════════════════════════════════════════════ */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
-      .nid-school, .nid-degree { display: none; }
-      #projects, #about, #contact { padding: 5rem 1.5rem; }
-      .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-label { position: static; }
+      #projects, #contact { padding: 5rem 1.5rem; }
+      .hero-content { left: 1.5rem; max-width: 90%; }
       .contact-body { grid-template-columns: 1fr; gap: 2.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: 0.3rem; text-align: center; }
     }
 
     @media (max-width: 600px) {
       .nav-links { gap: 1.4rem; }
-      .nid-name { font-size: 0.88rem; }
+      .hero-name { font-size: 2.4rem; }
       .projects-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -611,18 +559,25 @@
   <nav>
     <ul class="nav-links">
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="nav-identity">
-      <span class="nid-name">Nicholas Johnson</span>
-      <span class="nid-school">George Mason University</span>
-      <span class="nid-degree">Neuroscience — Computational Neuroscience</span>
-    </div>
   </nav>
 
-  <!-- ─── HERO — neuron fills this viewport ──────── -->
+  <!-- ─── HERO — identity left, neuron right ──────── -->
   <section id="hero">
+    <div class="hero-content">
+      <h1 class="hero-name">Nicholas Johnson</h1>
+      <p class="hero-school">George Mason University</p>
+      <p class="hero-degree">Neuroscience — Computational Neuroscience</p>
+      <div class="hero-rule"></div>
+      <p class="hero-about">
+        I'm a junior at George Mason University studying
+        Neuroscience with a concentration in <span class="hl">Computational Neuroscience</span>.
+        My work sits at the intersection of biology and computation — I'm interested in how
+        the brain encodes, transmits, and processes information at both the circuit and
+        systems level.
+      </p>
+    </div>
     <div class="scroll-cue" aria-hidden="true">
       <span>Scroll</span>
       <div class="scroll-track"></div>
@@ -678,43 +633,11 @@
     </div>
   </section>
 
-  <!-- ─── ABOUT ─────────────────────────────────── -->
-  <section id="about">
-    <div class="about-wrap">
-      <div class="sec-head">
-        <span class="sec-num">02 //</span>
-        <h2 class="sec-title">About</h2>
-        <div class="sec-rule"></div>
-      </div>
-      <div class="about-body">
-        <p>
-          I'm <strong>Nicholas Johnson</strong>, a junior at George Mason University studying
-          Neuroscience with a concentration in <span class="hl">Computational Neuroscience</span>.
-          My work sits at the intersection of biology and computation — I'm interested in how
-          the brain encodes, transmits, and processes information at both the circuit and
-          systems level.
-        </p>
-
-        <div class="skills-label">Skills</div>
-        <div class="skills-cluster">
-          <span class="skill-chip">NEURON Simulator</span>
-          <span class="skill-chip">Computational Modeling of Neurons &amp; Networks</span>
-          <span class="skill-chip">Neural Informatics</span>
-          <span class="skill-chip">Computational Neuroscience</span>
-          <span class="skill-chip">Cellular Neuroscience</span>
-          <span class="skill-chip">Python</span>
-          <span class="skill-chip">Neural Decoding</span>
-          <span class="skill-chip">Basic Neuroscience Wet Lab Skills</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ─── CONTACT ───────────────────────────────── -->
   <section id="contact">
     <div class="contact-wrap">
       <div class="sec-head">
-        <span class="sec-num">03 //</span>
+        <span class="sec-num">02 //</span>
         <h2 class="sec-title">Contact</h2>
         <div class="sec-rule"></div>
       </div>
@@ -878,7 +801,7 @@
       const W = canvas.width, H = canvas.height;
 
       soma3 = {
-        x: -W * 0.20, y: 0, z: 0,
+        x: W * 0.05, y: 0, z: 0,
         r: Math.max(16, Math.min(24, H * 0.028)),
       };
 
