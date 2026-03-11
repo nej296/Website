@@ -17,6 +17,11 @@ def tool():
     return render_template('tool.html')
 
 
+@app.route('/neur327')
+def neur327():
+    return render_template('neur327.html')
+
+
 @app.route('/api/gemini', methods=['POST'])
 def gemini_proxy():
     api_key = os.environ.get('GEMINI_API_KEY', '').strip()
