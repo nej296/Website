@@ -1,6 +1,6 @@
 import os
 import requests as http_requests
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
 TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 
@@ -17,9 +17,9 @@ def tool():
     return render_template('tool.html')
 
 
-@app.route('/bipoles')
-def bipoles():
-    return render_template('bipoles.html')
+@app.route('/neur327')
+def neur327():
+    return send_from_directory(TEMPLATE_DIR, 'neur327.html')
 
 
 @app.route('/api/gemini', methods=['POST'])
