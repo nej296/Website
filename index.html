@@ -755,6 +755,7 @@
     const FOV       = 800;
     let   worldScale = 1;     // set by fitNeuron() after build()
     let   curTiltX   = BASE_TILT; // updated each frame during drag
+    let   projCenterX = 0.5;  // 0..1 horizontal anchor for projection
 
     // ── Drag-rotation state ──────────────────────────
     let isDragging    = false;
@@ -788,7 +789,7 @@
 
       const s = FOV / (FOV + rz2);
       return {
-        sx: canvas.width  * 0.5 + rx  * s,
+        sx: canvas.width  * projCenterX + rx  * s,
         sy: canvas.height * 0.5 + ry2 * s,
         s, rz2,
       };
@@ -801,7 +802,7 @@
       const W = canvas.width, H = canvas.height;
 
       soma3 = {
-        x: W * 0.05, y: 0, z: 0,
+        x: -W * 0.20, y: 0, z: 0,
         r: Math.max(16, Math.min(24, H * 0.028)),
       };
 
@@ -888,23 +889,28 @@
       ];
 
       const W = canvas.width, H = canvas.height;
-      let maxSx = 0, maxSy = 0;
+      const cx = W * projCenterX, cy = H * 0.5;
+      let maxLeft = 0, maxRight = 0, maxSy = 0;
       const nAngles = 12;
 
       for (let i = 0; i < nAngles; i++) {
         const rotY = i * (Math.PI / nAngles);
         pts.forEach(p => {
           const pr = proj(p.x, p.y, p.z, rotY);
-          maxSx = Math.max(maxSx, Math.abs(pr.sx - W * 0.5));
-          maxSy = Math.max(maxSy, Math.abs(pr.sy - H * 0.5));
+          const dx = pr.sx - cx;
+          if (dx < 0) maxLeft  = Math.max(maxLeft,  -dx);
+          else        maxRight = Math.max(maxRight,  dx);
+          maxSy = Math.max(maxSy, Math.abs(pr.sy - cy));
         });
       }
 
-      const padX = W * 0.5 * 0.90;
-      const padY = H * 0.5 * 0.90;
-      const sx   = maxSx > 0 ? padX / maxSx : 1;
-      const sy   = maxSy > 0 ? padY / maxSy : 1;
-      worldScale  = Math.min(sx, sy, 1.6); // scale up to fill viewport, cap at 1.6×
+      const padLeft  = cx * 0.90;
+      const padRight = (W - cx) * 0.90;
+      const padY     = cy * 0.90;
+      const sxL  = maxLeft  > 0 ? padLeft  / maxLeft  : 9;
+      const sxR  = maxRight > 0 ? padRight / maxRight : 9;
+      const sy   = maxSy    > 0 ? padY     / maxSy    : 9;
+      worldScale  = Math.min(sxL, sxR, sy, 1.6);
     }
 
     // ── 3D path utilities ────────────────────────────
@@ -1241,9 +1247,10 @@
     function resize() {
       canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
-      worldScale    = 1; // reset before fitting
+      projCenterX   = canvas.width > 600 ? 0.68 : 0.5;
+      worldScale    = 1;
       build();
-      fitNeuron();  // auto-scale so neuron stays in viewport at all rotations
+      fitNeuron();
     }
 
     window.addEventListener('resize', () => {
