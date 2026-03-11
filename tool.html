@@ -1314,8 +1314,7 @@ ${truncated}`;
     }
 
     function renderMarkdown(raw) {
-      const safe = escapeHtml(raw);
-      const lines = safe.split('\n');
+      const lines = raw.split('\n');
       let html = '';
       let inUl = false, inOl = false;
 
@@ -1325,22 +1324,24 @@ ${truncated}`;
       }
 
       for (let i = 0; i < lines.length; i++) {
-        let line = lines[i];
+        const line = lines[i];
 
-        const ulMatch = line.match(/^[\s]*[-•*]\s+(.*)/);
-        const olMatch = line.match(/^[\s]*(\d+)[.)]\s+(.*)/);
+        const ulMatch = line.match(/^\s*[-•]\s+(.*)/);
+        const starBullet = line.match(/^\s*\*\s+(?!\*)(.*)/);
+        const olMatch = line.match(/^\s*(\d+)[.)]\s+(.*)/);
 
-        if (ulMatch) {
+        if (ulMatch || starBullet) {
           if (inOl) { html += '</ol>'; inOl = false; }
           if (!inUl) { html += '<ul>'; inUl = true; }
-          html += '<li>' + inlineFormat(ulMatch[1]) + '</li>';
+          const content = ulMatch ? ulMatch[1] : starBullet[1];
+          html += '<li>' + inlineFormat(escapeHtml(content)) + '</li>';
           continue;
         }
 
         if (olMatch) {
           if (inUl) { html += '</ul>'; inUl = false; }
           if (!inOl) { html += '<ol>'; inOl = true; }
-          html += '<li>' + inlineFormat(olMatch[2]) + '</li>';
+          html += '<li>' + inlineFormat(escapeHtml(olMatch[2])) + '</li>';
           continue;
         }
 
@@ -1351,7 +1352,7 @@ ${truncated}`;
           continue;
         }
 
-        html += '<p>' + inlineFormat(trimmed) + '</p>';
+        html += '<p>' + inlineFormat(escapeHtml(trimmed)) + '</p>';
       }
 
       closeLists();
@@ -1362,8 +1363,8 @@ ${truncated}`;
       return text
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/__(.+?)__/g, '<strong>$1</strong>')
-        .replace(/\*(.+?)\*/g, '<em>$1</em>')
-        .replace(/_(.+?)_/g, '<em>$1</em>');
+        .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>')
+        .replace(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/g, '<em>$1</em>');
     }
 
   })();
