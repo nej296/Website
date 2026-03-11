@@ -580,8 +580,25 @@
       font-size: 0.9rem;
       color: var(--text-body);
       line-height: 1.88;
-      white-space: pre-wrap;
     }
+
+    .result-body p { margin-bottom: 0.75rem; }
+    .result-body p:last-child { margin-bottom: 0; }
+
+    .result-body ul, .result-body ol {
+      margin: 0.5rem 0 0.75rem 1.4rem;
+      padding: 0;
+    }
+
+    .result-body li {
+      margin-bottom: 0.35rem;
+      padding-left: 0.25rem;
+    }
+
+    .result-body li:last-child { margin-bottom: 0; }
+
+    .result-body strong { color: var(--text); font-weight: 600; }
+    .result-body em { font-style: italic; color: var(--text); }
 
     /* TL;DR body: slightly larger, full white */
     .card-tldr .result-body {
@@ -1222,7 +1239,7 @@ ${truncated}`;
             <span class="result-num">${sec.num}</span>
             <span class="result-label">${sec.label}</span>
           </div>
-          <div class="result-body">${escapeHtml(body)}</div>
+          <div class="result-body">${renderMarkdown(body)}</div>
         `;
         resultsEl.appendChild(card);
         setTimeout(() => card.classList.add('in'), i * 120);
@@ -1239,7 +1256,7 @@ ${truncated}`;
           <div class="result-card-head">
             <span class="result-label">Analysis</span>
           </div>
-          <div class="result-body">${escapeHtml(text.trim())}</div>
+          <div class="result-body">${renderMarkdown(text.trim())}</div>
         </div>
       `;
       resultsEl.querySelector('.result-card').classList.add('in');
@@ -1294,6 +1311,59 @@ ${truncated}`;
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    }
+
+    function renderMarkdown(raw) {
+      const safe = escapeHtml(raw);
+      const lines = safe.split('\n');
+      let html = '';
+      let inUl = false, inOl = false;
+
+      function closeLists() {
+        if (inUl) { html += '</ul>'; inUl = false; }
+        if (inOl) { html += '</ol>'; inOl = false; }
+      }
+
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+
+        const ulMatch = line.match(/^[\s]*[-•*]\s+(.*)/);
+        const olMatch = line.match(/^[\s]*(\d+)[.)]\s+(.*)/);
+
+        if (ulMatch) {
+          if (inOl) { html += '</ol>'; inOl = false; }
+          if (!inUl) { html += '<ul>'; inUl = true; }
+          html += '<li>' + inlineFormat(ulMatch[1]) + '</li>';
+          continue;
+        }
+
+        if (olMatch) {
+          if (inUl) { html += '</ul>'; inUl = false; }
+          if (!inOl) { html += '<ol>'; inOl = true; }
+          html += '<li>' + inlineFormat(olMatch[2]) + '</li>';
+          continue;
+        }
+
+        closeLists();
+
+        const trimmed = line.trim();
+        if (trimmed === '' || trimmed === '---' || trimmed === '***') {
+          continue;
+        }
+
+        html += '<p>' + inlineFormat(trimmed) + '</p>';
+      }
+
+      closeLists();
+      return html;
+    }
+
+    function inlineFormat(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/__(.+?)__/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/_(.+?)_/g, '<em>$1</em>');
     }
 
   })();
