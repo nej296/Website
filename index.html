@@ -46,16 +46,13 @@
        CANVAS — Single neuron morphology
     ═══════════════════════════════════════════════ */
     #neural-canvas {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       z-index: 0;
       pointer-events: none;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
     }
 
     /* ═══════════════════════════════════════════════
@@ -110,8 +107,8 @@
       position: relative;
       z-index: 2;
       height: 100vh;
-      background: transparent;
-      pointer-events: none;
+      background: var(--bg);
+      overflow: hidden;
     }
 
     .hero-content {
@@ -553,9 +550,6 @@
 </head>
 <body>
 
-  <!-- Single-neuron AP animation -->
-  <canvas id="neural-canvas"></canvas>
-
   <!-- ─── NAV ─────────────────────────────────────── -->
   <nav>
     <ul class="nav-links">
@@ -566,6 +560,7 @@
 
   <!-- ─── HERO — identity left, neuron right ──────── -->
   <section id="hero">
+    <canvas id="neural-canvas"></canvas>
     <div class="hero-content">
       <h1 class="hero-name">Nicholas Johnson</h1>
       <p class="hero-school">George Mason University</p>
@@ -1175,9 +1170,9 @@
     let lastW = 0, lastH = 0;
 
     function resize() {
-      const vv = window.visualViewport;
-      const w = vv ? Math.round(vv.width) : window.innerWidth;
-      const h = vv ? Math.round(vv.height) : window.innerHeight;
+      const hero = document.getElementById('hero');
+      const w = hero.clientWidth;
+      const h = hero.clientHeight;
       if (w === lastW && h === lastH) return;
       lastW = w; lastH = h;
       canvas.width  = w;
@@ -1188,15 +1183,10 @@
       fitNeuron();
     }
 
-    function scheduleResize() {
+    window.addEventListener('resize', () => {
       clearTimeout(window._nrt);
       window._nrt = setTimeout(resize, 200);
-    }
-
-    window.addEventListener('resize', scheduleResize);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', scheduleResize);
-    }
+    });
 
     // ── Boot ──────────────────────────────────────────
     resize();
