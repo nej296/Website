@@ -100,23 +100,8 @@
       color: var(--text-dim);
       min-width: 100px;
     }
-    .row input[type="range"] {
-      flex: 1;
-      height: 6px;
-      -webkit-appearance: none;
-      background: var(--surface-hi);
-      border-radius: 3px;
-    }
-    .row input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
-      background: var(--accent);
-      border-radius: 50%;
-      cursor: pointer;
-    }
     .row input[type="number"] {
-      width: 70px;
+      width: 80px;
       padding: 0.35rem 0.5rem;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
@@ -183,21 +168,17 @@
       color: var(--text);
       min-width: 120px;
     }
-    .legend {
+    .neuron-fig {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      height: 120px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 1.5rem;
-      margin-top: 0.5rem;
-      font-size: 0.7rem;
-      color: var(--text-dim);
+      align-items: center;
+      justify-content: center;
     }
-    .legend span { display: flex; align-items: center; gap: 0.35rem; }
-    .legend .dot { width: 8px; height: 8px; border-radius: 50%; }
-    .legend .dot.na { background: var(--na); }
-    .legend .dot.k { background: var(--k); }
-    .legend .dot.leak { background: var(--leak); }
-    .legend .dot.inject { background: var(--inject); }
-    .legend .dot.total { background: var(--text); }
+    .neuron-fig svg { max-width: 100%; height: 100%; }
     .info { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.25rem; }
     a.back {
       display: inline-flex;
@@ -224,19 +205,29 @@
         <button type="button" id="btn-voltage-clamp">Voltage Clamp</button>
       </div>
 
+      <div class="neuron-fig" id="neuronFig">
+        <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#58a6ff" />
+            </marker>
+          </defs>
+          <ellipse cx="50" cy="40" rx="25" ry="30" fill="none" stroke="#8b949e" stroke-width="2"/>
+          <text x="50" y="45" text-anchor="middle" fill="#8b949e" font-size="10">Soma</text>
+          <path d="M 75 40 L 200 40 L 350 40" stroke="#8b949e" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <text x="212" y="35" text-anchor="middle" fill="#8b949e" font-size="9">Axon</text>
+          <circle cx="140" cy="40" r="12" fill="#3fb950" opacity="0.9"/>
+          <line x1="140" y1="40" x2="140" y2="15" stroke="#3fb950" stroke-width="2"/>
+          <text x="140" y="10" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">I_inj</text>
+        </svg>
+      </div>
+
       <div class="graph-container">
         <h3>Membrane Potential (mV)</h3>
         <canvas id="chartV"></canvas>
       </div>
       <div class="graph-container">
-        <h3>Currents (µA/cm²)</h3>
-        <div class="legend">
-          <span><i class="dot na"></i> I_Na</span>
-          <span><i class="dot k"></i> I_K</span>
-          <span><i class="dot leak"></i> I_L</span>
-          <span><i class="dot inject"></i> I_inj</span>
-          <span><i class="dot total"></i> I_total</span>
-        </div>
+        <h3>Total Membrane Current (µA/cm²)</h3>
         <canvas id="chartI"></canvas>
       </div>
     </div>
@@ -245,50 +236,42 @@
       <h2>Ion Concentrations & Nernst</h2>
       <div class="row">
         <label>[Na⁺]_out</label>
-        <input type="range" id="naOut" min="1" max="500" value="145">
-        <input type="number" id="naOutNum" value="145" min="1" max="500">
+        <input type="number" id="naOut" value="145" min="1" max="500">
         <span class="val" id="eNa">+70 mV</span>
       </div>
       <div class="row">
         <label>[Na⁺]_in</label>
-        <input type="range" id="naIn" min="1" max="500" value="12">
-        <input type="number" id="naInNum" value="12" min="1" max="500">
+        <input type="number" id="naIn" value="12" min="1" max="500">
       </div>
       <div class="row">
         <label>[K⁺]_out</label>
-        <input type="range" id="kOut" min="1" max="500" value="4">
-        <input type="number" id="kOutNum" value="4" min="1" max="500">
+        <input type="number" id="kOut" value="4" min="1" max="500">
         <span class="val" id="eK">-90 mV</span>
       </div>
       <div class="row">
         <label>[K⁺]_in</label>
-        <input type="range" id="kIn" min="1" max="500" value="155">
-        <input type="number" id="kInNum" value="155" min="1" max="500">
+        <input type="number" id="kIn" value="155" min="1" max="500">
       </div>
 
       <h2>Conductances</h2>
       <div class="row">
         <label>g_Na</label>
-        <input type="range" id="gNa" min="0" max="300" value="120">
-        <input type="number" id="gNaNum" value="120" min="0" max="300">
+        <input type="number" id="gNa" value="120" min="0" max="300">
         <span class="val">mS/cm²</span>
       </div>
       <div class="row">
         <label>g_K</label>
-        <input type="range" id="gK" min="0" max="200" value="36">
-        <input type="number" id="gKNum" value="36" min="0" max="200">
+        <input type="number" id="gK" value="36" min="0" max="200">
         <span class="val">mS/cm²</span>
       </div>
       <div class="row">
         <label>g_L</label>
-        <input type="range" id="gL" min="0" max="5" step="0.1" value="0.3">
-        <input type="number" id="gLNum" value="0.3" min="0" max="5" step="0.1">
+        <input type="number" id="gL" value="0.3" min="0" max="5" step="0.1">
         <span class="val">mS/cm²</span>
       </div>
       <div class="row">
         <label>C_m</label>
-        <input type="range" id="cm" min="0.1" max="10" step="0.1" value="1">
-        <input type="number" id="cmNum" value="1" min="0.1" max="10" step="0.1">
+        <input type="number" id="cm" value="1" min="0.1" max="10" step="0.1">
         <span class="val">µF/cm²</span>
       </div>
 
@@ -296,8 +279,7 @@
       <div id="current-clamp-controls">
         <div class="row">
           <label>I_inj</label>
-          <input type="range" id="iInj" min="-50" max="50" value="0">
-          <input type="number" id="iInjNum" value="0" min="-50" max="50" step="0.5">
+          <input type="number" id="iInj" value="0" min="-50" max="50" step="0.5">
           <span class="val">µA/cm²</span>
         </div>
         <div class="row">
@@ -354,8 +336,7 @@
       <h2>Simulation</h2>
       <div class="row">
         <label>Window (ms)</label>
-        <input type="range" id="winMs" min="20" max="200" value="50">
-        <span class="val" id="winMsVal">50 ms</span>
+        <input type="number" id="winMs" value="50" min="20" max="200">
       </div>
       <div class="row">
         <label>Speed</label>
@@ -445,7 +426,7 @@
       vProtocol: 'single',
       winMs: 50,
       speed: 1,
-      data: { t: [], V: [], I_Na: [], I_K: [], I_L: [], I_total: [], I_inj: [] },
+      data: { t: [], V: [], I_total: [] },
       animId: null
     };
 
@@ -540,21 +521,13 @@
 
       state.data.t.push(state.t);
       state.data.V.push(vPlot);
-      state.data.I_Na.push(out[4]);
-      state.data.I_K.push(out[5]);
-      state.data.I_L.push(out[6]);
       state.data.I_total.push(out[7]);
-      state.data.I_inj.push(iPlot);
 
       const win = state.winMs;
       while (state.data.t.length > 1 && state.data.t[state.data.t.length - 1] - state.data.t[0] > win) {
         state.data.t.shift();
         state.data.V.shift();
-        state.data.I_Na.shift();
-        state.data.I_K.shift();
-        state.data.I_L.shift();
         state.data.I_total.shift();
-        state.data.I_inj.shift();
       }
     }
 
@@ -573,13 +546,9 @@
       chartV.options.scales.x.min = Math.max(0, t[n-1] - state.winMs);
       chartV.update('none');
 
-      const iMax = Math.max(...state.data.I_Na, ...state.data.I_K.map(Math.abs), ...state.data.I_inj.map(Math.abs), 1);
+      const iMax = state.data.I_total.length ? Math.max(...state.data.I_total.map(Math.abs), 1) : 1;
       chartI.data.labels = t;
-      chartI.data.datasets[0].data = state.data.I_Na;
-      chartI.data.datasets[1].data = state.data.I_K;
-      chartI.data.datasets[2].data = state.data.I_L;
-      chartI.data.datasets[3].data = state.data.I_inj;
-      chartI.data.datasets[4].data = state.data.I_total;
+      chartI.data.datasets[0].data = state.data.I_total;
       chartI.options.scales.x.max = chartV.options.scales.x.max;
       chartI.options.scales.x.min = chartV.options.scales.x.min;
       chartI.options.scales.y.max = iMax * 1.1;
@@ -626,7 +595,14 @@
           { data: [], borderColor: 'rgba(210,134,50,0.6)', borderDash: [4,4], borderWidth: 1, pointRadius: 0, tension: 0 }
         ]
       },
-      options: { ...chartOpts, scales: { ...chartOpts.scales, y: { ...chartOpts.scales.y, min: -100, max: 80 } } }
+      options: {
+        ...chartOpts,
+        scales: {
+          ...chartOpts.scales,
+          x: { ...chartOpts.scales.x, title: { display: true, text: 'Time (ms)', font: { size: 11 } } },
+          y: { ...chartOpts.scales.y, min: -100, max: 80, title: { display: true, text: 'V_m (mV)', font: { size: 11 } } }
+        }
+      }
     });
 
     const chartI = new Chart(document.getElementById('chartI'), {
@@ -634,14 +610,17 @@
       data: {
         labels: [],
         datasets: [
-          { data: [], borderColor: '#f85149', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.1 },
-          { data: [], borderColor: '#58a6ff', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.1 },
-          { data: [], borderColor: '#8b949e', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.1 },
-          { data: [], borderColor: '#3fb950', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.1 },
-          { data: [], borderColor: '#e6edf3', borderDash: [4,4], backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0.1 }
+          { data: [], borderColor: '#58a6ff', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 0, tension: 0.1 }
         ]
       },
-      options: { ...chartOpts, scales: { ...chartOpts.scales, y: { ...chartOpts.scales.y, title: { text: 'µA/cm²' } } }
+      options: {
+        ...chartOpts,
+        scales: {
+          ...chartOpts.scales,
+          x: { ...chartOpts.scales.x, title: { display: true, text: 'Time (ms)', font: { size: 11 } } },
+          y: { ...chartOpts.scales.y, title: { display: true, text: 'I_total (µA/cm²)', font: { size: 11 } }, ticks: { display: true } }
+        }
+      }
     });
 
     function syncInputs() {
@@ -651,45 +630,45 @@
       document.getElementById('eK').textContent = state.eK.toFixed(1) + ' mV';
     }
 
-    function bindPanel() {
-      const pairs = [
-        ['naOut','naOutNum','naOut'], ['naIn','naInNum','naIn'],
-        ['kOut','kOutNum','kOut'], ['kIn','kInNum','kIn'],
-        ['gNa','gNaNum','gNa'], ['gK','gKNum','gK'], ['gL','gLNum','gL'], ['cm','cmNum','cm'],
-        ['iInj','iInjNum','iInj'], ['stimOn','stimOn','stimOn'], ['stimDur','stimDur','stimDur'],
-        ['vHold','vHold','vHold'], ['vCmd','vCmd','vCmd'], ['vStepOn','vStepOn','vStepOn'], ['vStepDur','vStepDur','vStepDur'],
-        ['trainFreq','trainFreq','trainFreq'], ['trainN','trainN','trainN']
-      ];
-      pairs.forEach(([a, b, key]) => {
-        const elA = document.getElementById(a);
-        const elB = document.getElementById(b);
-        const k = key || a;
-        if (!elA) return;
-        const isRange = elA.type === 'range';
-        const update = () => {
-          const v = parseFloat(isRange ? elA.value : (elB && elB.value !== undefined ? elB.value : elA.value));
-          state[k] = v;
-          if (elB && elB.type === 'number') elB.value = v;
-          if (elA.type === 'range') elA.value = v;
-          syncInputs();
-        };
-        elA.addEventListener('input', update);
-        if (elB && elB !== elA) elB.addEventListener('input', update);
+    function syncFromInputs() {
+      const ids = ['naOut','naIn','kOut','kIn','gNa','gK','gL','cm','iInj','stimOn','stimDur','vHold','vCmd','vStepOn','vStepDur','trainFreq','trainN','winMs'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) state[id] = parseFloat(el.value) || 0;
       });
+      state.stimType = document.getElementById('stimType').value;
+      state.vProtocol = document.getElementById('vProtocol').value;
+      state.speed = parseFloat(document.getElementById('speed').value) || 1;
+      syncInputs();
+    }
 
+    function bindPanel() {
+      const ids = ['naOut','naIn','kOut','kIn','gNa','gK','gL','cm','iInj','stimOn','stimDur','vHold','vCmd','vStepOn','vStepDur','trainFreq','trainN','winMs'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', () => { state[id] = parseFloat(el.value) || 0; syncInputs(); });
+      });
       document.getElementById('stimType').addEventListener('change', e => {
         state.stimType = e.target.value;
         document.getElementById('trainOpts').style.display = state.stimType === 'train' ? 'flex' : 'none';
       });
       document.getElementById('vProtocol').addEventListener('change', e => { state.vProtocol = e.target.value; });
-
-      document.getElementById('winMs').addEventListener('input', e => {
-        state.winMs = parseFloat(e.target.value);
-        document.getElementById('winMsVal').textContent = state.winMs + ' ms';
-      });
-      document.getElementById('speed').addEventListener('change', e => { state.speed = parseFloat(e.target.value); });
+      document.getElementById('speed').addEventListener('change', e => { state.speed = parseFloat(e.target.value) || 1; });
 
       document.getElementById('btnRun').addEventListener('click', () => {
+        syncFromInputs();
+        state.running = false;
+        if (state.animId) cancelAnimationFrame(state.animId);
+        state.t = 0;
+        state.V = -65;
+        state.m = 0.05;
+        state.h = 0.6;
+        state.n = 0.32;
+        state.data = { t: [], V: [], I_total: [] };
+        state.data.t.push(0);
+        state.data.V.push(-65);
+        state.data.I_total.push(0);
+        updateCharts();
         state.running = true;
         runLoop();
       });
@@ -705,7 +684,10 @@
         state.m = 0.05;
         state.h = 0.6;
         state.n = 0.32;
-        state.data = { t: [], V: [], I_Na: [], I_K: [], I_L: [], I_total: [], I_inj: [] };
+        state.data = { t: [], V: [], I_total: [] };
+        state.data.t.push(0);
+        state.data.V.push(-65);
+        state.data.I_total.push(0);
         updateCharts();
       });
       document.getElementById('btnDefaults').addEventListener('click', () => {
@@ -713,12 +695,7 @@
         Object.assign(state, defs);
         ['naOut','naIn','kOut','kIn','gNa','gK','gL','cm','iInj','stimOn','stimDur','vHold','vCmd','vStepOn','vStepDur','trainFreq','trainN','winMs'].forEach(id => {
           const el = document.getElementById(id);
-          if (el && defs[id] !== undefined) { el.value = defs[id]; }
-        });
-        ['naOutNum','naInNum','kOutNum','kInNum','gNaNum','gKNum','gLNum','cmNum','iInjNum'].forEach(id => {
-          const map = { naOutNum:'naOut', naInNum:'naIn', kOutNum:'kOut', kInNum:'kIn', gNaNum:'gNa', gKNum:'gK', gLNum:'gL', cmNum:'cm', iInjNum:'iInj' };
-          const el = document.getElementById(id);
-          if (el) el.value = state[map[id]];
+          if (el && defs[id] !== undefined) el.value = defs[id];
         });
         syncInputs();
       });
@@ -744,13 +721,11 @@
     }
 
     bindPanel();
-    syncInputs();
-
-    state.iInj = 20;
-    state.stimOn = 5;
-    state.stimDur = 1;
-    document.getElementById('iInj').value = 20;
-    document.getElementById('iInjNum').value = 20;
+    syncFromInputs();
+    state.data.t.push(0);
+    state.data.V.push(-65);
+    state.data.I_total.push(0);
+    updateCharts();
     state.running = true;
     runLoop();
   })();
