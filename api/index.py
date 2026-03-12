@@ -22,6 +22,11 @@ def neur327():
     return render_template('neur327.html')
 
 
+@app.route('/hodgkin-huxley')
+def hodgkin_huxley():
+    return render_template('hodgkin-huxley.html')
+
+
 @app.route('/api/gemini', methods=['POST'])
 def gemini_proxy():
     api_key = os.environ.get('GEMINI_API_KEY', '').strip()
