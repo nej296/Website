@@ -2,7 +2,7 @@
 
 Personal portfolio website for Nicholas Johnson, a Neuroscience student at George Mason University with a concentration in Computational Neuroscience.
 
-**Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app) | **Tool:** [nicholas-johnson-website.vercel.app/tool](https://nicholas-johnson-website.vercel.app/tool) | **NEUR 327:** [nicholas-johnson-website.vercel.app/neur327](https://nicholas-johnson-website.vercel.app/neur327)
+**Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app) | **Tool:** [nicholas-johnson-website.vercel.app/tool](https://nicholas-johnson-website.vercel.app/tool) | **NEUR 327:** [nicholas-johnson-website.vercel.app/neur327](https://nicholas-johnson-website.vercel.app/neur327) | **HH Simulator:** [nicholas-johnson-website.vercel.app/hodgkin-huxley](https://nicholas-johnson-website.vercel.app/hodgkin-huxley)
 
 ---
 
@@ -20,6 +20,9 @@ AI-powered research paper analysis tool. Supports three providers (Gemini, Claud
 ### [`api/templates/neur327.html`](api/templates/neur327.html) — HTML / CSS / JavaScript (NEUR 327 Presentation)
 Interactive 20-slide presentation on BiPOLES (Bidirectional Pair of Opsins for Light-induced Excitation and Silencing) for Cellular Neuroscience (NEUR 327). Features keyboard/click navigation, editable content fields, and optional Firebase real-time team sync.
 
+### [`api/templates/hodgkin-huxley.html`](api/templates/hodgkin-huxley.html) — HTML / CSS / JavaScript (Hodgkin-Huxley Simulator)
+Interactive Hodgkin-Huxley neuron simulator. Full 1952 equations, RK4 integration, current clamp and voltage clamp modes, Nernst-computed reversal potentials, adjustable conductances and ion concentrations.
+
 ### [`requirements.txt`](requirements.txt) — Python Dependencies
 ### [`vercel.json`](vercel.json) — Deployment Configuration
 
@@ -36,6 +39,7 @@ A Flask-powered portfolio featuring an interactive 3D neuron animation (action p
 | `/` | GET | Serves the portfolio home page |
 | `/tool` | GET | Serves the Scientific Article Tool |
 | `/neur327` | GET | Serves the NEUR 327 BiPOLES presentation |
+| `/hodgkin-huxley` | GET | Serves the Hodgkin-Huxley neuron simulator |
 | `/api/gemini` | POST | Proxies requests to Google's Gemini API with SSE streaming |
 
 The Gemini proxy keeps the API key secure on the server — frontend users never see or need it.
@@ -52,6 +56,15 @@ The Gemini proxy keeps the API key secure on the server — frontend users never
 - **Keyboard navigation** — Arrow keys and click to advance/retreat slides.
 - **Editable fields** — Content-editable sections for collaborative group work.
 - **Firebase sync** — Optional real-time team editing via Firebase Realtime Database.
+
+## Hodgkin-Huxley Simulator — `hodgkin-huxley.html`
+
+- **Full HH model** — Membrane potential and ionic currents from the 1952 Hodgkin-Huxley equations.
+- **RK4 integration** — 4th-order Runge-Kutta with 0.01 ms time step.
+- **Current clamp** — Single pulse, pulse train, or step current injection.
+- **Voltage clamp** — Command voltage steps with clamp current display.
+- **Nernst potentials** — E_Na and E_K computed from user-adjustable ion concentrations.
+- **Adjustable conductances** — g_Na, g_K, g_L, C_m with real-time updates.
 
 ## Scientific Article Tool — `tool.html`
 
