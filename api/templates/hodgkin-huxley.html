@@ -216,9 +216,10 @@
           <text x="50" y="45" text-anchor="middle" fill="#8b949e" font-size="10">Soma</text>
           <path d="M 75 40 L 200 40 L 350 40" stroke="#8b949e" stroke-width="3" fill="none" stroke-linecap="round"/>
           <text x="212" y="35" text-anchor="middle" fill="#8b949e" font-size="9">Axon</text>
-          <circle cx="140" cy="40" r="12" fill="#3fb950" opacity="0.9"/>
-          <line x1="140" y1="40" x2="140" y2="15" stroke="#3fb950" stroke-width="2"/>
-          <text x="140" y="10" text-anchor="middle" fill="#3fb950" font-size="11" font-weight="bold">I_inj</text>
+          <circle cx="78" cy="40" r="10" fill="#3fb950" opacity="0.9"/>
+          <line x1="78" y1="40" x2="78" y2="15" stroke="#3fb950" stroke-width="2"/>
+          <text x="78" y="10" text-anchor="middle" fill="#3fb950" font-size="10" font-weight="bold">I_inj</text>
+          <text x="78" y="58" text-anchor="middle" fill="#8b949e" font-size="8">hillock</text>
         </svg>
       </div>
 
@@ -333,6 +334,13 @@
         </div>
       </div>
 
+      <h2>Learn: Passive vs Active</h2>
+      <p class="info" style="margin-bottom:0.6rem">Passive: subthreshold current → small depolarization that decays. Active: suprathreshold → all-or-none action potential.</p>
+      <div class="btn-row">
+        <button type="button" id="btnPassive">Passive (subthreshold)</button>
+        <button type="button" id="btnActive">Active (suprathreshold)</button>
+      </div>
+
       <h2>Simulation</h2>
       <div class="row">
         <label>Window (ms)</label>
@@ -341,13 +349,20 @@
       <div class="row">
         <label>Speed</label>
         <select id="speed">
+          <option value="0.1">0.1× (slow)</option>
+          <option value="0.25" selected>0.25× (learn)</option>
           <option value="0.5">0.5×</option>
-          <option value="1" selected>1×</option>
+          <option value="1">1×</option>
           <option value="2">2×</option>
           <option value="5">5×</option>
         </select>
       </div>
-      <p class="info">Time step: 0.01 ms (RK4)</p>
+      <div class="row" id="scrollRow" style="display:none">
+        <label>View start (ms)</label>
+        <input type="number" id="viewStart" value="0" min="0" step="1">
+        <span class="val" id="scrollHint">← scroll when paused</span>
+      </div>
+      <p class="info">Time step: 0.01 ms (RK4). Pause to scroll through full trace.</p>
       <div class="btn-row">
         <button type="button" id="btnRun" class="primary">Run</button>
         <button type="button" id="btnPause">Pause</button>
@@ -426,6 +441,8 @@
       vProtocol: 'single',
       winMs: 50,
       speed: 1,
+      viewStart: 0,
+      maxDataMs: 500,
       data: { t: [], V: [], I_total: [] },
       animId: null
     };
@@ -523,12 +540,30 @@
       state.data.V.push(vPlot);
       state.data.I_total.push(out[7]);
 
-      const win = state.winMs;
-      while (state.data.t.length > 1 && state.data.t[state.data.t.length - 1] - state.data.t[0] > win) {
-        state.data.t.shift();
-        state.data.V.shift();
-        state.data.I_total.shift();
+      if (state.running) {
+        const maxT = state.maxDataMs;
+        while (state.data.t.length > 1 && state.data.t[state.data.t.length - 1] - state.data.t[0] > maxT) {
+          state.data.t.shift();
+          state.data.V.shift();
+          state.data.I_total.shift();
+        }
       }
+    }
+
+    function getViewRange() {
+      const t = state.data.t;
+      const n = t.length;
+      if (n === 0) return { min: 0, max: state.winMs };
+      const tMax = t[n - 1];
+      let start;
+      if (state.running) {
+        start = Math.max(0, tMax - state.winMs);
+        state.viewStart = start;
+      } else {
+        start = Math.max(0, Math.min(state.viewStart, tMax - state.winMs));
+        state.viewStart = start;
+      }
+      return { min: start, max: start + state.winMs };
     }
 
     function updateCharts() {
@@ -536,21 +571,23 @@
       const n = t.length;
       if (n === 0) return;
 
+      const range = getViewRange();
+
       chartV.data.labels = t;
       chartV.data.datasets[0].data = state.data.V;
       chartV.data.datasets[1].data = t.map(() => state.eNa);
       chartV.data.datasets[2].data = t.map(() => state.eK);
       chartV.data.datasets[3].data = t.map(() => state.eL);
       chartV.data.datasets[4].data = t.map(() => -40);
-      chartV.options.scales.x.max = Math.max(t[n-1], state.winMs);
-      chartV.options.scales.x.min = Math.max(0, t[n-1] - state.winMs);
+      chartV.options.scales.x.min = range.min;
+      chartV.options.scales.x.max = range.max;
       chartV.update('none');
 
       const iMax = state.data.I_total.length ? Math.max(...state.data.I_total.map(Math.abs), 1) : 1;
       chartI.data.labels = t;
       chartI.data.datasets[0].data = state.data.I_total;
-      chartI.options.scales.x.max = chartV.options.scales.x.max;
-      chartI.options.scales.x.min = chartV.options.scales.x.min;
+      chartI.options.scales.x.min = range.min;
+      chartI.options.scales.x.max = range.max;
       chartI.options.scales.y.max = iMax * 1.1;
       chartI.options.scales.y.min = -iMax * 1.1;
       chartI.update('none');
@@ -668,6 +705,9 @@
         state.data.t.push(0);
         state.data.V.push(-65);
         state.data.I_total.push(0);
+        state.viewStart = 0;
+        document.getElementById('scrollRow').style.display = 'none';
+        document.getElementById('viewStart').value = 0;
         updateCharts();
         state.running = true;
         runLoop();
@@ -675,6 +715,16 @@
       document.getElementById('btnPause').addEventListener('click', () => {
         state.running = false;
         if (state.animId) cancelAnimationFrame(state.animId);
+        document.getElementById('scrollRow').style.display = 'flex';
+        const tMax = state.data.t.length ? state.data.t[state.data.t.length - 1] : 0;
+        document.getElementById('viewStart').value = Math.round(state.viewStart);
+        document.getElementById('viewStart').max = Math.max(0, tMax - state.winMs);
+      });
+      document.getElementById('viewStart').addEventListener('input', () => {
+        if (!state.running) {
+          state.viewStart = parseFloat(document.getElementById('viewStart').value) || 0;
+          updateCharts();
+        }
       });
       document.getElementById('btnReset').addEventListener('click', () => {
         state.running = false;
@@ -688,7 +738,32 @@
         state.data.t.push(0);
         state.data.V.push(-65);
         state.data.I_total.push(0);
+        state.viewStart = 0;
+        document.getElementById('scrollRow').style.display = 'none';
+        document.getElementById('viewStart').value = 0;
         updateCharts();
+      });
+      document.getElementById('btnPassive').addEventListener('click', () => {
+        document.getElementById('iInj').value = 5;
+        document.getElementById('stimOn').value = 5;
+        document.getElementById('stimDur').value = 1;
+        document.getElementById('stimType').value = 'pulse';
+        state.iInj = 5;
+        state.stimOn = 5;
+        state.stimDur = 1;
+        state.stimType = 'pulse';
+        document.getElementById('btnRun').click();
+      });
+      document.getElementById('btnActive').addEventListener('click', () => {
+        document.getElementById('iInj').value = 20;
+        document.getElementById('stimOn').value = 5;
+        document.getElementById('stimDur').value = 1;
+        document.getElementById('stimType').value = 'pulse';
+        state.iInj = 20;
+        state.stimOn = 5;
+        state.stimDur = 1;
+        state.stimType = 'pulse';
+        document.getElementById('btnRun').click();
       });
       document.getElementById('btnDefaults').addEventListener('click', () => {
         const defs = { naOut:145, naIn:12, kOut:4, kIn:155, gNa:120, gK:36, gL:0.3, cm:1, iInj:0, stimOn:5, stimDur:1, vHold:-65, vCmd:0, vStepOn:5, vStepDur:10, trainFreq:50, trainN:5, winMs:50 };
