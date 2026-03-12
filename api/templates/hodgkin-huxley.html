@@ -168,6 +168,34 @@
       color: var(--text);
       min-width: 120px;
     }
+    .scroll-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+    }
+    .scroll-bar-wrap .scroll-label { font-size: 0.8rem; color: var(--text-dim); }
+    .scroll-bar-wrap .time-scroll {
+      flex: 1;
+      height: 8px;
+      -webkit-appearance: none;
+      background: var(--surface-hi);
+      border-radius: 4px;
+    }
+    .scroll-bar-wrap .time-scroll::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .scroll-bar-wrap .scroll-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      min-width: 50px;
+    }
     .neuron-fig {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -205,6 +233,12 @@
         <button type="button" id="btn-voltage-clamp">Voltage Clamp</button>
       </div>
 
+      <div class="scroll-bar-wrap" id="scrollBarWrap" style="display:none">
+        <label class="scroll-label">Scroll time (ms)</label>
+        <input type="range" id="timeScroll" class="time-scroll" min="0" max="100" value="0" step="0.5">
+        <span class="scroll-val" id="timeScrollVal">0</span>
+      </div>
+
       <div class="neuron-fig" id="neuronFig">
         <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -220,6 +254,7 @@
           <line x1="78" y1="40" x2="78" y2="15" stroke="#3fb950" stroke-width="2"/>
           <text x="78" y="10" text-anchor="middle" fill="#3fb950" font-size="10" font-weight="bold">I_inj</text>
           <text x="78" y="58" text-anchor="middle" fill="#8b949e" font-size="8">hillock</text>
+          <circle id="apPulse" cx="-100" cy="40" r="8" fill="#f85149" opacity="0" style="transition: opacity 0.1s"/>
         </svg>
       </div>
 
@@ -236,28 +271,28 @@
     <div class="panel">
       <h2>Ion Concentrations & Nernst</h2>
       <div class="row">
-        <label>[Na⁺]_out</label>
+        <label>[Na⁺]_out (mM)</label>
         <input type="number" id="naOut" value="145" min="1" max="500">
         <span class="val" id="eNa">+70 mV</span>
       </div>
       <div class="row">
-        <label>[Na⁺]_in</label>
+        <label>[Na⁺]_in (mM)</label>
         <input type="number" id="naIn" value="12" min="1" max="500">
       </div>
       <div class="row">
-        <label>[K⁺]_out</label>
+        <label>[K⁺]_out (mM)</label>
         <input type="number" id="kOut" value="4" min="1" max="500">
         <span class="val" id="eK">-90 mV</span>
       </div>
       <div class="row">
-        <label>[K⁺]_in</label>
+        <label>[K⁺]_in (mM)</label>
         <input type="number" id="kIn" value="155" min="1" max="500">
       </div>
 
       <h2>Conductances</h2>
       <div class="row">
         <label>g_Na</label>
-        <input type="number" id="gNa" value="120" min="0" max="300">
+        <input type="number" id="gNa" value="90" min="0" max="300">
         <span class="val">mS/cm²</span>
       </div>
       <div class="row">
@@ -357,11 +392,6 @@
           <option value="5">5×</option>
         </select>
       </div>
-      <div class="row" id="scrollRow" style="display:none">
-        <label>View start (ms)</label>
-        <input type="number" id="viewStart" value="0" min="0" step="1">
-        <span class="val" id="scrollHint">← scroll when paused</span>
-      </div>
       <p class="info">Time step: 0.01 ms (RK4). Pause to scroll through full trace.</p>
       <div class="btn-row">
         <button type="button" id="btnRun" class="primary">Run</button>
@@ -401,6 +431,10 @@
     }
     function betaN(V) { return 0.125 * Math.exp(-(V + 65) / 80); }
 
+    function mInf(V) { const a = alphaM(V), b = betaM(V); return a / (a + b); }
+    function hInf(V) { const a = alphaH(V), b = betaH(V); return a / (a + b); }
+    function nInf(V) { const a = alphaN(V), b = betaN(V); return a / (a + b); }
+
     function rk4(f, y, t, dt) {
       const k1 = f(t, y);
       const k2 = f(t + dt/2, y.map((yi, i) => yi + dt/2 * k1[i]));
@@ -409,11 +443,18 @@
       return y.map((yi, i) => yi + dt/6 * (k1[i] + 2*k2[i] + 2*k3[i] + k4[i]));
     }
 
+    const V_REST = -65;
+    function initSteadyState() {
+      state.m = mInf(V_REST);
+      state.h = hInf(V_REST);
+      state.n = nInf(V_REST);
+    }
+
     let state = {
       mode: 'current',
       running: false,
       t: 0,
-      V: -65,
+      V: V_REST,
       m: 0.05,
       h: 0.6,
       n: 0.32,
@@ -421,8 +462,8 @@
       naIn: 12,
       kOut: 4,
       kIn: 155,
-      gNa: 120,
-      gK: 36,
+      gNa: 90,
+      gK: 38,
       gL: 0.3,
       cm: 1,
       eL: -65,
@@ -444,7 +485,10 @@
       viewStart: 0,
       maxDataMs: 500,
       data: { t: [], V: [], I_total: [] },
-      animId: null
+      animId: null,
+      apPulseActive: false,
+      apPulseStart: 0,
+      lastV: -65
     };
 
     function getIInj(t) {
@@ -550,6 +594,20 @@
       }
     }
 
+    function updateTimeScroll() {
+      const wrap = document.getElementById('scrollBarWrap');
+      const el = document.getElementById('timeScroll');
+      const val = document.getElementById('timeScrollVal');
+      if (!el) return;
+      wrap.style.display = 'block';
+      const tMax = state.data.t.length ? state.data.t[state.data.t.length - 1] : 0;
+      const maxStart = Math.max(0.1, tMax - state.winMs);
+      el.max = maxStart;
+      el.value = Math.min(state.viewStart, maxStart);
+      state.viewStart = parseFloat(el.value) || 0;
+      if (val) val.textContent = state.viewStart.toFixed(1);
+    }
+
     function getViewRange() {
       const t = state.data.t;
       const n = t.length;
@@ -596,9 +654,47 @@
     function runLoop() {
       if (!state.running) return;
       const steps = Math.max(1, Math.floor(state.speed * 5));
-      for (let i = 0; i < steps; i++) step();
+      for (let i = 0; i < steps; i++) {
+        step();
+        if (state.t >= state.winMs) {
+          state.running = false;
+          if (state.animId) cancelAnimationFrame(state.animId);
+          document.getElementById('scrollBarWrap').style.display = 'block';
+          updateTimeScroll();
+          break;
+        }
+      }
       updateCharts();
-      state.animId = requestAnimationFrame(runLoop);
+      updateAPPulse();
+      if (state.running) state.animId = requestAnimationFrame(runLoop);
+    }
+
+    function updateAPPulse() {
+      const pulse = document.getElementById('apPulse');
+      if (!pulse) return;
+      const THRESH = -20;
+      if (state.V > THRESH && state.lastV <= THRESH && !state.apPulseActive) {
+        state.apPulseActive = true;
+        state.apPulseStart = performance.now();
+      }
+      state.lastV = state.V;
+      if (!state.apPulseActive) {
+        pulse.setAttribute('opacity', '0');
+        pulse.setAttribute('cx', '-100');
+        return;
+      }
+      const elapsed = (performance.now() - state.apPulseStart) / 1000;
+      const dur = 0.6;
+      if (elapsed > dur) {
+        state.apPulseActive = false;
+        pulse.setAttribute('opacity', '0');
+        pulse.setAttribute('cx', '-100');
+        return;
+      }
+      const frac = elapsed / dur;
+      const x = 78 + frac * (350 - 78);
+      pulse.setAttribute('cx', String(x));
+      pulse.setAttribute('opacity', '0.95');
     }
 
     const chartOpts = {
@@ -697,17 +793,18 @@
         state.running = false;
         if (state.animId) cancelAnimationFrame(state.animId);
         state.t = 0;
-        state.V = -65;
-        state.m = 0.05;
-        state.h = 0.6;
-        state.n = 0.32;
+        state.V = V_REST;
+        initSteadyState();
         state.data = { t: [], V: [], I_total: [] };
         state.data.t.push(0);
-        state.data.V.push(-65);
+        state.data.V.push(V_REST);
         state.data.I_total.push(0);
         state.viewStart = 0;
-        document.getElementById('scrollRow').style.display = 'none';
-        document.getElementById('viewStart').value = 0;
+        state.apPulseActive = false;
+        state.lastV = V_REST;
+        document.getElementById('scrollBarWrap').style.display = 'none';
+        document.getElementById('timeScroll').value = 0;
+        if (document.getElementById('timeScrollVal')) document.getElementById('timeScrollVal').textContent = '0';
         updateCharts();
         state.running = true;
         runLoop();
@@ -715,14 +812,14 @@
       document.getElementById('btnPause').addEventListener('click', () => {
         state.running = false;
         if (state.animId) cancelAnimationFrame(state.animId);
-        document.getElementById('scrollRow').style.display = 'flex';
-        const tMax = state.data.t.length ? state.data.t[state.data.t.length - 1] : 0;
-        document.getElementById('viewStart').value = Math.round(state.viewStart);
-        document.getElementById('viewStart').max = Math.max(0, tMax - state.winMs);
+        document.getElementById('scrollBarWrap').style.display = 'block';
+        updateTimeScroll();
       });
-      document.getElementById('viewStart').addEventListener('input', () => {
+      const timeScrollEl = document.getElementById('timeScroll');
+      if (timeScrollEl) timeScrollEl.addEventListener('input', () => {
         if (!state.running) {
-          state.viewStart = parseFloat(document.getElementById('viewStart').value) || 0;
+          state.viewStart = parseFloat(timeScrollEl.value) || 0;
+          document.getElementById('timeScrollVal').textContent = state.viewStart.toFixed(1);
           updateCharts();
         }
       });
@@ -730,17 +827,18 @@
         state.running = false;
         if (state.animId) cancelAnimationFrame(state.animId);
         state.t = 0;
-        state.V = -65;
-        state.m = 0.05;
-        state.h = 0.6;
-        state.n = 0.32;
+        state.V = V_REST;
+        initSteadyState();
         state.data = { t: [], V: [], I_total: [] };
         state.data.t.push(0);
-        state.data.V.push(-65);
+        state.data.V.push(V_REST);
         state.data.I_total.push(0);
         state.viewStart = 0;
-        document.getElementById('scrollRow').style.display = 'none';
-        document.getElementById('viewStart').value = 0;
+        state.apPulseActive = false;
+        state.lastV = V_REST;
+        document.getElementById('scrollBarWrap').style.display = 'none';
+        document.getElementById('timeScroll').value = 0;
+        if (document.getElementById('timeScrollVal')) document.getElementById('timeScrollVal').textContent = '0';
         updateCharts();
       });
       document.getElementById('btnPassive').addEventListener('click', () => {
@@ -766,7 +864,7 @@
         document.getElementById('btnRun').click();
       });
       document.getElementById('btnDefaults').addEventListener('click', () => {
-        const defs = { naOut:145, naIn:12, kOut:4, kIn:155, gNa:120, gK:36, gL:0.3, cm:1, iInj:0, stimOn:5, stimDur:1, vHold:-65, vCmd:0, vStepOn:5, vStepDur:10, trainFreq:50, trainN:5, winMs:50 };
+        const defs = { naOut:145, naIn:12, kOut:4, kIn:155, gNa:90, gK:38, gL:0.3, cm:1, iInj:0, stimOn:5, stimDur:1, vHold:-65, vCmd:0, vStepOn:5, vStepDur:10, trainFreq:50, trainN:5, winMs:50 };
         Object.assign(state, defs);
         ['naOut','naIn','kOut','kIn','gNa','gK','gL','cm','iInj','stimOn','stimDur','vHold','vCmd','vStepOn','vStepDur','trainFreq','trainN','winMs'].forEach(id => {
           const el = document.getElementById(id);
@@ -797,8 +895,9 @@
 
     bindPanel();
     syncFromInputs();
+    initSteadyState();
     state.data.t.push(0);
-    state.data.V.push(-65);
+    state.data.V.push(V_REST);
     state.data.I_total.push(0);
     updateCharts();
     state.running = true;
