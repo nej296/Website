@@ -212,7 +212,7 @@
   }
 
   /* ── Advantage / Limitation Items ─────────────── */
-  .ai {
+  .adv-item {
     display: flex; align-items: flex-start; gap: 14px;
     padding: 13px 18px; background: rgba(10,20,40,0.5);
     border-left: 3px solid var(--blue);
@@ -220,7 +220,7 @@
     font-family: var(--ff-b); font-size: 15px;
     color: var(--text-sec); line-height: 1.5;
   }
-  .ai .ic { color: var(--blue-lt); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .adv-item .ic { color: var(--blue-lt); font-size: 16px; flex-shrink: 0; margin-top: 2px; }
 
   .li {
     display: flex; align-items: flex-start; gap: 14px;
@@ -390,14 +390,14 @@
   }
 
   /* ═══ SLIDE 17 ANIM — cascade advantages ═════ */
-  .slide[data-s="17"] .ai { opacity: 0; }
-  .slide[data-s="17"].active .ai { animation: revI .45s ease forwards; }
-  .slide[data-s="17"].active .ai:nth-child(1) { animation-delay: .15s; }
-  .slide[data-s="17"].active .ai:nth-child(2) { animation-delay: .35s; }
-  .slide[data-s="17"].active .ai:nth-child(3) { animation-delay: .55s; }
-  .slide[data-s="17"].active .ai:nth-child(4) { animation-delay: .75s; }
-  .slide[data-s="17"].active .ai:nth-child(5) { animation-delay: .95s; }
-  .slide[data-s="17"].active .ai:nth-child(6) { animation-delay: 1.15s; }
+  .slide[data-s="17"] .adv-item { opacity: 0; }
+  .slide[data-s="17"].active .adv-item { animation: revI .45s ease forwards; }
+  .slide[data-s="17"].active .adv-item:nth-child(1) { animation-delay: .15s; }
+  .slide[data-s="17"].active .adv-item:nth-child(2) { animation-delay: .35s; }
+  .slide[data-s="17"].active .adv-item:nth-child(3) { animation-delay: .55s; }
+  .slide[data-s="17"].active .adv-item:nth-child(4) { animation-delay: .75s; }
+  .slide[data-s="17"].active .adv-item:nth-child(5) { animation-delay: .95s; }
+  .slide[data-s="17"].active .adv-item:nth-child(6) { animation-delay: 1.15s; }
 
   /* ═══ SLIDE 20 ANIM — floating dots ══════════ */
   .slide[data-s="20"] .dot {
@@ -1113,27 +1113,27 @@
     <h2 class="sh">Advantages Over Previous Tools</h2>
     <div class="tl"></div>
     <div style="flex:1;display:flex;flex-direction:column;gap:0;">
-      <div class="ai" contenteditable="true">
+      <div class="adv-item" contenteditable="true">
         <span class="ic">&#10003;</span>
         <span><strong>Channels, not pumps</strong> — Higher sensitivity, no disruption of ion gradients, moves multiple ions per photon</span>
       </div>
-      <div class="ai" contenteditable="true">
+      <div class="adv-item" contenteditable="true">
         <span class="ic">&#10003;</span>
         <span><strong>Inverted color scheme</strong> — Exclusive red-light excitation, fully compatible with blue-light ChRs for dual-population experiments</span>
       </div>
-      <div class="ai" contenteditable="true">
+      <div class="adv-item" contenteditable="true">
         <span class="ic">&#10003;</span>
         <span><strong>Fixed 1:1 stoichiometry</strong> — Single ORF ensures reliable and predictable expression ratio across all cells</span>
       </div>
-      <div class="ai" contenteditable="true">
+      <div class="adv-item" contenteditable="true">
         <span class="ic">&#10003;</span>
         <span><strong>Soma targeting (somBiPOLES)</strong> — Avoids axonal artifacts where chloride gradients could invert GtACR2 function</span>
       </div>
-      <div class="ai" contenteditable="true">
+      <div class="adv-item" contenteditable="true">
         <span class="ic">&#10003;</span>
         <span><strong>Cross-species utility</strong> — Validated in C. elegans, Drosophila, mice, and ferrets</span>
       </div>
-      <div class="ai" contenteditable="true">
+      <div class="adv-item" contenteditable="true">
         <span class="ic">&#10003;</span>
         <span><strong>Single- and two-photon compatible</strong> — Works with standard widefield and advanced holographic stimulation</span>
       </div>

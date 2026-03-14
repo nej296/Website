@@ -135,61 +135,10 @@
     }
 
     /* ═══════════════════════════════════════════════
-       API KEY — single-use, never persisted
+       INPUT PANEL
     ═══════════════════════════════════════════════ */
     .key-panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 1.1rem 1.3rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .key-panel-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      color: var(--orange);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 0.7rem;
-    }
-
-    .provider-row {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .provider-btn {
-      flex: 1;
-      padding: 0.55rem 0.9rem;
-      background: var(--deep);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--text-dim);
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-      text-align: center;
-    }
-
-    .provider-btn:hover:not(.active) {
-      color: var(--text);
-      background: var(--surface-hi);
-    }
-
-    .provider-btn.active {
-      color: var(--orange);
-      border-color: var(--border-hi);
-      background: var(--orange-dim);
-    }
-
-    .key-row {
-      display: flex;
-      gap: 0.55rem;
-      align-items: center;
+      display: none;
     }
 
     .key-input {
@@ -663,35 +612,11 @@
       <p class="tool-tag">// Research Instrument</p>
       <h1 class="tool-title">Scientific Article Tool</h1>
       <p class="tool-sub">
-        Paste the text of any scientific paper — or upload a PDF — and get an AI-powered
+        Paste the text of any scientific paper — or upload a PDF — and get a
         15-section structured breakdown: from TL;DR and study design through
         raw results, statistical analysis, key figures, limitations, and a final verdict.
-        Free to use with Gemini — or bring your own Claude / ChatGPT key.
       </p>
     </header>
-
-    <!-- ─── PROVIDER & API KEY ─────────────────── -->
-    <div class="key-panel">
-      <p class="key-panel-label">AI Provider</p>
-      <div class="provider-row">
-        <button class="provider-btn active" data-provider="gemini">Gemini 2.5 Flash (Free)</button>
-        <button class="provider-btn" data-provider="anthropic">Claude (Key)</button>
-        <button class="provider-btn" data-provider="openai">ChatGPT (Key)</button>
-      </div>
-      <div class="key-row" id="keyRow" style="display:none">
-        <input
-          type="password"
-          class="key-input"
-          id="apiKeyInput"
-          placeholder="sk-ant-..."
-          autocomplete="off"
-          spellcheck="false"
-        >
-      </div>
-      <p class="key-notice" id="keyNotice">
-        Powered by Gemini 2.5 Flash — completely free, no API key needed. Handles full-length papers.
-      </p>
-    </div>
 
     <!-- ─── INPUT PANEL ──────────────────────────── -->
     <div class="input-panel">
@@ -744,7 +669,7 @@ Tip: copy everything from the abstract through the references. The more complete
     <div class="stream-block" id="streamBlock">
       <div class="stream-header">
         <div class="stream-dot" id="streamDot"></div>
-        <span id="streamLabel">Claude is reading the paper</span>
+        <span id="streamLabel">Analyzing your paper</span>
       </div>
       <div class="stream-body" id="streamBody">
         <span id="streamCursor" class="stream-cursor"></span>
@@ -765,13 +690,8 @@ Tip: copy everything from the abstract through the references. The more complete
   (function () {
     'use strict';
 
-    const MODELS = {
-      anthropic: 'claude-sonnet-4-20250514',
-      openai:    'gpt-4o',
-    };
     const MAX_TOKENS = 8192;
 
-    let provider    = 'gemini';
     let activeTab   = 'paste';
     let pdfText     = '';
     let rawResponse = '';
@@ -779,9 +699,6 @@ Tip: copy everything from the abstract through the references. The more complete
 
     const $ = id => document.getElementById(id);
 
-    const apiKeyInput   = $('apiKeyInput');
-    const keyRow        = $('keyRow');
-    const keyNotice     = $('keyNotice');
     const paperText     = $('paperText');
     const pdfInput      = $('pdfInput');
     const uploadZone    = $('uploadZone');
@@ -802,50 +719,6 @@ Tip: copy everything from the abstract through the references. The more complete
     pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    // ── Provider selector ──────────────────────────
-    const providerBtns = document.querySelectorAll('.provider-btn');
-
-    const PROVIDER_UI = {
-      gemini: {
-        needsKey: false,
-        notice: 'Powered by Gemini 2.5 Flash — completely free, no API key needed. ' +
-                'Handles full-length papers with a 1M token context window.',
-      },
-      anthropic: {
-        needsKey: true,
-        placeholder: 'sk-ant-...',
-        notice: 'Your key is used for this single analysis only and is immediately discarded. ' +
-                'It is never saved, stored, or sent anywhere except directly to ' +
-                '<a href="https://console.anthropic.com/" target="_blank" rel="noopener">Anthropic\'s API</a>.',
-      },
-      openai: {
-        needsKey: true,
-        placeholder: 'sk-...',
-        notice: 'Your key is used for this single analysis only and is immediately discarded. ' +
-                'It is never saved, stored, or sent anywhere except directly to ' +
-                '<a href="https://platform.openai.com/" target="_blank" rel="noopener">OpenAI\'s API</a>.',
-      },
-    };
-
-    function setProvider(p) {
-      provider = p;
-      providerBtns.forEach(b => b.classList.toggle('active', b.dataset.provider === p));
-      const ui = PROVIDER_UI[p];
-      keyRow.style.display = ui.needsKey ? '' : 'none';
-      if (ui.needsKey) apiKeyInput.placeholder = ui.placeholder;
-      keyNotice.innerHTML = ui.notice;
-      checkReady();
-    }
-
-    providerBtns.forEach(b => b.addEventListener('click', () => setProvider(b.dataset.provider)));
-
-    function hasKey() {
-      if (provider === 'gemini') return true;
-      const k = apiKeyInput.value.trim();
-      if (provider === 'anthropic') return k.startsWith('sk-ant-') && k.length > 20;
-      return k.startsWith('sk-') && k.length > 20;
-    }
-
     function hasContent() {
       if (activeTab === 'paste')  return paperText.value.trim().length > 100;
       if (activeTab === 'upload') return pdfText.length > 100;
@@ -853,10 +726,8 @@ Tip: copy everything from the abstract through the references. The more complete
     }
 
     function checkReady() {
-      analyzeBtn.disabled = isLoading || !hasKey() || !hasContent();
+      analyzeBtn.disabled = isLoading || !hasContent();
     }
-
-    apiKeyInput.addEventListener('input', checkReady);
     paperText.addEventListener('input', checkReady);
     checkReady();
 
@@ -978,37 +849,7 @@ Paper content:
 ${truncated}`;
     }
 
-    // ── OpenAI-compatible SSE parser (Groq + OpenAI) ─
-    async function streamOpenAICompat(response) {
-      const reader  = response.body.getReader();
-      const decoder = new TextDecoder();
-      let   buffer  = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop();
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const data = line.slice(6).trim();
-          if (data === '[DONE]') break;
-          try {
-            const ev = JSON.parse(data);
-            const delta = ev.choices?.[0]?.delta?.content;
-            if (delta) {
-              rawResponse += delta;
-              updateStream(rawResponse);
-            }
-          } catch (_) {}
-        }
-      }
-    }
-
-    // ── Gemini streaming (via server proxy) ─────────
+    // ── Analysis streaming (via server proxy) ────────
     async function streamGemini(prompt) {
       const response = await fetch('/api/gemini', {
         method: 'POST',
@@ -1053,124 +894,25 @@ ${truncated}`;
       }
     }
 
-    // ── Anthropic streaming ────────────────────────
-    async function streamAnthropic(apiKey, prompt) {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type':      'application/json',
-          'x-api-key':         apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true',
-        },
-        body: JSON.stringify({
-          model:      MODELS.anthropic,
-          max_tokens: MAX_TOKENS,
-          stream:     true,
-          messages:   [{ role: 'user', content: prompt }],
-        }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.error?.message || `HTTP ${response.status}`);
-      }
-
-      const reader  = response.body.getReader();
-      const decoder = new TextDecoder();
-      let   buffer  = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop();
-
-        for (const line of lines) {
-          if (!line.startsWith('data: ')) continue;
-          const data = line.slice(6).trim();
-          if (data === '[DONE]') continue;
-          try {
-            const ev = JSON.parse(data);
-            if (ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta') {
-              rawResponse += ev.delta.text;
-              updateStream(rawResponse);
-            }
-            if (ev.type === 'message_stop') break;
-          } catch (_) {}
-        }
-      }
-    }
-
-    // ── OpenAI streaming ───────────────────────────
-    async function streamOpenAI(apiKey, prompt) {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type':  'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model:      MODELS.openai,
-          max_tokens: MAX_TOKENS,
-          stream:     true,
-          messages:   [
-            { role: 'system', content: 'You are an expert scientific literature analyst.' },
-            { role: 'user',   content: prompt },
-          ],
-        }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.error?.message || `HTTP ${response.status}`);
-      }
-
-      await streamOpenAICompat(response);
-    }
-
     // ── Main analyze handler ──────────────────────
     analyzeBtn.addEventListener('click', analyze);
 
-    const MODEL_NAMES = { gemini: 'Gemini', anthropic: 'Claude', openai: 'ChatGPT' };
-
     async function analyze() {
-      if (provider !== 'gemini') {
-        const apiKey = apiKeyInput.value.trim();
-        if (!apiKey) {
-          showError(`Enter your ${provider === 'anthropic' ? 'Anthropic' : 'OpenAI'} API key above.`);
-          return;
-        }
-      }
-
       const content = activeTab === 'paste' ? paperText.value.trim() : pdfText.trim();
       if (content.length < 100) { showError('No paper content found. Paste text or upload a PDF.'); return; }
 
-      const apiKey = apiKeyInput.value.trim();
-      if (provider !== 'gemini') {
-        apiKeyInput.value = '';
-      }
       checkReady();
 
       const prompt = buildPrompt(content);
-      const modelName = MODEL_NAMES[provider];
-      streamLabel.textContent = `${modelName} is reading the paper`;
+      streamLabel.textContent = 'Analyzing your paper';
 
-      setLoading(true, modelName);
+      setLoading(true);
       rawResponse = '';
       clearResults();
       showStream(true);
 
       try {
-        if (provider === 'gemini') {
-          await streamGemini(prompt);
-        } else if (provider === 'anthropic') {
-          await streamAnthropic(apiKey, prompt);
-        } else {
-          await streamOpenAI(apiKey, prompt);
-        }
+        await streamGemini(prompt);
 
         setLoading(false);
         showStream(false);
@@ -1268,13 +1010,13 @@ ${truncated}`;
       rawResponse = '';
     }
 
-    function setLoading(on, modelName) {
+    function setLoading(on) {
       isLoading = on;
       analyzeBtn.disabled = on;
       if (on) {
         statusBar.className = 'status-bar visible';
         statusSpinner.style.display = '';
-        statusText.textContent = `${modelName || 'AI'} is analyzing your paper…`;
+        statusText.textContent = 'Analyzing your paper…';
         analyzeBtn.querySelector('.btn-icon').textContent = '⏳';
       } else {
         statusBar.className = 'status-bar';

@@ -9,13 +9,13 @@ Personal portfolio website for Nicholas Johnson, a Neuroscience student at Georg
 ## Source Code
 
 ### [`api/index.py`](api/index.py) — Python (Flask Backend)
-The entire backend. Serves all pages and proxies the Gemini API for free AI analysis.
+The entire backend. Serves all pages and proxies the analysis service for structured research paper breakdowns.
 
 ### [`api/templates/index.html`](api/templates/index.html) — HTML / CSS / JavaScript (Portfolio Page)
 The main portfolio page with hero section, interactive 3D neuron animation rendered on HTML5 Canvas, project cards, and contact information.
 
 ### [`api/templates/tool.html`](api/templates/tool.html) — HTML / CSS / JavaScript (Scientific Article Tool)
-AI-powered research paper analysis tool. Supports three providers (Gemini, Claude, ChatGPT), streams responses in real time, and renders formatted output with markdown.
+Research paper analysis tool. Paste text or upload a PDF to get a structured 15-section breakdown. Streams responses in real time and renders formatted output with markdown.
 
 ### [`api/templates/neur327.html`](api/templates/neur327.html) — HTML / CSS / JavaScript (NEUR 327 Presentation)
 Interactive 20-slide presentation on BiPOLES (Bidirectional Pair of Opsins for Light-induced Excitation and Silencing) for Cellular Neuroscience (NEUR 327). Features keyboard/click navigation, editable content fields, and optional Firebase real-time team sync.
@@ -30,7 +30,7 @@ Interactive Hodgkin-Huxley neuron simulator. Full 1952 equations, RK4 integratio
 
 ## Overview
 
-A Flask-powered portfolio featuring an interactive 3D neuron animation (action potential propagation rendered on HTML5 Canvas), project cards, contact information, and a Scientific Article Tool that uses AI to produce structured 15-section breakdowns of research papers.
+A Flask-powered portfolio featuring an interactive 3D neuron animation (action potential propagation rendered on HTML5 Canvas), project cards, contact information, and a Scientific Article Tool that produces structured 15-section breakdowns of research papers.
 
 ## Flask Routes (`api/index.py`)
 
@@ -40,9 +40,9 @@ A Flask-powered portfolio featuring an interactive 3D neuron animation (action p
 | `/tool` | GET | Serves the Scientific Article Tool |
 | `/neur327` | GET | Serves the NEUR 327 BiPOLES presentation |
 | `/hodgkin-huxley` | GET | Serves the Hodgkin-Huxley neuron simulator |
-| `/api/gemini` | POST | Proxies requests to Google's Gemini API with SSE streaming |
+| `/api/gemini` | POST | Proxies analysis requests with SSE streaming |
 
-The Gemini proxy keeps the API key secure on the server — frontend users never see or need it.
+The analysis proxy keeps credentials secure on the server — frontend users never see or need them.
 
 ## Portfolio Page — `index.html`
 
@@ -68,10 +68,7 @@ The Gemini proxy keeps the API key secure on the server — frontend users never
 
 ## Scientific Article Tool — `tool.html`
 
-- **Multi-provider AI analysis** — Paste text or upload a PDF of any research paper. Choose from three AI providers:
-  - **Gemini 2.5 Flash (Free)** — Default option, no API key needed. 1M token context window handles full-length papers. API key stored server-side.
-  - **Claude (Bring Your Own Key)** — Anthropic's API, called directly from the browser. Key is ephemeral.
-  - **ChatGPT (Bring Your Own Key)** — OpenAI's API, called directly from the browser. Key is ephemeral.
+- **Structured analysis** — Paste text or upload a PDF of any research paper to get a 15-section breakdown. Handles full-length papers.
 - **15-section structured output** — TL;DR, problem, background, hypothesis, study design, methods, data, results, statistics, key figures, author interpretation, limitations, implications, future directions, and verdict.
 - **Real-time streaming** with live cursor and **markdown rendering** (bold, italic, bullet points, numbered lists).
 
@@ -81,7 +78,7 @@ Hosted on [Vercel](https://vercel.com) using the Python serverless runtime.
 
 | Environment Variable | Description |
 |----------------------|-------------|
-| `GEMINI_API_KEY` | Google Gemini API key for the free-tier analysis proxy |
+| `GEMINI_API_KEY` | API key for the analysis service (server-side only) |
 
 ```bash
 npm i -g vercel
@@ -97,7 +94,4 @@ vercel --prod
 | Vanilla JavaScript | All frontend logic — no frameworks |
 | CSS Custom Properties | Design system with dark theme |
 | PDF.js | Client-side PDF text extraction |
-| Google Gemini API | Free-tier AI analysis (server-proxied) |
-| Anthropic Claude API | Bring-your-own-key analysis (client-side) |
-| OpenAI ChatGPT API | Bring-your-own-key analysis (client-side) |
 | Vercel | Python serverless hosting |

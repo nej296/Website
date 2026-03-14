@@ -31,7 +31,7 @@ def hodgkin_huxley():
 def gemini_proxy():
     api_key = os.environ.get('GEMINI_API_KEY', '').strip()
     if not api_key:
-        return jsonify({'error': 'Gemini API key not configured on server'}), 500
+        return jsonify({'error': 'Analysis service not configured on server'}), 500
 
     data = request.get_json(silent=True) or {}
     prompt = data.get('prompt', '')
@@ -58,10 +58,10 @@ def gemini_proxy():
             try:
                 err = gemini_resp.json()
                 msg = err.get('error', {}).get(
-                    'message', f'Gemini API returned HTTP {gemini_resp.status_code}'
+                    'message', f'Analysis service returned HTTP {gemini_resp.status_code}'
                 )
             except Exception:
-                msg = f'Gemini API returned HTTP {gemini_resp.status_code}'
+                msg = f'Analysis service returned HTTP {gemini_resp.status_code}'
             return jsonify({'error': msg}), gemini_resp.status_code
 
         def stream():
