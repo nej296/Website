@@ -2,7 +2,7 @@
 
 Personal portfolio website for Nicholas Johnson, a Neuroscience student at George Mason University with a concentration in Computational Neuroscience.
 
-**Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app) | **Tool:** [nicholas-johnson-website.vercel.app/tool](https://nicholas-johnson-website.vercel.app/tool) | **NEUR 327:** [nicholas-johnson-website.vercel.app/neur327](https://nicholas-johnson-website.vercel.app/neur327) | **HH Simulator:** [nicholas-johnson-website.vercel.app/hodgkin-huxley](https://nicholas-johnson-website.vercel.app/hodgkin-huxley)
+**Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app) | **Tool:** [nicholas-johnson-website.vercel.app/tool](https://nicholas-johnson-website.vercel.app/tool) | **NEUR 327:** [nicholas-johnson-website.vercel.app/neur327](https://nicholas-johnson-website.vercel.app/neur327) | **HH Simulator:** [nicholas-johnson-website.vercel.app/hodgkin-huxley](https://nicholas-johnson-website.vercel.app/hodgkin-huxley) | **Exam Practice:** [nicholas-johnson-website.vercel.app/exam-practice](https://nicholas-johnson-website.vercel.app/exam-practice)
 
 ---
 
@@ -23,6 +23,9 @@ Interactive 20-slide presentation on BiPOLES (Bidirectional Pair of Opsins for L
 ### [`api/templates/hodgkin-huxley.html`](api/templates/hodgkin-huxley.html) — HTML / CSS / JavaScript (Hodgkin-Huxley Simulator)
 Interactive Hodgkin-Huxley neuron simulator. Full 1952 equations, RK4 integration, current clamp and voltage clamp modes, Nernst-computed reversal potentials, adjustable conductances and ion concentrations.
 
+### [`exam-practice/`](exam-practice/) — Exam Scheduling and Practice Problems (React SPA)
+Built output from [Exam-Practice-Problem-Maker](https://github.com/nej296/Exam-Practice-Problem-Maker-). To update: `cd Exam-Practice-Problem-Maker- && npm run build && cp -r dist/* ../Website/exam-practice/`
+
 ### [`requirements.txt`](requirements.txt) — Python Dependencies
 ### [`vercel.json`](vercel.json) — Deployment Configuration
 
@@ -40,6 +43,7 @@ A Flask-powered portfolio featuring an interactive 3D neuron animation (action p
 | `/tool` | GET | Serves the Scientific Article Tool |
 | `/neur327` | GET | Serves the NEUR 327 BiPOLES presentation |
 | `/hodgkin-huxley` | GET | Serves the Hodgkin-Huxley neuron simulator |
+| `/exam-practice` | GET | Serves the Exam Scheduling and Practice Problems app (React SPA) |
 | `/api/gemini` | POST | Proxies analysis requests with SSE streaming |
 
 The analysis proxy keeps credentials secure on the server — frontend users never see or need them.
