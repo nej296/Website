@@ -95,3 +95,7 @@ vercel --prod
 | CSS Custom Properties | Design system with dark theme |
 | PDF.js | Client-side PDF text extraction |
 | Vercel | Python serverless hosting |
+
+## Author
+
+Nicholas Johnson
