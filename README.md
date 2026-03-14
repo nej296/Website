@@ -24,7 +24,7 @@ Interactive 20-slide presentation on BiPOLES (Bidirectional Pair of Opsins for L
 Interactive Hodgkin-Huxley neuron simulator. Full 1952 equations, RK4 integration, current clamp and voltage clamp modes, Nernst-computed reversal potentials, adjustable conductances and ion concentrations.
 
 ### [`exam-practice/`](exam-practice/) — Exam Scheduling and Practice Problems (React SPA)
-Built output from [Exam-Practice-Problem-Maker](https://github.com/nej296/Exam-Practice-Problem-Maker-). To update: `cd Exam-Practice-Problem-Maker- && npm run build && cp -r dist/* ../Website/exam-practice/`
+Built output from [Exam-Practice-Problem-Maker](https://github.com/nej296/Exam-Practice-Problem-Maker-). To update: build the app (`npm run build`), then copy `dist/*` into `Website/exam-practice/`.
 
 ### [`requirements.txt`](requirements.txt) — Python Dependencies
 ### [`vercel.json`](vercel.json) — Deployment Configuration
