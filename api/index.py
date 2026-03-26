@@ -1,8 +1,10 @@
 import os
 import requests as http_requests
-from flask import Flask, render_template, request, jsonify, Response
+from flask import Flask, render_template, request, jsonify, Response, send_from_directory
 
-TEMPLATE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
@@ -25,6 +27,15 @@ def neur327():
 @app.route('/hodgkin-huxley')
 def hodgkin_huxley():
     return render_template('hodgkin-huxley.html')
+
+
+@app.route('/Nicholas_Johnson_Resume.pdf')
+def resume_pdf():
+    return send_from_directory(
+        STATIC_DIR,
+        'Nicholas_Johnson_Resume.pdf',
+        mimetype='application/pdf',
+    )
 
 
 @app.route('/api/gemini', methods=['POST'])

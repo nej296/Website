@@ -1,8 +1,7 @@
 {
   "rewrites": [
+    { "source": "/Nicholas_Johnson_Resume.pdf", "destination": "/api/index" },
     { "source": "/api/gemini", "destination": "/api/index" },
-    { "source": "/exam-practice", "destination": "/exam-practice/index.html" },
-    { "source": "/exam-practice/:path*", "destination": "/exam-practice/index.html" },
     { "source": "/tool", "destination": "/api/index" },
     { "source": "/neur327", "destination": "/api/index" },
     { "source": "/hodgkin-huxley", "destination": "/api/index" },
