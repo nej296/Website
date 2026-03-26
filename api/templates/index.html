@@ -169,64 +169,6 @@
     .hero-about strong { color: var(--text); font-weight: 600; }
     .hero-about .hl { color: var(--orange); }
 
-    .resume-wrap {
-      margin-top: 2rem;
-      max-width: 440px;
-    }
-
-    .resume-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .resume-label::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--orange);
-      opacity: 0.5;
-    }
-
-    .resume-frame-container {
-      border: 1px solid var(--border-hi);
-      border-radius: 4px;
-      overflow: hidden;
-      background: var(--surface);
-    }
-
-    .resume-frame {
-      width: 100%;
-      height: 520px;
-      display: block;
-      border: none;
-    }
-
-    .resume-download {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.4rem;
-      padding: 0.55rem 0.75rem;
-      background: var(--surface-hi);
-      border-top: 1px solid var(--border);
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--orange);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: color 0.2s;
-    }
-
-    .resume-download:hover { color: var(--orange-hi); }
-
     .scroll-cue {
       position: absolute;
       bottom: 2.5rem;
@@ -635,20 +577,6 @@
         the brain encodes, transmits, and processes information at both the circuit and
         systems level.
       </p>
-      <div class="resume-wrap">
-        <p class="resume-label">Résumé</p>
-        <div class="resume-frame-container">
-          <iframe
-            class="resume-frame"
-            src="/Nicholas_Johnson_Resume.pdf"
-            title="Nicholas Johnson Resume"
-            aria-label="Embedded resume PDF">
-          </iframe>
-          <a class="resume-download" href="/Nicholas_Johnson_Resume.pdf" download>
-            ↓ Download PDF
-          </a>
-        </div>
-      </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">
       <span>Scroll</span>
@@ -781,24 +709,13 @@
             <span class="link-label">School</span>
           </a>
 
-          <!-- Résumé (PDF) -->
-          <div class="social-card">
-            <div class="social-card-head">
-              <span class="social-icon">▤</span>
-              <div class="social-card-meta">
-                <span class="social-handle">Nicholas_Johnson_Resume.pdf</span>
-                <span class="social-platform">Résumé</span>
-              </div>
-            </div>
-            <div class="social-card-body">
-              <p class="social-desc">
-                Education, research experience, skills, and selected projects — available as a PDF for recruiters and collaborators.
-              </p>
-            </div>
-            <a href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener" class="social-open-btn">
-              Open résumé (PDF) ↗
-            </a>
-          </div>
+          <!-- Resume PDF — same row style as email; opens in a new tab -->
+          <a href="/Nicholas_Johnson_Resume.pdf" class="link-row" target="_blank" rel="noopener"
+             aria-label="Open resume PDF in a new tab">
+            <span class="link-icon">▤</span>
+            <span>Resume (PDF)</span>
+            <span class="link-label">Open</span>
+          </a>
 
           <!-- GitHub preview card -->
           <div class="social-card">
