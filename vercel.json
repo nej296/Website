@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/Nicholas_Johnson_Resume.pdf", "destination": "/api/index" },
     { "source": "/api/gemini", "destination": "/api/index" },
     { "source": "/tool", "destination": "/api/index" },
     { "source": "/neur327", "destination": "/api/index" },
