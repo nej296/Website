@@ -359,24 +359,12 @@
       text-transform: uppercase;
     }
 
-    .proj-tech {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .proj-tech span {
+    .proj-type {
       font-family: var(--font-mono);
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       color: var(--text-dim);
-      letter-spacing: 0.05em;
-    }
-
-    .proj-tech-sep {
-      color: rgba(255,255,255,0.12);
-      font-size: 0.5rem;
-      user-select: none;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
     }
 
     .proj-arrow {
@@ -389,7 +377,7 @@
 
     @media (max-width: 600px) {
       .project-row { grid-template-columns: 1fr auto; gap: 1rem; }
-      .proj-tech { display: none; }
+      .proj-type { display: none; }
     }
 
     /* Social preview cards (contact section) */
@@ -620,52 +608,36 @@
         <a href="/tool" class="project-row">
           <div class="proj-left">
             <span class="proj-title">Scientific Article Tool</span>
-            <span class="proj-category">Research Tool</span>
+            <span class="proj-category">Individual</span>
           </div>
-          <div class="proj-tech">
-            <span>Python</span><span class="proj-tech-sep">/</span>
-            <span>Flask</span><span class="proj-tech-sep">/</span>
-            <span>PDF Parsing</span>
-          </div>
+          <span class="proj-type">Research Tool</span>
           <i class="proj-arrow">&#8594;</i>
         </a>
 
         <a href="/hodgkin-huxley" class="project-row">
           <div class="proj-left">
-            <span class="proj-title">Hodgkin-Huxley Neuron Simulator</span>
-            <span class="proj-category">Computational Neuroscience</span>
+            <span class="proj-title">Neuronal Impulse Propagation</span>
+            <span class="proj-category">Individual</span>
           </div>
-          <div class="proj-tech">
-            <span>HH Model</span><span class="proj-tech-sep">/</span>
-            <span>Voltage Clamp</span><span class="proj-tech-sep">/</span>
-            <span>RK4</span>
-          </div>
+          <span class="proj-type">Educational Tool</span>
           <i class="proj-arrow">&#8594;</i>
         </a>
 
         <a href="https://github.com/nej296/Exam-Practice-Problem-Maker-" target="_blank" rel="noopener" class="project-row">
           <div class="proj-left">
             <span class="proj-title">Exam Scheduling &amp; Practice Problems</span>
-            <span class="proj-category">Study Tool</span>
+            <span class="proj-category">Individual</span>
           </div>
-          <div class="proj-tech">
-            <span>React</span><span class="proj-tech-sep">/</span>
-            <span>TypeScript</span><span class="proj-tech-sep">/</span>
-            <span>Tailwind</span>
-          </div>
+          <span class="proj-type">Study Tool</span>
           <i class="proj-arrow">&#8594;</i>
         </a>
 
         <a href="https://github.com/nej296/Neurotransmitter-Chart" target="_blank" rel="noopener" class="project-row">
           <div class="proj-left">
             <span class="proj-title">Neurotransmitter Wheel Chart</span>
-            <span class="proj-category">Computational Neuroscience</span>
+            <span class="proj-category">Individual</span>
           </div>
-          <div class="proj-tech">
-            <span>D3.js</span><span class="proj-tech-sep">/</span>
-            <span>Flask</span><span class="proj-tech-sep">/</span>
-            <span>Data Viz</span>
-          </div>
+          <span class="proj-type">Database</span>
           <i class="proj-arrow">&#8594;</i>
         </a>
 
