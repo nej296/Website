@@ -16,15 +16,15 @@
       --bg:          #0a0a0a;
       --surface:     #111111;
       --surface-hi:  #1a1a1a;
-      --orange:      #ff6b00;
-      --orange-lo:   #c45200;
-      --orange-hi:   #ff9a3c;
-      --orange-dim:  rgba(255, 107, 0, 0.1);
-      --orange-mid:  rgba(255, 107, 0, 0.2);
+      --accent:      #8a8a8a;
+      --accent-lo:   #666666;
+      --accent-hi:   #aaaaaa;
+      --accent-dim:  rgba(255, 255, 255, 0.04);
+      --accent-mid:  rgba(255, 255, 255, 0.08);
       --text:        #f0f0f0;
       --text-dim:    #555555;
       --border:      rgba(255, 255, 255, 0.07);
-      --border-hi:   rgba(255, 107, 0, 0.4);
+      --border-hi:   rgba(255, 255, 255, 0.2);
       --font-display: 'Bebas Neue', sans-serif;
       --font-body:    'Space Grotesk', sans-serif;
       --font-mono:    'DM Mono', monospace;
@@ -96,11 +96,11 @@
       position: absolute;
       bottom: -3px; left: 0;
       width: 0; height: 1px;
-      background: var(--orange);
+      background: var(--accent);
       transition: width 0.25s var(--ease);
     }
 
-    .nav-links a:hover { color: var(--orange); }
+    .nav-links a:hover { color: var(--text); }
     .nav-links a:hover::after { width: 100%; }
 
     /* ═══════════════════════════════════════════════
@@ -146,7 +146,7 @@
     .hero-degree {
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--orange);
+      color: var(--accent);
       letter-spacing: 0.1em;
       margin-bottom: 2rem;
     }
@@ -154,8 +154,8 @@
     .hero-rule {
       width: 40px;
       height: 1px;
-      background: var(--orange);
-      opacity: 0.4;
+      background: var(--accent);
+      opacity: 0.3;
       margin-bottom: 1.6rem;
     }
 
@@ -167,7 +167,6 @@
     }
 
     .hero-about strong { color: var(--text); font-weight: 600; }
-    .hero-about .hl { color: var(--orange); }
 
     .resume-wrap {
       margin-top: 2rem;
@@ -191,7 +190,7 @@
       display: inline-block;
       width: 20px;
       height: 1px;
-      background: var(--orange);
+      background: var(--accent);
       opacity: 0.5;
     }
 
@@ -219,13 +218,13 @@
       border-top: 1px solid var(--border);
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      color: var(--orange);
+      color: var(--accent);
       text-decoration: none;
       letter-spacing: 0.08em;
       transition: color 0.2s;
     }
 
-    .resume-download:hover { color: var(--orange-hi); }
+    .resume-download:hover { color: var(--accent-hi); }
 
     .scroll-cue {
       position: absolute;
@@ -261,7 +260,7 @@
       top: -100%;
       width: 1px;
       height: 100%;
-      background: linear-gradient(to bottom, transparent, var(--orange));
+      background: linear-gradient(to bottom, transparent, var(--accent));
       animation: scrollDrop 2s ease-in-out infinite;
     }
 
@@ -284,7 +283,7 @@
     .sec-num {
       font-family: var(--font-mono);
       font-size: 0.65rem;
-      color: var(--orange);
+      color: var(--accent);
       letter-spacing: 0.18em;
       white-space: nowrap;
     }
@@ -348,7 +347,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
       opacity: 0;
       transition: opacity 0.3s;
     }
@@ -357,7 +356,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% -10%, var(--orange-dim), transparent 65%);
+      background: radial-gradient(ellipse at 50% -10%, var(--accent-dim), transparent 65%);
       opacity: 0;
       transition: opacity 0.3s;
     }
@@ -366,7 +365,7 @@
       border-color: var(--border-hi);
       background: var(--surface-hi);
       transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(255, 107, 0, 0.06);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(255, 255, 255, 0.03);
     }
 
     .project-card:hover::before,
@@ -375,7 +374,7 @@
     .card-category {
       font-family: var(--font-mono);
       font-size: 0.62rem;
-      color: var(--orange);
+      color: var(--accent);
       letter-spacing: 0.22em;
       text-transform: uppercase;
       margin-bottom: 1rem;
@@ -416,7 +415,7 @@
     }
 
     .card-arrow {
-      color: var(--orange);
+      color: var(--accent);
       font-size: 1.1rem;
       font-style: normal;
       transition: transform 0.25s var(--ease);
@@ -444,7 +443,7 @@
 
     .social-icon {
       font-size: 1.05rem;
-      color: var(--orange);
+      color: var(--accent);
       flex-shrink: 0;
     }
 
@@ -487,10 +486,10 @@
       display: block;
       margin: 0 1.3rem 1rem;
       padding: 0.5rem 1rem;
-      background: var(--orange-dim);
-      border: 1px solid rgba(255, 107, 0, 0.22);
+      background: var(--accent-dim);
+      border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 3px;
-      color: var(--orange);
+      color: var(--accent);
       font-family: var(--font-mono);
       font-size: 0.64rem;
       letter-spacing: 0.1em;
@@ -500,7 +499,7 @@
     }
 
     .social-open-btn:hover {
-      background: var(--orange-mid);
+      background: var(--accent-mid);
       border-color: var(--border-hi);
     }
 
@@ -543,7 +542,7 @@
     .link-row:hover {
       border-color: var(--border-hi);
       background: var(--surface-hi);
-      color: var(--orange);
+      color: var(--accent);
     }
 
     .link-icon { font-size: 0.95rem; opacity: 0.6; }
@@ -616,7 +615,7 @@
     <ul class="nav-links">
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="https://github.com/nej296/Website/raw/main/api/static/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+      <li><a href="https://github.com/nej296" target="_blank" rel="noopener">Github</a></li>
     </ul>
   </nav>
 
@@ -629,26 +628,8 @@
       <p class="hero-degree">Neuroscience — Computational Neuroscience</p>
       <div class="hero-rule"></div>
       <p class="hero-about">
-        I'm a junior at George Mason University studying
-        Neuroscience with a concentration in <span class="hl">Computational Neuroscience</span>.
-        My work sits at the intersection of biology and computation — I'm interested in how
-        the brain encodes, transmits, and processes information at both the circuit and
-        systems level.
+        My work sits at the intersection of AI, Neuroscience, Neuron Modeling, and Neural Networks.
       </p>
-      <div class="resume-wrap">
-        <p class="resume-label">Résumé</p>
-        <div class="resume-frame-container">
-          <iframe
-            class="resume-frame"
-            src="/Nicholas_Johnson_Resume.pdf"
-            title="Nicholas Johnson Resume"
-            aria-label="Embedded resume PDF">
-          </iframe>
-          <a class="resume-download" href="/Nicholas_Johnson_Resume.pdf" download>
-            ↓ Download PDF
-          </a>
-        </div>
-      </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">
       <span>Scroll</span>
@@ -768,25 +749,33 @@
         <div class="sec-rule"></div>
       </div>
       <div class="contact-body">
-        <p class="contact-copy">
-          Open to research collaborations, internship opportunities, and conversations
-          about neuroscience, computational modeling, and everything in between.<br><br>
-          Reach out — I'd love to connect.
-        </p>
+        <div class="contact-left">
+          <p class="contact-copy">
+            Open to research collaborations, internship opportunities, and conversations
+            about neuroscience, computational modeling, and everything in between.<br><br>
+            Reach out — I'd love to connect.
+          </p>
+          <div class="resume-wrap" style="margin-top: 2.5rem;">
+            <p class="resume-label">Résumé</p>
+            <div class="resume-frame-container">
+              <iframe
+                class="resume-frame"
+                src="/Nicholas_Johnson_Resume.pdf"
+                title="Nicholas Johnson Resume"
+                aria-label="Embedded resume PDF">
+              </iframe>
+              <a class="resume-download" href="/Nicholas_Johnson_Resume.pdf" download>
+                ↓ Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
         <div class="link-stack">
           <!-- Email links -->
           <a href="mailto:njohns59@gmu.edu" class="link-row">
             <span class="link-icon">✉</span>
             <span>njohns59@gmu.edu</span>
-            <span class="link-label">School</span>
-          </a>
-
-          <!-- Resume PDF — same row style as email -->
-          <a href="https://github.com/nej296/Website/raw/main/api/static/Nicholas_Johnson_Resume.pdf" class="link-row" target="_blank" rel="noopener"
-             aria-label="Open resume PDF in a new tab">
-            <span class="link-icon">▤</span>
-            <span>Resume (PDF)</span>
-            <span class="link-label">Open</span>
+            <span class="link-label">University</span>
           </a>
 
           <!-- GitHub preview card -->
