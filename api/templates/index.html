@@ -962,7 +962,7 @@
       const sxL  = maxLeft  > 0 ? padLeft  / maxLeft  : 9;
       const sxR  = maxRight > 0 ? padRight / maxRight : 9;
       const sy   = maxSy    > 0 ? padY     / maxSy    : 9;
-      worldScale  = Math.min(sxL, sxR, sy, 2.4);
+      worldScale  = Math.min(sxL, sxR, sy, 3.2);
     }
 
     // ── 3D path utilities ────────────────────────────
@@ -1291,7 +1291,7 @@
       lastW = w; lastH = h;
       canvas.width  = w;
       canvas.height = h;
-      projCenterX   = w > 600 ? 0.68 : 0.5;
+      projCenterX   = w > 600 ? 0.55 : 0.5;
       worldScale    = 1;
       build();
       fitNeuron();
