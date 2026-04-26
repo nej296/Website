@@ -662,6 +662,24 @@
       isolation: isolate;
     }
 
+    .hero-portrait {
+      position: absolute;
+      right: clamp(7.5rem, 16vw, 18rem);
+      top: 47%;
+      width: clamp(230px, 23vw, 340px);
+      transform: translateY(-50%);
+      background: transparent;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeInOnly 0.8s var(--ease) 0.35s forwards;
+    }
+
+    .hero-portrait img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     #hero::before {
       content: 'COMPUTATIONAL NEUROSCIENCE';
       position: absolute;
@@ -680,7 +698,7 @@
       top: auto;
       left: auto;
       transform: none;
-      max-width: 720px;
+      max-width: min(720px, 56vw);
       margin-left: clamp(2rem, 9vw, 8rem);
       padding: clamp(2rem, 4vw, 4rem);
       border-left: 1px solid var(--border-hi);
@@ -722,19 +740,15 @@
       line-height: 1.65;
     }
 
-    .nav-projects-item {
-      position: relative;
-    }
-
     .neural-emblem {
       position: absolute;
-      top: 50%;
-      right: calc(100% + 1.05rem);
-      width: clamp(4.5rem, 6vw, 5.8rem);
+      top: clamp(13.2rem, 21vw, 16.8rem);
+      left: clamp(19.4rem, 32vw, 27rem);
+      width: clamp(10.2rem, 14.2vw, 12.8rem);
       aspect-ratio: 1;
       background: transparent;
       overflow: hidden;
-      transform: translateY(-50%) rotate(-7deg);
+      transform: rotate(5deg);
       pointer-events: none;
     }
 
@@ -959,6 +973,11 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    @keyframes fadeInOnly {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     @keyframes emblemSpin {
       to { transform: rotate(360deg); }
     }
@@ -975,8 +994,21 @@
         display: none;
       }
       .hero-content {
+        max-width: 100%;
         margin-left: 0;
         padding: 1.5rem 0 1.5rem 1.25rem;
+      }
+      .hero-portrait {
+        right: 2.25rem;
+        top: 42%;
+        bottom: auto;
+        width: 160px;
+        transform: translateY(-50%);
+      }
+      .neural-emblem {
+        top: 11.6rem;
+        left: 15.8rem;
+        width: 9.6rem;
       }
       .projects-list,
       .contact-body {
@@ -1020,12 +1052,7 @@
   <!-- ─── NAV ─────────────────────────────────────── -->
   <nav>
     <ul class="nav-links">
-      <li class="nav-projects-item">
-        <span class="neural-emblem" aria-hidden="true">
-          <canvas id="neural-canvas"></canvas>
-        </span>
-        <a href="#projects">Projects</a>
-      </li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="https://github.com/nej296" target="_blank" rel="noopener">Github</a></li>
     </ul>
@@ -1033,10 +1060,16 @@
 
   <!-- ─── HERO — identity left, neuron right ──────── -->
   <section id="hero">
+    <figure class="hero-portrait" aria-label="Portrait of Nicholas Johnson">
+      <img src="/static/nicholas-portrait-original.png" alt="Nicholas Johnson portrait">
+    </figure>
     <div class="hero-content">
       <h1 class="hero-name">Nicholas Johnson</h1>
       <p class="hero-school">George Mason University</p>
       <p class="hero-degree">Neuroscience — Computational Neuroscience</p>
+      <span class="neural-emblem" aria-hidden="true">
+        <canvas id="neural-canvas"></canvas>
+      </span>
       <div class="hero-rule"></div>
       <p class="hero-about">
         My work sits at the intersection of AI, Neuroscience, Neuron Modeling, and Neural Networks.
@@ -1264,7 +1297,8 @@
 
     // ── Projection constants ─────────────────────────
     const ROT_SPEED = (Math.PI * 2) / 28000; // ~28s full rotation
-    const BASE_TILT = -0.20;                  // resting X tilt (radians)
+    const BASE_TILT = -0.20;                  // original subtle 3D tilt
+    const FIXED_ROT_Y = 0;                       // soma left, terminal right
     const FOV       = 800;
     let   worldScale = 1;     // set by fitNeuron() after build()
     let   curTiltX   = BASE_TILT; // updated each frame during drag
@@ -1388,9 +1422,7 @@
     }
 
     // ── Fit neuron to viewport ────────────────────────
-    // Samples all world points across 8 Y-rotation angles to find the
-    // worst-case screen extent, then sets worldScale so the neuron
-    // never clips outside the viewport.
+    // Fit the fixed right-facing view with room for terminal glow.
     function fitNeuron() {
       worldScale = 1; // reset so proj() gives raw values first
 
@@ -1404,22 +1436,19 @@
       const W = canvas.width, H = canvas.height;
       const cx = W * projCenterX, cy = H * 0.5;
       let maxLeft = 0, maxRight = 0, maxSy = 0;
-      const nAngles = 12;
 
-      for (let i = 0; i < nAngles; i++) {
-        const rotY = i * (Math.PI / nAngles);
-        pts.forEach(p => {
-          const pr = proj(p.x, p.y, p.z, rotY);
-          const dx = pr.sx - cx;
-          if (dx < 0) maxLeft  = Math.max(maxLeft,  -dx);
-          else        maxRight = Math.max(maxRight,  dx);
-          maxSy = Math.max(maxSy, Math.abs(pr.sy - cy));
-        });
-      }
+      pts.forEach(p => {
+        const pr = proj(p.x, p.y, p.z, FIXED_ROT_Y);
+        const dx = pr.sx - cx;
+        if (dx < 0) maxLeft  = Math.max(maxLeft,  -dx);
+        else        maxRight = Math.max(maxRight,  dx);
+        maxSy = Math.max(maxSy, Math.abs(pr.sy - cy));
+      });
 
-      const padLeft  = cx * 0.90;
-      const padRight = (W - cx) * 0.90;
-      const padY     = cy * 0.90;
+      const glowPad  = Math.min(W, H) * 0.12;
+      const padLeft  = Math.max(1, cx - glowPad);
+      const padRight = Math.max(1, W - cx - glowPad);
+      const padY     = Math.max(1, cy - glowPad);
       const sxL  = maxLeft  > 0 ? padLeft  / maxLeft  : 9;
       const sxR  = maxRight > 0 ? padRight / maxRight : 9;
       const sy   = maxSy    > 0 ? padY     / maxSy    : 9;
@@ -1626,21 +1655,8 @@
     function render(ts) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const sinceInteract = ts - lastInteract;
-      let rotY;
-      if (isDragging) {
-        rotY     = manualRotY;
-        curTiltX = BASE_TILT + manualRotX;
-      } else if (sinceInteract < RESUME_DELAY) {
-        const t     = sinceInteract / RESUME_DELAY;
-        const eased = t * t * (3 - 2 * t);
-        const autoY = ts * ROT_SPEED + autoRotOffset;
-        rotY        = manualRotY + (autoY - manualRotY) * eased;
-        curTiltX    = BASE_TILT + manualRotX * (1 - eased);
-      } else {
-        rotY     = ts * ROT_SPEED + autoRotOffset;
-        curTiltX = BASE_TILT;
-      }
+      const rotY = FIXED_ROT_Y;
+      curTiltX = BASE_TILT;
 
       const elapsed  = ts - phaseStart;
       const progress = Math.min(1, elapsed / DUR[phase]);
