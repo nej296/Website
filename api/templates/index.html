@@ -6,7 +6,7 @@
   <title>Nicholas Johnson — Computational Neuroscience</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ═══════════════════════════════════════════════
@@ -32,7 +32,10 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 90%;
+    }
 
     body {
       background: var(--bg);
@@ -563,6 +566,453 @@
       .hero-name { font-size: 2.4rem; }
       .projects-grid { grid-template-columns: 1fr; }
     }
+
+    /* ═══════════════════════════════════════════════
+       PROFESSIONAL DOSSIER REDESIGN
+       Keeps content intact, changes presentation only.
+    ═══════════════════════════════════════════════ */
+    :root {
+      --bg: #10100e;
+      --surface: #171714;
+      --surface-hi: #202019;
+      --paper: #e7edf5;
+      --paper-dim: #a6b5c7;
+      --ink: #f3ecdf;
+      --ink-soft: rgba(243, 236, 223, 0.72);
+      --ink-faint: rgba(243, 236, 223, 0.42);
+      --field: rgba(232, 222, 204, 0.06);
+      --field-hi: rgba(232, 222, 204, 0.11);
+      --accent: #d8cab2;
+      --accent-lo: #94856f;
+      --accent-hi: #f2eadc;
+      --border: rgba(242, 234, 220, 0.15);
+      --border-hi: rgba(242, 234, 220, 0.36);
+      --text: var(--ink);
+      --text-dim: var(--ink-faint);
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 12% 0%, rgba(232, 222, 204, 0.16), transparent 32rem),
+        linear-gradient(90deg, rgba(242, 234, 220, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(242, 234, 220, 0.024) 1px, transparent 1px),
+        var(--bg);
+      background-size: auto, 72px 72px, 72px 72px, auto;
+      color: var(--ink);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.14;
+      background-image:
+        linear-gradient(115deg, transparent 0 42%, rgba(242, 234, 220, 0.15) 43%, transparent 44%),
+        radial-gradient(circle at 70% 20%, rgba(255,255,255,0.16), transparent 1px);
+      background-size: 420px 420px, 5px 5px;
+      mix-blend-mode: screen;
+    }
+
+    nav {
+      inset: 2rem 3rem auto 3rem;
+      width: auto;
+      padding: 0.65rem;
+      justify-content: flex-end;
+      background: rgba(16, 16, 14, 0.72);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+    }
+
+    .nav-links {
+      gap: 0.25rem;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.4rem;
+      padding: 0 1.05rem;
+      border-radius: 999px;
+      color: var(--ink-soft);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+    }
+
+    .nav-links a::after { display: none; }
+    .nav-links a:hover {
+      color: var(--bg);
+      background: var(--paper);
+    }
+
+    #hero {
+      min-height: 100svh;
+      height: auto;
+      display: grid;
+      align-items: center;
+      padding: 9rem 3rem 5rem;
+      background:
+        linear-gradient(180deg, rgba(16, 16, 14, 0) 0%, var(--bg) 92%),
+        radial-gradient(circle at 72% 45%, rgba(232, 222, 204, 0.11), transparent 19rem);
+      isolation: isolate;
+    }
+
+    #hero::before {
+      content: 'COMPUTATIONAL NEUROSCIENCE';
+      position: absolute;
+      left: 3rem;
+      top: 7.3rem;
+      color: rgba(242, 234, 220, 0.14);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.42em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+
+    .hero-content {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      max-width: 720px;
+      margin-left: clamp(2rem, 9vw, 8rem);
+      padding: clamp(2rem, 4vw, 4rem);
+      border-left: 1px solid var(--border-hi);
+      background: linear-gradient(90deg, rgba(242, 234, 220, 0.05), transparent 72%);
+      animation: fadeInUp 0.8s var(--ease) 0.2s forwards;
+    }
+
+    .hero-name {
+      max-width: 10ch;
+      font-size: clamp(4.2rem, 10vw, 8.8rem);
+      font-weight: 500;
+      letter-spacing: -0.07em;
+      line-height: 0.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-school,
+    .hero-degree {
+      font-size: 0.72rem;
+      color: var(--paper-dim);
+      letter-spacing: 0.2em;
+    }
+
+    .hero-degree {
+      color: var(--accent-hi);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-rule {
+      width: min(100%, 540px);
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0.72;
+    }
+
+    .hero-about {
+      max-width: 560px;
+      color: var(--ink-soft);
+      font-size: clamp(1.08rem, 1.8vw, 1.5rem);
+      line-height: 1.65;
+    }
+
+    .nav-projects-item {
+      position: relative;
+    }
+
+    .neural-emblem {
+      position: absolute;
+      top: 50%;
+      right: calc(100% + 1.05rem);
+      width: clamp(4.5rem, 6vw, 5.8rem);
+      aspect-ratio: 1;
+      background: transparent;
+      overflow: hidden;
+      transform: translateY(-50%) rotate(-7deg);
+      pointer-events: none;
+    }
+
+    #neural-canvas {
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.78;
+      filter: sepia(0.32) saturate(1.12) contrast(1.08);
+      cursor: grab;
+    }
+
+    .scroll-cue {
+      left: auto;
+      right: 3rem;
+      bottom: 2.5rem;
+      transform: none;
+    }
+
+    section {
+      background: transparent;
+    }
+
+    #projects,
+    #contact {
+      padding: 8rem 3rem;
+    }
+
+    .projects-wrap,
+    .contact-wrap {
+      max-width: 1180px;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: rgba(16, 16, 14, 0.76);
+      box-shadow: 0 34px 110px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
+    }
+
+    .sec-head {
+      align-items: end;
+      margin-bottom: 3.4rem;
+    }
+
+    .sec-num {
+      color: var(--accent-hi);
+      font-size: 0.7rem;
+    }
+
+    .sec-title {
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 5.8rem);
+      font-weight: 500;
+      letter-spacing: -0.055em;
+      line-height: 0.9;
+    }
+
+    .projects-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .project-row,
+    .project-row:first-child {
+      min-height: 168px;
+      grid-template-columns: 1fr;
+      align-content: space-between;
+      gap: 1.2rem;
+      padding: 1.35rem;
+      border: 0;
+      background:
+        linear-gradient(135deg, rgba(232, 222, 204, 0.052), transparent 62%),
+        var(--surface);
+      opacity: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-row::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent-hi);
+      transition: height 0.28s var(--ease);
+    }
+
+    .project-row:hover {
+      background: var(--surface-hi);
+    }
+
+    .project-row:hover::before {
+      height: 100%;
+    }
+
+    .proj-left {
+      gap: 0.85rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .proj-title {
+      max-width: 14ch;
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.55rem);
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+    }
+
+    .proj-category,
+    .proj-type {
+      color: var(--paper-dim);
+    }
+
+    .proj-type {
+      justify-self: start;
+      padding: 0.42rem 0.65rem;
+      border: 1px solid rgba(242, 234, 220, 0.12);
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .proj-arrow {
+      position: absolute;
+      right: 1.2rem;
+      bottom: 1.1rem;
+      color: var(--accent-hi);
+      opacity: 1;
+    }
+
+    .coming-soon-label {
+      margin: 2rem 0 0.8rem;
+      color: var(--paper-dim);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .project-row.is-coming-soon {
+      cursor: default;
+    }
+
+    .project-row.is-coming-soon .proj-title {
+      color: rgba(231, 237, 245, 0.72);
+    }
+
+    .project-row.is-coming-soon .proj-arrow {
+      opacity: 1;
+      transform: none;
+      color: var(--paper-dim);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      font-style: normal;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    #contact {
+      border-top: 0;
+    }
+
+    #contact .sec-rule {
+      display: none;
+    }
+
+    .contact-body {
+      align-items: start;
+      gap: clamp(2rem, 5vw, 5rem);
+      grid-template-columns: minmax(280px, 0.82fr) minmax(420px, 1.18fr);
+    }
+
+    .contact-copy {
+      max-width: 44rem;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+    }
+
+    .link-row,
+    .social-card,
+    .resume-frame-container {
+      border-color: var(--border);
+      background: var(--field);
+      border-radius: 2px;
+    }
+
+    .link-row:hover,
+    .social-open-btn:hover {
+      color: var(--paper);
+      border-color: var(--accent-lo);
+      background: var(--field-hi);
+    }
+
+    .resume-frame-container {
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+    }
+
+    #contact .resume-wrap {
+      max-width: none;
+      margin-top: calc((clamp(2.8rem, 6vw, 5.8rem) + 2.45rem) * -1);
+    }
+
+    #contact .resume-frame {
+      height: min(90vh, 1040px);
+      min-height: 800px;
+    }
+
+    footer {
+      background: transparent;
+      border-top-color: var(--border);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes emblemSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        inset: 1rem 1rem auto 1rem;
+        justify-content: center;
+      }
+      #hero {
+        padding: 7.5rem 1.25rem 18rem;
+      }
+      #hero::before {
+        display: none;
+      }
+      .hero-content {
+        margin-left: 0;
+        padding: 1.5rem 0 1.5rem 1.25rem;
+      }
+      .projects-list,
+      .contact-body {
+        grid-template-columns: 1fr;
+      }
+      #contact .resume-wrap {
+        margin-top: 0;
+      }
+      #contact .resume-frame {
+        height: 620px;
+        min-height: 0;
+      }
+      #projects,
+      #contact {
+        padding: 4.5rem 1.25rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links {
+        gap: 0.1rem;
+      }
+      .nav-links a {
+        padding: 0 0.62rem;
+        font-size: 0.58rem;
+      }
+      .hero-name {
+        font-size: clamp(3.2rem, 18vw, 4.6rem);
+      }
+      .sec-head {
+        gap: 0.9rem;
+      }
+      .sec-rule {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -570,7 +1020,12 @@
   <!-- ─── NAV ─────────────────────────────────────── -->
   <nav>
     <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
+      <li class="nav-projects-item">
+        <span class="neural-emblem" aria-hidden="true">
+          <canvas id="neural-canvas"></canvas>
+        </span>
+        <a href="#projects">Projects</a>
+      </li>
       <li><a href="#contact">Contact</a></li>
       <li><a href="https://github.com/nej296" target="_blank" rel="noopener">Github</a></li>
     </ul>
@@ -578,7 +1033,6 @@
 
   <!-- ─── HERO — identity left, neuron right ──────── -->
   <section id="hero">
-    <canvas id="neural-canvas"></canvas>
     <div class="hero-content">
       <h1 class="hero-name">Nicholas Johnson</h1>
       <p class="hero-school">George Mason University</p>
@@ -604,6 +1058,15 @@
       </div>
 
       <div class="projects-list">
+
+        <a href="https://github.com/nej296/Neurotech-Internship-Targeting-App" target="_blank" rel="noopener" class="project-row">
+          <div class="proj-left">
+            <span class="proj-title">Neurotech Internship Targeting App</span>
+            <span class="proj-category">Individual</span>
+          </div>
+          <span class="proj-type">Next.js / Targeting Tool</span>
+          <i class="proj-arrow">&#8594;</i>
+        </a>
 
         <a href="/tool" class="project-row">
           <div class="proj-left">
@@ -643,6 +1106,45 @@
 
         <!-- ADD NEW ROWS HERE -->
 
+      </div>
+
+      <p class="coming-soon-label">Coming Soon</p>
+      <div class="projects-list coming-soon-list">
+        <div class="project-row is-coming-soon">
+          <div class="proj-left">
+            <span class="proj-title">Large Neuroscience Datasets Workbench</span>
+            <span class="proj-category">Coming Soon / Individual</span>
+          </div>
+          <span class="proj-type">Python / Streamlit / Neuroinformatics</span>
+          <i class="proj-arrow">Soon</i>
+        </div>
+
+        <div class="project-row is-coming-soon">
+          <div class="proj-left">
+            <span class="proj-title">Single Cell Neuron Model</span>
+            <span class="proj-category">Coming Soon / University Project</span>
+          </div>
+          <span class="proj-type">Python / NEURON Simulator</span>
+          <i class="proj-arrow">Soon</i>
+        </div>
+
+        <div class="project-row is-coming-soon">
+          <div class="proj-left">
+            <span class="proj-title">Neuronal Circuit Model</span>
+            <span class="proj-category">Coming Soon / University Project</span>
+          </div>
+          <span class="proj-type">Python / NEURON Simulator</span>
+          <i class="proj-arrow">Soon</i>
+        </div>
+
+        <div class="project-row is-coming-soon">
+          <div class="proj-left">
+            <span class="proj-title">Neural Network Project</span>
+            <span class="proj-category">Coming Soon / University Project</span>
+          </div>
+          <span class="proj-type">Python / PyTorch</span>
+          <i class="proj-arrow">Soon</i>
+        </div>
       </div>
     </div>
   </section>
@@ -700,7 +1202,6 @@
           </div>
         </div>
         <div class="resume-wrap">
-          <p class="resume-label">Résumé</p>
           <div class="resume-frame-container">
             <iframe
               class="resume-frame"
@@ -810,7 +1311,8 @@
 
     // ── Build 3D neuron geometry ─────────────────────
     function build() {
-      const W = canvas.width, H = canvas.height;
+      const W = Math.max(canvas.width, 720);
+      const H = Math.max(canvas.height, 520);
 
       soma3 = {
         x: -W * 0.20, y: 0, z: 0,
@@ -1243,14 +1745,14 @@
     let lastW = 0, lastH = 0;
 
     function resize() {
-      const hero = document.getElementById('hero');
-      const w = hero.clientWidth;
-      const h = hero.clientHeight;
+      const host = canvas.parentElement || document.getElementById('hero');
+      const w = host.clientWidth;
+      const h = host.clientHeight;
       if (w === lastW && h === lastH) return;
       lastW = w; lastH = h;
       canvas.width  = w;
       canvas.height = h;
-      projCenterX   = w > 600 ? 0.60 : 0.5;
+      projCenterX   = 0.5;
       worldScale    = 1;
       build();
       fitNeuron();
