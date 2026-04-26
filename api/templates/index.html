@@ -664,9 +664,9 @@
 
     .hero-portrait {
       position: absolute;
-      right: clamp(7.5rem, 16vw, 18rem);
+      right: clamp(9rem, 19vw, 21rem);
       top: 47%;
-      width: clamp(230px, 23vw, 340px);
+      width: clamp(255px, 25vw, 375px);
       transform: translateY(-50%);
       background: transparent;
       z-index: 1;
@@ -680,29 +680,16 @@
       display: block;
     }
 
-    #hero::before {
-      content: 'COMPUTATIONAL NEUROSCIENCE';
-      position: absolute;
-      left: 3rem;
-      top: 7.3rem;
-      color: rgba(242, 234, 220, 0.14);
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.42em;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-    }
-
     .hero-content {
       position: relative;
       top: auto;
       left: auto;
       transform: none;
-      max-width: min(720px, 56vw);
+      max-width: min(880px, 66vw);
       margin-left: clamp(2rem, 9vw, 8rem);
       padding: clamp(2rem, 4vw, 4rem);
       border-left: 1px solid var(--border-hi);
-      background: linear-gradient(90deg, rgba(242, 234, 220, 0.05), transparent 72%);
+      background: linear-gradient(90deg, rgba(242, 234, 220, 0.058), rgba(242, 234, 220, 0.026) 58%, transparent 88%);
       animation: fadeInUp 0.8s var(--ease) 0.2s forwards;
     }
 
@@ -717,9 +704,11 @@
 
     .hero-school,
     .hero-degree {
-      font-size: 0.72rem;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 500;
       color: var(--paper-dim);
-      letter-spacing: 0.2em;
+      letter-spacing: -0.015em;
     }
 
     .hero-degree {
@@ -742,9 +731,9 @@
 
     .neural-emblem {
       position: absolute;
-      top: clamp(13.2rem, 21vw, 16.8rem);
-      left: clamp(19.4rem, 32vw, 27rem);
-      width: clamp(10.2rem, 14.2vw, 12.8rem);
+      top: clamp(10.7rem, 17.6vw, 14.2rem);
+      left: clamp(15rem, 26vw, 22.5rem);
+      width: clamp(15.2rem, 20.6vw, 18.8rem);
       aspect-ratio: 1;
       background: transparent;
       overflow: hidden;
@@ -990,25 +979,22 @@
       #hero {
         padding: 7.5rem 1.25rem 18rem;
       }
-      #hero::before {
-        display: none;
-      }
       .hero-content {
         max-width: 100%;
         margin-left: 0;
         padding: 1.5rem 0 1.5rem 1.25rem;
       }
       .hero-portrait {
-        right: 2.25rem;
+        right: 3.25rem;
         top: 42%;
         bottom: auto;
-        width: 160px;
+        width: 180px;
         transform: translateY(-50%);
       }
       .neural-emblem {
-        top: 11.6rem;
-        left: 15.8rem;
-        width: 9.6rem;
+        top: 9.1rem;
+        left: 12.4rem;
+        width: 14.6rem;
       }
       .projects-list,
       .contact-body {
