@@ -208,11 +208,11 @@
 
     .resume-frame {
       width: 100%;
-      height: 100%;
+      height: auto;
       min-height: 0;
       display: block;
       border: none;
-      object-fit: cover;
+      object-fit: contain;
       object-position: top center;
     }
 
@@ -900,8 +900,8 @@
 
     .contact-body {
       align-items: start;
-      gap: clamp(2rem, 5vw, 5rem);
-      grid-template-columns: minmax(280px, 0.82fr) minmax(420px, 1.18fr);
+      gap: clamp(1.5rem, 3vw, 3rem);
+      grid-template-columns: minmax(260px, 0.68fr) minmax(560px, 1.5fr);
     }
 
     .contact-copy {
@@ -934,8 +934,8 @@
     }
 
     #contact .resume-frame {
-      height: min(90vh, 1040px);
-      min-height: 800px;
+      height: auto;
+      min-height: 0;
     }
 
     footer {
