@@ -224,6 +224,139 @@
       image-rendering: -webkit-optimize-contrast;
     }
 
+    .resume-zoom-trigger {
+      all: unset;
+      display: block;
+      width: 100%;
+      cursor: zoom-in;
+      position: relative;
+      transition: transform 240ms var(--ease, cubic-bezier(.2,.7,.2,1));
+    }
+    .resume-zoom-trigger:hover { transform: translateY(-2px); }
+    .resume-zoom-trigger:focus-visible {
+      outline: 2px solid var(--accent, #b08d3a);
+      outline-offset: 4px;
+    }
+
+    .resume-zoom-hint {
+      margin-top: 0.6rem;
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim, rgba(60,55,45,0.55));
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .resume-zoom-hint::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 1px;
+      background: var(--accent, #b08d3a);
+      opacity: 0.55;
+    }
+
+    .resume-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: stretch;
+      justify-content: center;
+      padding: clamp(1rem, 3vw, 2.4rem);
+      background: rgba(18, 16, 12, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      animation: lightboxFade 220ms var(--ease, cubic-bezier(.2,.7,.2,1));
+    }
+    .resume-lightbox[data-open="true"] {
+      display: flex;
+    }
+
+    .resume-lightbox-stage {
+      position: relative;
+      flex: 1 1 auto;
+      max-width: min(960px, 100%);
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 4px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .resume-lightbox-stage img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .resume-lightbox-toolbar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.7rem 1rem;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      font-family: var(--font-mono, 'JetBrains Mono', monospace);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(20, 18, 14, 0.7);
+      z-index: 2;
+    }
+    .resume-lightbox-toolbar a {
+      color: inherit;
+      text-decoration: none;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      padding: 0.45rem 0.85rem;
+      border-radius: 2px;
+      transition: background 200ms var(--ease, cubic-bezier(.2,.7,.2,1)), color 200ms;
+    }
+    .resume-lightbox-toolbar a:hover {
+      background: rgba(20, 18, 14, 0.92);
+      color: #f5efe2;
+    }
+
+    .resume-lightbox-close {
+      all: unset;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      border-radius: 50%;
+      font-size: 1.05rem;
+      line-height: 1;
+      color: rgba(20, 18, 14, 0.78);
+      transition: background 200ms var(--ease, cubic-bezier(.2,.7,.2,1));
+    }
+    .resume-lightbox-close:hover {
+      background: rgba(20, 18, 14, 0.92);
+      color: #f5efe2;
+    }
+
+    body.resume-lightbox-open {
+      overflow: hidden;
+    }
+
+    @keyframes lightboxFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 700px) {
+      .resume-lightbox-stage { max-width: 100%; }
+      .resume-lightbox-toolbar { font-size: 0.6rem; }
+    }
+
     .scroll-cue {
       position: absolute;
       bottom: 2.5rem;
@@ -1216,15 +1349,22 @@
           </div>
         </div>
         <div class="resume-wrap">
-          <div class="resume-frame-container">
-            <picture>
-              <source srcset="/static/Nicholas_Johnson_Resume_preview.svg" type="image/svg+xml">
-              <img
-                class="resume-frame"
-                src="/static/Nicholas_Johnson_Resume_preview.png"
-                alt="Preview of Nicholas Johnson resume">
-            </picture>
-          </div>
+          <button
+            type="button"
+            class="resume-zoom-trigger"
+            aria-label="Open resume at full size"
+            data-resume-open>
+            <div class="resume-frame-container">
+              <picture>
+                <source srcset="/static/Nicholas_Johnson_Resume_preview.svg" type="image/svg+xml">
+                <img
+                  class="resume-frame"
+                  src="/static/Nicholas_Johnson_Resume_preview.png"
+                  alt="Preview of Nicholas Johnson resume">
+              </picture>
+            </div>
+          </button>
+          <p class="resume-zoom-hint">Click resume to enlarge</p>
         </div>
       </div>
     </div>
@@ -1233,6 +1373,22 @@
   <footer>
     <p>George Mason University</p>
   </footer>
+
+  <div class="resume-lightbox" id="resume-lightbox" role="dialog" aria-modal="true" aria-label="Nicholas Johnson resume" data-open="false">
+    <div class="resume-lightbox-stage" role="document">
+      <div class="resume-lightbox-toolbar">
+        <span>Nicholas Johnson — Resume</span>
+        <span style="display:flex; gap:0.6rem; align-items:center;">
+          <a href="/static/Nicholas_Johnson_Resume.pdf" download>Download PDF ↓</a>
+          <button type="button" class="resume-lightbox-close" data-resume-close aria-label="Close">×</button>
+        </span>
+      </div>
+      <picture>
+        <source srcset="/static/Nicholas_Johnson_Resume_preview.svg" type="image/svg+xml">
+        <img src="/static/Nicholas_Johnson_Resume_preview.png" alt="Nicholas Johnson resume, full size">
+      </picture>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════════════
        SINGLE-NEURON 3D ACTION POTENTIAL ANIMATION
@@ -1762,6 +1918,41 @@
     resize();
     phaseStart = performance.now();
     requestAnimationFrame(render);
+  })();
+  </script>
+
+  <script>
+  (function () {
+    'use strict';
+    const lightbox = document.getElementById('resume-lightbox');
+    if (!lightbox) return;
+    const openers = document.querySelectorAll('[data-resume-open]');
+    const closers = lightbox.querySelectorAll('[data-resume-close]');
+    let lastTrigger = null;
+
+    function open(ev) {
+      lastTrigger = ev && ev.currentTarget;
+      lightbox.dataset.open = 'true';
+      document.body.classList.add('resume-lightbox-open');
+      const closeBtn = lightbox.querySelector('[data-resume-close]');
+      if (closeBtn) closeBtn.focus({ preventScroll: true });
+    }
+    function close() {
+      lightbox.dataset.open = 'false';
+      document.body.classList.remove('resume-lightbox-open');
+      if (lastTrigger && typeof lastTrigger.focus === 'function') {
+        lastTrigger.focus({ preventScroll: true });
+      }
+    }
+
+    openers.forEach(function (el) { el.addEventListener('click', open); });
+    closers.forEach(function (el) { el.addEventListener('click', close); });
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && lightbox.dataset.open === 'true') close();
+    });
   })();
   </script>
 
