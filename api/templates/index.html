@@ -199,11 +199,10 @@
 
     .resume-frame-container {
       position: relative;
-      border: 1px solid var(--border, rgba(40, 34, 24, 0.18));
+      border: 1px solid rgba(243, 236, 223, 0.10);
       border-radius: 3px;
       overflow: hidden;
       background: #ffffff;
-      box-shadow: 0 18px 38px rgba(20, 16, 8, 0.10), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
       display: flex;
       flex-direction: column;
     }
@@ -218,8 +217,8 @@
       align-items: center;
       gap: 0.55rem;
       padding: 0.55rem 0.75rem;
-      background: linear-gradient(180deg, rgba(248, 244, 234, 0.96), rgba(238, 232, 218, 0.96));
-      border-bottom: 1px solid var(--border, rgba(40, 34, 24, 0.16));
+      background: linear-gradient(180deg, #f3ecdf, #e9e1cf);
+      border-bottom: 1px solid rgba(40, 34, 24, 0.14);
       font-family: var(--font-mono, 'JetBrains Mono', monospace);
       font-size: 0.62rem;
       letter-spacing: 0.18em;
@@ -1045,8 +1044,11 @@
     }
 
     #contact .resume-frame {
-      height: auto;
-      min-height: 0;
+      height: clamp(720px, 86vh, 1180px);
+    }
+    #contact .resume-frame-container {
+      border-color: rgba(243, 236, 223, 0.10);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
     }
 
     footer {
@@ -1101,9 +1103,7 @@
         margin-top: 0;
       }
       #contact .resume-frame {
-        height: auto;
-        min-height: 0;
-        object-fit: contain;
+        height: clamp(560px, 72vh, 900px);
       }
       #projects,
       #contact {
