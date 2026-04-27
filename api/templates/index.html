@@ -207,7 +207,13 @@
       padding: clamp(0.6rem, 1.4vw, 1.1rem);
     }
 
-    .resume-frame {
+    .resume-frame-container picture {
+      display: block;
+      width: 100%;
+    }
+
+    .resume-frame,
+    .resume-frame-container picture > img {
       width: 100%;
       height: auto;
       min-height: 0;
@@ -215,6 +221,7 @@
       border: none;
       object-fit: contain;
       object-position: top center;
+      image-rendering: -webkit-optimize-contrast;
     }
 
     .scroll-cue {
@@ -1210,10 +1217,13 @@
         </div>
         <div class="resume-wrap">
           <div class="resume-frame-container">
-            <img
-              class="resume-frame"
-              src="/static/Nicholas_Johnson_Resume_preview.svg"
-              alt="Preview of Nicholas Johnson resume">
+            <picture>
+              <source srcset="/static/Nicholas_Johnson_Resume_preview.svg" type="image/svg+xml">
+              <img
+                class="resume-frame"
+                src="/static/Nicholas_Johnson_Resume_preview.png"
+                alt="Preview of Nicholas Johnson resume">
+            </picture>
           </div>
         </div>
       </div>
