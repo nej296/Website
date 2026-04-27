@@ -217,13 +217,13 @@
       align-items: center;
       gap: 0.55rem;
       padding: 0.55rem 0.75rem;
-      background: linear-gradient(180deg, #f3ecdf, #e9e1cf);
-      border-bottom: 1px solid rgba(40, 34, 24, 0.14);
+      background: linear-gradient(180deg, rgba(20, 20, 18, 0.96), rgba(14, 14, 12, 0.96));
+      border-bottom: 1px solid rgba(242, 234, 220, 0.10);
       font-family: var(--font-mono, 'JetBrains Mono', monospace);
       font-size: 0.62rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(28, 22, 14, 0.78);
+      color: rgba(243, 236, 223, 0.62);
       user-select: none;
     }
 
@@ -245,29 +245,29 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(40, 34, 24, 0.22);
+      border: 1px solid rgba(242, 234, 220, 0.14);
       border-radius: 2px;
-      background: rgba(255, 255, 255, 0.55);
+      background: rgba(242, 234, 220, 0.04);
       font-size: 0.85rem;
       line-height: 1;
-      color: rgba(28, 22, 14, 0.82);
+      color: rgba(243, 236, 223, 0.82);
       transition: background 180ms var(--ease, cubic-bezier(.2,.7,.2,1)),
                   color 180ms,
                   border-color 180ms,
                   transform 120ms;
     }
     .resume-toolbar-btn:hover {
-      background: rgba(20, 16, 8, 0.92);
+      background: rgba(242, 234, 220, 0.12);
       color: #f5efe2;
-      border-color: rgba(20, 16, 8, 0.92);
+      border-color: rgba(242, 234, 220, 0.32);
     }
     .resume-toolbar-btn:active { transform: scale(0.94); }
     .resume-toolbar-btn:focus-visible {
-      outline: 2px solid var(--accent, #b08d3a);
+      outline: 2px solid var(--accent-hi, #f2eadc);
       outline-offset: 2px;
     }
     .resume-toolbar-btn[disabled] {
-      opacity: 0.4;
+      opacity: 0.35;
       cursor: not-allowed;
     }
 
@@ -276,7 +276,7 @@
       text-align: center;
       font-variant-numeric: tabular-nums;
       letter-spacing: 0.08em;
-      color: rgba(28, 22, 14, 0.72);
+      color: rgba(243, 236, 223, 0.72);
     }
 
     .resume-toolbar-link {
@@ -285,23 +285,23 @@
       gap: 0.4rem;
       padding: 0 0.7rem;
       height: 26px;
-      border: 1px solid rgba(40, 34, 24, 0.22);
+      border: 1px solid rgba(242, 234, 220, 0.14);
       border-radius: 2px;
-      background: rgba(255, 255, 255, 0.55);
-      color: rgba(28, 22, 14, 0.82);
+      background: rgba(242, 234, 220, 0.04);
+      color: rgba(243, 236, 223, 0.82);
       text-decoration: none;
       transition: background 180ms var(--ease, cubic-bezier(.2,.7,.2,1)), color 180ms, border-color 180ms;
     }
     .resume-toolbar-link:hover {
-      background: rgba(20, 16, 8, 0.92);
+      background: rgba(242, 234, 220, 0.12);
       color: #f5efe2;
-      border-color: rgba(20, 16, 8, 0.92);
+      border-color: rgba(242, 234, 220, 0.32);
     }
 
     .resume-toolbar-divider {
       width: 1px;
       height: 18px;
-      background: rgba(40, 34, 24, 0.22);
+      background: rgba(242, 234, 220, 0.18);
       margin: 0 0.35rem;
     }
 
