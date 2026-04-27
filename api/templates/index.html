@@ -198,163 +198,133 @@
     }
 
     .resume-frame-container {
-      border: 0;
-      border-radius: 0;
+      position: relative;
+      border: 1px solid var(--border, rgba(40, 34, 24, 0.18));
+      border-radius: 3px;
       overflow: hidden;
       background: #ffffff;
+      box-shadow: 0 18px 38px rgba(20, 16, 8, 0.10), 0 1px 0 rgba(255, 255, 255, 0.4) inset;
       display: flex;
       flex-direction: column;
-      padding: clamp(0.6rem, 1.4vw, 1.1rem);
     }
 
-    .resume-frame-container picture {
-      display: block;
-      width: 100%;
+    .resume-frame-container.is-fullscreen {
+      border-radius: 0;
+      border: 0;
     }
 
-    .resume-frame,
-    .resume-frame-container picture > img {
-      width: 100%;
-      height: auto;
-      min-height: 0;
-      display: block;
-      border: none;
-      object-fit: contain;
-      object-position: top center;
-      image-rendering: -webkit-optimize-contrast;
-    }
-
-    .resume-zoom-trigger {
-      all: unset;
-      display: block;
-      width: 100%;
-      cursor: zoom-in;
-      position: relative;
-      transition: transform 240ms var(--ease, cubic-bezier(.2,.7,.2,1));
-    }
-    .resume-zoom-trigger:hover { transform: translateY(-2px); }
-    .resume-zoom-trigger:focus-visible {
-      outline: 2px solid var(--accent, #b08d3a);
-      outline-offset: 4px;
-    }
-
-    .resume-zoom-hint {
-      margin-top: 0.6rem;
+    .resume-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 0.75rem;
+      background: linear-gradient(180deg, rgba(248, 244, 234, 0.96), rgba(238, 232, 218, 0.96));
+      border-bottom: 1px solid var(--border, rgba(40, 34, 24, 0.16));
       font-family: var(--font-mono, 'JetBrains Mono', monospace);
       font-size: 0.62rem;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-dim, rgba(60,55,45,0.55));
-      display: flex;
+      color: rgba(28, 22, 14, 0.78);
+      user-select: none;
+    }
+
+    .resume-toolbar-group {
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-    }
-    .resume-zoom-hint::before {
-      content: '';
-      display: inline-block;
-      width: 18px;
-      height: 1px;
-      background: var(--accent, #b08d3a);
-      opacity: 0.55;
+      gap: 0.25rem;
     }
 
-    .resume-lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: none;
-      align-items: stretch;
-      justify-content: center;
-      padding: clamp(1rem, 3vw, 2.4rem);
-      background: rgba(18, 16, 12, 0.78);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      animation: lightboxFade 220ms var(--ease, cubic-bezier(.2,.7,.2,1));
-    }
-    .resume-lightbox[data-open="true"] {
-      display: flex;
+    .resume-toolbar-group + .resume-toolbar-group {
+      margin-left: auto;
     }
 
-    .resume-lightbox-stage {
-      position: relative;
-      flex: 1 1 auto;
-      max-width: min(960px, 100%);
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 4px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-      overflow: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    .resume-lightbox-stage img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .resume-lightbox-toolbar {
-      position: sticky;
-      top: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.7rem 1rem;
-      background: rgba(255, 255, 255, 0.96);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      font-family: var(--font-mono, 'JetBrains Mono', monospace);
-      font-size: 0.7rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(20, 18, 14, 0.7);
-      z-index: 2;
-    }
-    .resume-lightbox-toolbar a {
-      color: inherit;
-      text-decoration: none;
-      border: 1px solid rgba(0, 0, 0, 0.18);
-      padding: 0.45rem 0.85rem;
-      border-radius: 2px;
-      transition: background 200ms var(--ease, cubic-bezier(.2,.7,.2,1)), color 200ms;
-    }
-    .resume-lightbox-toolbar a:hover {
-      background: rgba(20, 18, 14, 0.92);
-      color: #f5efe2;
-    }
-
-    .resume-lightbox-close {
+    .resume-toolbar-btn {
       all: unset;
       cursor: pointer;
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(0, 0, 0, 0.18);
-      border-radius: 50%;
-      font-size: 1.05rem;
+      border: 1px solid rgba(40, 34, 24, 0.22);
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.55);
+      font-size: 0.85rem;
       line-height: 1;
-      color: rgba(20, 18, 14, 0.78);
-      transition: background 200ms var(--ease, cubic-bezier(.2,.7,.2,1));
+      color: rgba(28, 22, 14, 0.82);
+      transition: background 180ms var(--ease, cubic-bezier(.2,.7,.2,1)),
+                  color 180ms,
+                  border-color 180ms,
+                  transform 120ms;
     }
-    .resume-lightbox-close:hover {
-      background: rgba(20, 18, 14, 0.92);
+    .resume-toolbar-btn:hover {
+      background: rgba(20, 16, 8, 0.92);
       color: #f5efe2;
+      border-color: rgba(20, 16, 8, 0.92);
+    }
+    .resume-toolbar-btn:active { transform: scale(0.94); }
+    .resume-toolbar-btn:focus-visible {
+      outline: 2px solid var(--accent, #b08d3a);
+      outline-offset: 2px;
+    }
+    .resume-toolbar-btn[disabled] {
+      opacity: 0.4;
+      cursor: not-allowed;
     }
 
-    body.resume-lightbox-open {
-      overflow: hidden;
+    .resume-toolbar-zoom {
+      min-width: 3.4rem;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.08em;
+      color: rgba(28, 22, 14, 0.72);
     }
 
-    @keyframes lightboxFade {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .resume-toolbar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0 0.7rem;
+      height: 26px;
+      border: 1px solid rgba(40, 34, 24, 0.22);
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.55);
+      color: rgba(28, 22, 14, 0.82);
+      text-decoration: none;
+      transition: background 180ms var(--ease, cubic-bezier(.2,.7,.2,1)), color 180ms, border-color 180ms;
+    }
+    .resume-toolbar-link:hover {
+      background: rgba(20, 16, 8, 0.92);
+      color: #f5efe2;
+      border-color: rgba(20, 16, 8, 0.92);
     }
 
-    @media (max-width: 700px) {
-      .resume-lightbox-stage { max-width: 100%; }
-      .resume-lightbox-toolbar { font-size: 0.6rem; }
+    .resume-toolbar-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(40, 34, 24, 0.22);
+      margin: 0 0.35rem;
+    }
+
+    .resume-frame-scroll {
+      position: relative;
+      width: 100%;
+      overflow: auto;
+      background: #f4ede0;
+    }
+
+    .resume-frame {
+      display: block;
+      border: 0;
+      width: 100%;
+      height: clamp(720px, 86vh, 1180px);
+      background: #ffffff;
+      transform-origin: top left;
+      transition: width 220ms var(--ease, cubic-bezier(.2,.7,.2,1));
+    }
+
+    .resume-frame-container.is-fullscreen .resume-frame {
+      height: calc(100vh - 48px);
     }
 
     .scroll-cue {
@@ -1349,22 +1319,29 @@
           </div>
         </div>
         <div class="resume-wrap">
-          <button
-            type="button"
-            class="resume-zoom-trigger"
-            aria-label="Open resume at full size"
-            data-resume-open>
-            <div class="resume-frame-container">
-              <picture>
-                <source srcset="/static/Nicholas_Johnson_Resume_preview.svg" type="image/svg+xml">
-                <img
-                  class="resume-frame"
-                  src="/static/Nicholas_Johnson_Resume_preview.png"
-                  alt="Preview of Nicholas Johnson resume">
-              </picture>
+          <div class="resume-frame-container" id="resume-shell">
+            <div class="resume-toolbar" role="toolbar" aria-label="Resume controls">
+              <div class="resume-toolbar-group">
+                <button type="button" class="resume-toolbar-btn" data-zoom-out aria-label="Zoom out">−</button>
+                <span class="resume-toolbar-zoom" data-zoom-display>100%</span>
+                <button type="button" class="resume-toolbar-btn" data-zoom-in aria-label="Zoom in">+</button>
+                <button type="button" class="resume-toolbar-btn" data-zoom-reset aria-label="Reset zoom" title="Reset zoom">↺</button>
+              </div>
+              <div class="resume-toolbar-group">
+                <a class="resume-toolbar-link" href="/static/Nicholas_Johnson_Resume.pdf" download>Download ↓</a>
+                <span class="resume-toolbar-divider" aria-hidden="true"></span>
+                <button type="button" class="resume-toolbar-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">⤢</button>
+              </div>
             </div>
-          </button>
-          <p class="resume-zoom-hint">Click resume to enlarge</p>
+            <div class="resume-frame-scroll" data-frame-scroll>
+              <iframe
+                class="resume-frame"
+                id="resume-iframe"
+                src="/static/Nicholas_Johnson_Resume.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                title="Nicholas Johnson resume"
+                loading="lazy"></iframe>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1373,22 +1350,6 @@
   <footer>
     <p>George Mason University</p>
   </footer>
-
-  <div class="resume-lightbox" id="resume-lightbox" role="dialog" aria-modal="true" aria-label="Nicholas Johnson resume" data-open="false">
-    <div class="resume-lightbox-stage" role="document">
-      <div class="resume-lightbox-toolbar">
-        <span>Nicholas Johnson — Resume</span>
-        <span style="display:flex; gap:0.6rem; align-items:center;">
-          <a href="/static/Nicholas_Johnson_Resume.pdf" download>Download PDF ↓</a>
-          <button type="button" class="resume-lightbox-close" data-resume-close aria-label="Close">×</button>
-        </span>
-      </div>
-      <picture>
-        <source srcset="/static/Nicholas_Johnson_Resume_preview.svg" type="image/svg+xml">
-        <img src="/static/Nicholas_Johnson_Resume_preview.png" alt="Nicholas Johnson resume, full size">
-      </picture>
-    </div>
-  </div>
 
   <!-- ═══════════════════════════════════════════════════
        SINGLE-NEURON 3D ACTION POTENTIAL ANIMATION
@@ -1924,35 +1885,50 @@
   <script>
   (function () {
     'use strict';
-    const lightbox = document.getElementById('resume-lightbox');
-    if (!lightbox) return;
-    const openers = document.querySelectorAll('[data-resume-open]');
-    const closers = lightbox.querySelectorAll('[data-resume-close]');
-    let lastTrigger = null;
+    const shell  = document.getElementById('resume-shell');
+    const iframe = document.getElementById('resume-iframe');
+    if (!shell || !iframe) return;
 
-    function open(ev) {
-      lastTrigger = ev && ev.currentTarget;
-      lightbox.dataset.open = 'true';
-      document.body.classList.add('resume-lightbox-open');
-      const closeBtn = lightbox.querySelector('[data-resume-close]');
-      if (closeBtn) closeBtn.focus({ preventScroll: true });
+    const display = shell.querySelector('[data-zoom-display]');
+    const btnIn   = shell.querySelector('[data-zoom-in]');
+    const btnOut  = shell.querySelector('[data-zoom-out]');
+    const btnRst  = shell.querySelector('[data-zoom-reset]');
+    const btnFs   = shell.querySelector('[data-fullscreen]');
+
+    const PDF_URL = '/static/Nicholas_Johnson_Resume.pdf';
+    const STEPS   = [60, 75, 90, 100, 115, 135, 160, 190, 225];
+    let stepIdx   = STEPS.indexOf(100);
+
+    function applyZoom() {
+      const z = STEPS[stepIdx];
+      iframe.src = PDF_URL + '#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=' + z;
+      iframe.style.width = z >= 100 ? (z + '%') : '100%';
+      if (display) display.textContent = z + '%';
+      if (btnIn)  btnIn.disabled  = stepIdx >= STEPS.length - 1;
+      if (btnOut) btnOut.disabled = stepIdx <= 0;
     }
-    function close() {
-      lightbox.dataset.open = 'false';
-      document.body.classList.remove('resume-lightbox-open');
-      if (lastTrigger && typeof lastTrigger.focus === 'function') {
-        lastTrigger.focus({ preventScroll: true });
+
+    if (btnIn)  btnIn.addEventListener('click',  function () { if (stepIdx < STEPS.length - 1) { stepIdx++; applyZoom(); } });
+    if (btnOut) btnOut.addEventListener('click', function () { if (stepIdx > 0)               { stepIdx--; applyZoom(); } });
+    if (btnRst) btnRst.addEventListener('click', function () { stepIdx = STEPS.indexOf(100); applyZoom(); });
+
+    function isFullscreen() {
+      return document.fullscreenElement === shell || document.webkitFullscreenElement === shell;
+    }
+    function toggleFullscreen() {
+      if (isFullscreen()) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        const req = shell.requestFullscreen || shell.webkitRequestFullscreen;
+        if (req) req.call(shell);
       }
     }
-
-    openers.forEach(function (el) { el.addEventListener('click', open); });
-    closers.forEach(function (el) { el.addEventListener('click', close); });
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox) close();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && lightbox.dataset.open === 'true') close();
-    });
+    function syncFullscreenClass() {
+      shell.classList.toggle('is-fullscreen', isFullscreen());
+    }
+    if (btnFs) btnFs.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', syncFullscreenClass);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenClass);
   })();
   </script>
 
