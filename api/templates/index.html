@@ -198,36 +198,23 @@
     }
 
     .resume-frame-container {
-      border: 1px solid var(--border-hi);
-      border-radius: 4px;
+      border: 0;
+      border-radius: 0;
       overflow: hidden;
-      background: var(--surface);
+      background: transparent;
+      display: flex;
+      flex-direction: column;
     }
 
     .resume-frame {
       width: 100%;
-      height: 520px;
+      height: 100%;
+      min-height: 0;
       display: block;
       border: none;
+      object-fit: cover;
+      object-position: top center;
     }
-
-    .resume-download {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.4rem;
-      padding: 0.55rem 0.75rem;
-      background: var(--surface-hi);
-      border-top: 1px solid var(--border);
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: color 0.2s;
-    }
-
-    .resume-download:hover { color: var(--accent-hi); }
 
     .scroll-cue {
       position: absolute;
@@ -924,8 +911,7 @@
     }
 
     .link-row,
-    .social-card,
-    .resume-frame-container {
+    .social-card {
       border-color: var(--border);
       background: var(--field);
       border-radius: 2px;
@@ -939,7 +925,7 @@
     }
 
     .resume-frame-container {
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+      box-shadow: none;
     }
 
     #contact .resume-wrap {
@@ -1004,8 +990,9 @@
         margin-top: 0;
       }
       #contact .resume-frame {
-        height: 620px;
+        height: auto;
         min-height: 0;
+        object-fit: contain;
       }
       #projects,
       #contact {
@@ -1222,15 +1209,10 @@
         </div>
         <div class="resume-wrap">
           <div class="resume-frame-container">
-            <iframe
+            <img
               class="resume-frame"
-              src="/Nicholas_Johnson_Resume.pdf"
-              title="Nicholas Johnson Resume"
-              aria-label="Embedded resume PDF">
-            </iframe>
-            <a class="resume-download" href="/Nicholas_Johnson_Resume.pdf" download>
-              ↓ Download PDF
-            </a>
+              src="/static/Nicholas_Johnson_Resume_preview.png"
+              alt="Preview of Nicholas Johnson resume">
           </div>
         </div>
       </div>
