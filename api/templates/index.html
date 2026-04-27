@@ -540,24 +540,70 @@
     }
 
     .social-open-btn {
+      --circle-start: #f3ecdf;
+      --circle-end:   #94856f;
+      position: relative;
+      isolation: isolate;
       display: block;
       margin: 0 1.3rem 1rem;
-      padding: 0.5rem 1rem;
-      background: var(--accent-dim);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 3px;
-      color: var(--accent);
+      padding: 0.78rem 1.4rem;
+      background: rgba(243, 236, 223, 0.045);
+      border: 0;
+      border-radius: 999px;
+      color: var(--accent-hi, #f2eadc);
       font-family: var(--font-mono);
-      font-size: 0.64rem;
-      letter-spacing: 0.1em;
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
       text-align: center;
       text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
+      cursor: pointer;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: background 200ms var(--ease, cubic-bezier(.2,.7,.2,1)),
+                  color 200ms,
+                  transform 200ms;
     }
-
+    .social-open-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 1;
+      box-shadow:
+        inset 0 0 0 1px rgba(243, 236, 223, 0.18),
+        inset 0 0 18px 0 rgba(216, 202, 178, 0.10),
+        inset 0 -3px 14px 0 rgba(216, 202, 178, 0.16),
+        0 1px 3px 0 rgba(0, 0, 0, 0.50),
+        0 4px 14px 0 rgba(0, 0, 0, 0.45);
+      transition: transform 300ms var(--ease, cubic-bezier(.2,.7,.2,1));
+    }
     .social-open-btn:hover {
-      background: var(--accent-mid);
-      border-color: var(--border-hi);
+      background: rgba(243, 236, 223, 0.085);
+      color: #ffffff;
+    }
+    .social-open-btn:active::before { transform: scale(0.975); }
+    .social-open-btn:focus-visible { outline: 2px solid var(--accent-hi, #f2eadc); outline-offset: 3px; }
+
+    .social-open-btn > .btn-trail {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      filter: blur(14px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 300ms ease-out;
+    }
+    .social-open-btn > .btn-trail.fade-in  { opacity: 0.78; }
+    .social-open-btn > .btn-trail.fade-out { opacity: 0; transition-duration: 1.2s; }
+    .social-open-btn > .btn-label {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
     }
 
     /* ═══════════════════════════════════════════════
@@ -1027,8 +1073,7 @@
       border-radius: 2px;
     }
 
-    .link-row:hover,
-    .social-open-btn:hover {
+    .link-row:hover {
       color: var(--paper);
       border-color: var(--accent-lo);
       background: var(--field-hi);
@@ -1298,8 +1343,8 @@
                   <span class="social-platform">GitHub</span>
                 </div>
               </div>
-              <a href="https://github.com/nej296" target="_blank" rel="noopener" class="social-open-btn">
-                Open GitHub Profile ↗
+              <a href="https://github.com/nej296" target="_blank" rel="noopener" class="social-open-btn" data-hover-button>
+                <span class="btn-label">Open GitHub Profile ↗</span>
               </a>
             </div>
 
@@ -1312,8 +1357,8 @@
                   <span class="social-platform">LinkedIn</span>
                 </div>
               </div>
-              <a href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener" class="social-open-btn">
-                Open LinkedIn Profile ↗
+              <a href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener" class="social-open-btn" data-hover-button>
+                <span class="btn-label">Open LinkedIn Profile ↗</span>
               </a>
             </div>
           </div>
@@ -1929,6 +1974,52 @@
     if (btnFs) btnFs.addEventListener('click', toggleFullscreen);
     document.addEventListener('fullscreenchange', syncFullscreenClass);
     document.addEventListener('webkitfullscreenchange', syncFullscreenClass);
+  })();
+  </script>
+
+  <script>
+  (function () {
+    'use strict';
+    const buttons = document.querySelectorAll('[data-hover-button]');
+    if (!buttons.length) return;
+
+    const THROTTLE_MS = 90;
+    const FADE_OUT_AT = 1000;
+    const REMOVE_AT   = 2200;
+
+    buttons.forEach(function (btn) {
+      let listening = false;
+      let lastAdded = 0;
+
+      function makeTrail(x, y) {
+        const w = btn.offsetWidth || 1;
+        const xPct = Math.max(0, Math.min(1, x / w)) * 100;
+        const cs = getComputedStyle(btn);
+        const start = cs.getPropertyValue('--circle-start').trim() || '#f3ecdf';
+        const end   = cs.getPropertyValue('--circle-end').trim()   || '#94856f';
+        const dot = document.createElement('span');
+        dot.className = 'btn-trail';
+        dot.style.left = x + 'px';
+        dot.style.top  = y + 'px';
+        dot.style.background =
+          'linear-gradient(to right, ' + start + ' ' + xPct + '%, ' + end + ' ' + xPct + '%)';
+        btn.appendChild(dot);
+        requestAnimationFrame(function () { dot.classList.add('fade-in'); });
+        setTimeout(function () { dot.classList.remove('fade-in'); dot.classList.add('fade-out'); }, FADE_OUT_AT);
+        setTimeout(function () { if (dot.parentNode) dot.parentNode.removeChild(dot); }, REMOVE_AT);
+      }
+
+      btn.addEventListener('pointerenter', function () { listening = true; });
+      btn.addEventListener('pointerleave', function () { listening = false; });
+      btn.addEventListener('pointermove', function (e) {
+        if (!listening) return;
+        const now = Date.now();
+        if (now - lastAdded < THROTTLE_MS) return;
+        lastAdded = now;
+        const rect = btn.getBoundingClientRect();
+        makeTrail(e.clientX - rect.left, e.clientY - rect.top);
+      });
+    });
   })();
   </script>
 
