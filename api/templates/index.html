@@ -480,73 +480,14 @@
       .proj-type { display: none; }
     }
 
-    /* Social preview cards (contact section) */
-    .social-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-top: 0.7rem;
-    }
-
-    .social-card-head {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      padding: 0.95rem 1.3rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .social-icon {
-      font-size: 1.05rem;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .social-card-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.12rem;
-      min-width: 0;
-    }
-
-    .social-handle {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text);
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .social-platform {
-      font-family: var(--font-mono);
-      font-size: 0.56rem;
-      color: var(--text-dim);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .social-card-body {
-      padding: 0.85rem 1.3rem 0.7rem;
-    }
-
-    .social-desc {
-      font-size: 0.83rem;
-      color: var(--text-dim);
-      line-height: 1.65;
-    }
-
     .social-open-btn {
       --circle-start: #f3ecdf;
       --circle-end:   #94856f;
       position: relative;
       isolation: isolate;
       display: block;
-      margin: 0 1.3rem 1rem;
-      padding: 0.78rem 1.4rem;
+      margin-top: 0.7rem;
+      padding: 0.85rem 1.5rem;
       background: rgba(243, 236, 223, 0.045);
       border: 0;
       border-radius: 999px;
@@ -1066,8 +1007,7 @@
       font-size: 1.05rem;
     }
 
-    .link-row,
-    .social-card {
+    .link-row {
       border-color: var(--border);
       background: var(--field);
       border-radius: 2px;
@@ -1334,33 +1274,13 @@
               <span class="link-label">University</span>
             </a>
 
-            <!-- GitHub preview card -->
-            <div class="social-card">
-              <div class="social-card-head">
-                <span class="social-icon">⌥</span>
-                <div class="social-card-meta">
-                  <span class="social-handle">github.com/nej296</span>
-                  <span class="social-platform">GitHub</span>
-                </div>
-              </div>
-              <a href="https://github.com/nej296" target="_blank" rel="noopener" class="social-open-btn" data-hover-button>
-                <span class="btn-label">Open GitHub Profile ↗</span>
-              </a>
-            </div>
+            <a href="https://github.com/nej296" target="_blank" rel="noopener" class="social-open-btn" data-hover-button>
+              <span class="btn-label">Open GitHub Profile ↗</span>
+            </a>
 
-            <!-- LinkedIn preview card -->
-            <div class="social-card">
-              <div class="social-card-head">
-                <span class="social-icon">◈</span>
-                <div class="social-card-meta">
-                  <span class="social-handle">linkedin.com/in/johnsonlink</span>
-                  <span class="social-platform">LinkedIn</span>
-                </div>
-              </div>
-              <a href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener" class="social-open-btn" data-hover-button>
-                <span class="btn-label">Open LinkedIn Profile ↗</span>
-              </a>
-            </div>
+            <a href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener" class="social-open-btn" data-hover-button>
+              <span class="btn-label">Open LinkedIn Profile ↗</span>
+            </a>
           </div>
         </div>
         <div class="resume-wrap">
