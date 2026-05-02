@@ -1156,7 +1156,7 @@
         grid-area: heroContent;
         max-width: 100%;
         margin-left: 0;
-        padding: 1.35rem 0 1.35rem 1rem;
+        padding: 1.35rem 4.75rem 1.35rem 1rem;
       }
       .hero-portrait {
         grid-area: heroPortrait;
@@ -1180,9 +1180,19 @@
         justify-self: center;
       }
       .neural-emblem {
-        top: 8rem;
-        left: 8.5rem;
-        width: 10.5rem;
+        position: absolute;
+        top: 0.55rem;
+        right: 0.65rem;
+        left: auto;
+        width: 4.125rem;
+        aspect-ratio: 1;
+        transform: rotate(12deg);
+        transform-origin: center;
+        opacity: 0.55;
+      }
+      .neural-emblem #neural-canvas {
+        opacity: 0.72;
+        filter: sepia(0.2) saturate(1.06) contrast(1.06);
       }
     }
   </style>
