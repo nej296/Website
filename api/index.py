@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, jsonify, Response, send_from_
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
+PRIVATE_DIR = os.path.join(BASE_DIR, 'private')
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR)
 
@@ -38,12 +39,19 @@ def hodgkin_huxley():
 
 
 @app.route('/Nicholas_Johnson_Resume.pdf')
+@app.route('/api/resume_may_2026.pdf')
 def resume_pdf():
+    """Not under api/static so Vercel never serves a stale edge-only PDF for this file."""
+    extra = (
+        {'download_name': 'Nicholas_Johnson_Resume.pdf'}
+        if request.path == '/Nicholas_Johnson_Resume.pdf'
+        else {}
+    )
     return send_from_directory(
-        STATIC_DIR,
+        PRIVATE_DIR,
         'resume_may_2026.pdf',
         mimetype='application/pdf',
-        download_name='Nicholas_Johnson_Resume.pdf',
+        **extra,
     )
 
 

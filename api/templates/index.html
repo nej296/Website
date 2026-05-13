@@ -1362,7 +1362,7 @@
                 <button type="button" class="resume-toolbar-btn" data-zoom-reset aria-label="Reset zoom" title="Reset zoom">↺</button>
               </div>
               <div class="resume-toolbar-group">
-                <a class="resume-toolbar-link" href="/static/resume_may_2026.pdf" download="Nicholas_Johnson_Resume.pdf">Download ↓</a>
+                <a class="resume-toolbar-link" href="/api/resume_may_2026.pdf" download="Nicholas_Johnson_Resume.pdf">Download ↓</a>
                 <span class="resume-toolbar-divider" aria-hidden="true"></span>
                 <button type="button" class="resume-toolbar-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">⤢</button>
               </div>
@@ -1371,7 +1371,7 @@
               <iframe
                 class="resume-frame"
                 id="resume-iframe"
-                src="/static/resume_may_2026.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
+                src="/api/resume_may_2026.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
                 title="Nicholas Johnson resume"
                 loading="lazy"></iframe>
             </div>
@@ -1929,7 +1929,7 @@
     const btnRst  = shell.querySelector('[data-zoom-reset]');
     const btnFs   = shell.querySelector('[data-fullscreen]');
 
-    const PDF_URL = '/static/resume_may_2026.pdf';
+    const PDF_URL = '/api/resume_may_2026.pdf';
     const STEPS   = [60, 75, 90, 100, 115, 135, 160, 190, 225];
     let stepIdx   = STEPS.indexOf(100);
 
