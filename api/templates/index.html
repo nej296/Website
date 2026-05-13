@@ -746,22 +746,87 @@
       isolation: isolate;
     }
 
-    .hero-portrait {
+    .hero-highlight {
       position: absolute;
-      right: clamp(6rem, 14vw, 17rem);
-      top: calc(50vh - 13.5rem);
-      width: clamp(240px, 24vw, 360px);
+      right: clamp(4rem, 11vw, 13rem);
+      top: calc(50vh - 15rem);
+      width: clamp(300px, 30vw, 440px);
       transform: none;
-      background: transparent;
       z-index: 1;
       opacity: 0;
       animation: fadeInOnly 0.8s var(--ease) 0.35s forwards;
+      padding: clamp(1.35rem, 2.4vw, 2rem);
+      border: 1px solid rgba(242, 234, 220, 0.18);
+      border-radius: 2px;
+      background:
+        linear-gradient(135deg, rgba(242, 234, 220, 0.12), rgba(242, 234, 220, 0.045) 42%, rgba(16, 16, 14, 0.72)),
+        rgba(16, 16, 14, 0.78);
+      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(18px);
     }
 
-    .hero-portrait img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .hero-highlight::before {
+      content: '';
+      position: absolute;
+      inset: 0.75rem;
+      border: 1px solid rgba(242, 234, 220, 0.08);
+      pointer-events: none;
+    }
+
+    .highlight-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1.25rem;
+      color: var(--paper-dim);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .highlight-kicker::before {
+      content: '';
+      width: 1.55rem;
+      height: 1px;
+      background: var(--accent-hi);
+      opacity: 0.62;
+    }
+
+    .highlight-title {
+      margin: 0 0 1.1rem;
+      max-width: 11ch;
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3.1rem);
+      font-weight: 500;
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+    }
+
+    .highlight-copy {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: clamp(0.88rem, 1.05vw, 1rem);
+      line-height: 1.72;
+    }
+
+    .highlight-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.45rem;
+      min-height: 2.4rem;
+      padding: 0 0.9rem;
+      border: 1px solid rgba(242, 234, 220, 0.12);
+      border-radius: 999px;
+      background: rgba(232, 222, 204, 0.06);
+      color: rgba(243, 236, 223, 0.44);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      cursor: not-allowed;
     }
 
     .hero-content {
@@ -769,7 +834,7 @@
       top: auto;
       left: auto;
       transform: none;
-      max-width: min(880px, 66vw);
+      max-width: min(760px, 44vw);
       margin-left: clamp(2rem, 9vw, 8rem);
       padding: clamp(2rem, 4vw, 4rem);
       border-left: 1px solid var(--border-hi);
@@ -1068,12 +1133,13 @@
         margin-left: 0;
         padding: 1.5rem 0 1.5rem 1.25rem;
       }
-      .hero-portrait {
-        right: 3.25rem;
-        top: 42%;
-        bottom: auto;
-        width: 140px;
-        transform: translateY(-50%);
+      .hero-highlight {
+        right: 1.25rem;
+        top: auto;
+        bottom: 5.75rem;
+        width: min(360px, calc(100vw - 2.5rem));
+        transform: none;
+        padding: 1.25rem;
       }
       .neural-emblem {
         top: 9.1rem;
@@ -1136,7 +1202,7 @@
       }
     }
 
-    /* Hero: portrait below headline copy on typical iPhone portrait widths only.
+    /* Hero: highlighted project below headline copy on typical iPhone portrait widths only.
        (CSS cannot target “iPhone” exactly; ~430px covers iPhone 12–15 portrait.) */
     @media (max-width: 430px) {
       #hero {
@@ -1144,7 +1210,7 @@
         grid-template-columns: 1fr;
         grid-template-areas:
           "heroContent"
-          "heroPortrait"
+          "heroHighlight"
           "heroScroll";
         align-items: start;
         justify-items: stretch;
@@ -1158,15 +1224,15 @@
         margin-left: 0;
         padding: 1.35rem 0 1.35rem 1rem;
       }
-      .hero-portrait {
-        grid-area: heroPortrait;
+      .hero-highlight {
+        grid-area: heroHighlight;
         position: static;
         right: auto;
         top: auto;
         bottom: auto;
         left: auto;
         transform: none;
-        width: min(188px, 46vw);
+        width: 100%;
         margin: 0.35rem auto 0;
       }
       .scroll-cue {
@@ -1196,11 +1262,16 @@
     </ul>
   </nav>
 
-  <!-- ─── HERO — identity left, neuron right ──────── -->
+  <!-- ─── HERO — identity left, featured project right ──────── -->
   <section id="hero">
-    <figure class="hero-portrait" aria-label="Portrait of Nicholas Johnson">
-      <img src="/static/nicholas-portrait-original.png" alt="Nicholas Johnson portrait">
-    </figure>
+    <aside class="hero-highlight" aria-labelledby="highlight-title">
+      <span class="highlight-kicker">Featured Work</span>
+      <h2 class="highlight-title" id="highlight-title">Hodgkin–Huxley Neuron Simulator</h2>
+      <p class="highlight-copy">
+        Built a biophysical neuron simulator from the ground up using the Hodgkin–Huxley mathematical framework. Investigated how sodium and potassium conductance parameters shape neuronal spike behavior, then validated outputs against NEURON to confirm numerical accuracy and biological realism. Findings were documented in a full research-style paper, treating the project with the same rigor as a published study.
+      </p>
+      <span class="highlight-status" aria-disabled="true">Scientific Paper Coming Soon</span>
+    </aside>
     <div class="hero-content">
       <h1 class="hero-name">Nicholas Johnson</h1>
       <p class="hero-school">George Mason University</p>
