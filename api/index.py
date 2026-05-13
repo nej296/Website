@@ -12,7 +12,7 @@ app = Flask(__name__, template_folder=TEMPLATE_DIR)
 @app.after_request
 def avoid_stale_html_cache(response):
     """So updates to templates show up instead of a cached older deployment HTML."""
-    if request.endpoint in ('home', 'tool', 'neur327', 'hodgkin_huxley'):
+    if request.endpoint in ('home', 'tool', 'neur327', 'hodgkin_huxley', 'resume_pdf'):
         response.headers['Cache-Control'] = 'no-store, max-age=0, must-revalidate'
     return response
 
@@ -41,8 +41,9 @@ def hodgkin_huxley():
 def resume_pdf():
     return send_from_directory(
         STATIC_DIR,
-        'Nicholas_Johnson_Resume.pdf',
+        'resume_may_2026.pdf',
         mimetype='application/pdf',
+        download_name='Nicholas_Johnson_Resume.pdf',
     )
 
 
