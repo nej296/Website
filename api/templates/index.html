@@ -1072,6 +1072,20 @@
       font-size: 1.05rem;
     }
 
+    .contact-headshot {
+      width: 86px;
+      height: 86px;
+      margin: 0 0 1.35rem;
+      border-radius: 50%;
+      border: 1px solid rgba(242, 234, 220, 0.22);
+      background: rgba(232, 222, 204, 0.06);
+      box-shadow:
+        0 18px 44px rgba(0, 0, 0, 0.32),
+        0 0 0 6px rgba(232, 222, 204, 0.025);
+      object-fit: cover;
+      display: block;
+    }
+
     .link-row {
       border-color: var(--border);
       background: var(--field);
@@ -1172,6 +1186,10 @@
       }
       .hero-name {
         font-size: clamp(3.2rem, 18vw, 4.6rem);
+      }
+      .contact-headshot {
+        width: 74px;
+        height: 74px;
       }
       .sec-head {
         gap: 0.9rem;
@@ -1401,6 +1419,11 @@
       </div>
       <div class="contact-body">
         <div class="contact-left">
+          <img
+            class="contact-headshot"
+            src="/static/nicholas-contact-portrait.png"
+            alt="Nicholas Johnson portrait"
+            loading="lazy">
           <p class="contact-copy">
             Open to research collaborations, internship opportunities, and projects
             about neuroscience, computational modeling, and everything in between<br><br>
