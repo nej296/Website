@@ -39,7 +39,7 @@ def hodgkin_huxley():
 
 
 @app.route('/Nicholas_Johnson_Resume.pdf')
-@app.route('/api/resume_may_2026.pdf')
+@app.route('/resume-may-2026.pdf')
 def resume_pdf():
     """Not under api/static so Vercel never serves a stale edge-only PDF for this file."""
     extra = (
