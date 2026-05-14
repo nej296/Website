@@ -326,6 +326,61 @@
       height: calc(100vh - 48px);
     }
 
+    .resume-fallback {
+      display: none;
+      min-height: clamp(420px, 62vh, 760px);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(135deg, rgba(242, 234, 220, 0.10), rgba(242, 234, 220, 0.035)),
+        #10100e;
+      text-align: center;
+    }
+
+    .resume-fallback-card {
+      width: min(100%, 24rem);
+      padding: 2rem;
+      border: 1px solid rgba(242, 234, 220, 0.16);
+      background: rgba(16, 16, 14, 0.86);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+    }
+
+    .resume-fallback-kicker {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: var(--paper-dim, var(--text-dim));
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .resume-fallback-title {
+      margin: 0 0 0.8rem;
+      color: var(--paper, var(--text));
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+      letter-spacing: -0.055em;
+      line-height: 0.96;
+    }
+
+    .resume-fallback-copy {
+      margin: 0 0 1.4rem;
+      color: var(--ink-soft, rgba(240, 240, 240, 0.72));
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .resume-frame-container.uses-fallback .resume-frame {
+      display: none;
+    }
+
+    .resume-frame-container.uses-fallback .resume-fallback {
+      display: flex;
+    }
+
     .scroll-cue {
       position: absolute;
       bottom: 2.5rem;
@@ -478,6 +533,90 @@
     @media (max-width: 600px) {
       .project-row { grid-template-columns: 1fr auto; gap: 1rem; }
       .proj-type { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════
+       COURSEWORK
+    ═══════════════════════════════════════════════ */
+    #coursework { padding: 0 3rem 8rem; }
+
+    .coursework-wrap { max-width: 900px; margin: 0 auto; }
+
+    .coursework-note {
+      margin: -1.5rem 0 2rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    #coursework .sec-title {
+      white-space: normal;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+
+    .course-card {
+      min-width: 0;
+      padding: 1.1rem;
+      background: var(--surface);
+    }
+
+    .course-subject {
+      margin-bottom: 0.9rem;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .course-list {
+      display: grid;
+      gap: 0.55rem;
+      list-style: none;
+    }
+
+    .course-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: baseline;
+      gap: 0.65rem;
+      min-width: 0;
+      color: rgba(240, 240, 240, 0.78);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .course-code {
+      color: var(--accent-hi);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .course-name {
+      min-width: 0;
+    }
+
+    .course-status {
+      padding: 0.14rem 0.42rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.54rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .social-open-btn {
@@ -911,11 +1050,13 @@
     }
 
     #projects,
+    #coursework,
     #contact {
       padding: 8rem 3rem;
     }
 
     .projects-wrap,
+    .coursework-wrap,
     .contact-wrap {
       max-width: 1180px;
       padding: clamp(1.5rem, 4vw, 3rem);
@@ -1052,6 +1193,44 @@
       text-transform: uppercase;
     }
 
+    #coursework {
+      padding-top: 0;
+    }
+
+    .coursework-note {
+      color: var(--paper-dim);
+    }
+
+    .course-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-color: var(--border);
+      background: var(--border);
+    }
+
+    .course-card {
+      background:
+        linear-gradient(135deg, rgba(232, 222, 204, 0.045), transparent 66%),
+        var(--surface);
+    }
+
+    .course-subject {
+      color: var(--paper);
+    }
+
+    .course-item {
+      color: var(--ink-soft);
+    }
+
+    .course-code {
+      color: var(--accent-hi);
+    }
+
+    .course-status {
+      border-color: rgba(242, 234, 220, 0.14);
+      color: var(--paper-dim);
+      background: rgba(232, 222, 204, 0.045);
+    }
+
     #contact {
       border-top: 0;
     }
@@ -1161,6 +1340,7 @@
         width: 14.6rem;
       }
       .projects-list,
+      .course-grid,
       .contact-body {
         grid-template-columns: 1fr;
       }
@@ -1171,6 +1351,7 @@
         height: clamp(560px, 72vh, 900px);
       }
       #projects,
+      #coursework,
       #contact {
         padding: 4.5rem 1.25rem;
       }
@@ -1197,6 +1378,13 @@
       .sec-rule {
         display: none;
       }
+      .course-item {
+        grid-template-columns: auto 1fr;
+      }
+      .course-status {
+        grid-column: 2;
+        justify-self: start;
+      }
     }
 
     /* Contact: single column on phones — including landscape iPhones where
@@ -1220,7 +1408,7 @@
       }
     }
 
-    /* Hero: highlighted project below headline copy on typical iPhone portrait widths only.
+    /* Hero: compact first screen on typical iPhone portrait widths only.
        (CSS cannot target “iPhone” exactly; ~430px covers iPhone 12–15 portrait.) */
     @media (max-width: 430px) {
       #hero {
@@ -1232,15 +1420,35 @@
           "heroScroll";
         align-items: start;
         justify-items: stretch;
-        min-height: auto;
-        padding: 6.5rem 1.1rem 2.75rem;
-        row-gap: 1.15rem;
+        min-height: 100svh;
+        padding: 5.7rem 1rem 1.25rem;
+        row-gap: 0.7rem;
       }
       .hero-content {
         grid-area: heroContent;
         max-width: 100%;
         margin-left: 0;
-        padding: 1.35rem 0 1.35rem 1rem;
+        min-height: 12.4rem;
+        padding: 1rem 6.1rem 1rem 0.85rem;
+      }
+      .hero-name {
+        font-size: clamp(2.45rem, 13.5vw, 3.35rem);
+        margin-bottom: 0.65rem;
+      }
+      .hero-school,
+      .hero-degree {
+        font-size: 0.72rem;
+        line-height: 1.2;
+      }
+      .hero-degree {
+        margin-bottom: 1rem;
+      }
+      .hero-rule {
+        margin-bottom: 0.85rem;
+      }
+      .hero-about {
+        font-size: 0.88rem;
+        line-height: 1.45;
       }
       .hero-highlight {
         grid-area: heroHighlight;
@@ -1251,7 +1459,31 @@
         left: auto;
         transform: none;
         width: 100%;
-        margin: 0.35rem auto 0;
+        margin: 0;
+        padding: 0.95rem;
+      }
+      .hero-highlight::before {
+        inset: 0.45rem;
+      }
+      .highlight-kicker {
+        margin-bottom: 0.55rem;
+        font-size: 0.54rem;
+      }
+      .highlight-title {
+        max-width: none;
+        margin-bottom: 0.55rem;
+        font-size: 1.35rem;
+        line-height: 1.02;
+      }
+      .highlight-copy {
+        font-size: 0.72rem;
+        line-height: 1.36;
+      }
+      .highlight-status {
+        min-height: 1.8rem;
+        margin-top: 0.65rem;
+        padding: 0 0.65rem;
+        font-size: 0.5rem;
       }
       .scroll-cue {
         grid-area: heroScroll;
@@ -1264,7 +1496,12 @@
         justify-self: center;
       }
       .neural-emblem {
-        display: none !important;
+        display: block !important;
+        top: 0.7rem;
+        right: 0.1rem;
+        left: auto;
+        width: 5.9rem;
+        opacity: 0.82;
       }
     }
   </style>
@@ -1409,11 +1646,88 @@
     </div>
   </section>
 
+  <!-- ─── RELEVANT COURSEWORK ─────────────────────── -->
+  <section id="coursework" aria-labelledby="coursework-title">
+    <div class="coursework-wrap">
+      <div class="sec-head">
+        <span class="sec-num">02 //</span>
+        <h2 class="sec-title" id="coursework-title">Relevant Coursework</h2>
+        <div class="sec-rule"></div>
+      </div>
+      <p class="coursework-note">Planned coursework is marked with a small label.</p>
+
+      <div class="course-grid">
+        <article class="course-card">
+          <h3 class="course-subject">Chemistry</h3>
+          <ul class="course-list">
+            <li class="course-item"><span class="course-code">CHEM 211</span><span class="course-name">General Chemistry I</span></li>
+            <li class="course-item"><span class="course-code">CHEM 212</span><span class="course-name">General Chemistry II</span></li>
+            <li class="course-item"><span class="course-code">CHEM 213</span><span class="course-name">General Chemistry Laboratory I</span></li>
+            <li class="course-item"><span class="course-code">CHEM 214</span><span class="course-name">General Chemistry Laboratory II</span></li>
+          </ul>
+        </article>
+
+        <article class="course-card">
+          <h3 class="course-subject">Biology</h3>
+          <ul class="course-list">
+            <li class="course-item"><span class="course-code">BIOL 103</span><span class="course-name">Introductory Biology II: Cell and Molecular Biology</span></li>
+            <li class="course-item"><span class="course-code">BIOL 105</span><span class="course-name">Introductory Biology II Laboratory</span></li>
+            <li class="course-item"><span class="course-code">BIOL 213</span><span class="course-name">Cell Structure and Function</span></li>
+            <li class="course-item"><span class="course-code">BIOL 214</span><span class="course-name">Biostatistics for Biology Majors</span></li>
+            <li class="course-item"><span class="course-code">BIOL 311</span><span class="course-name">General Genetics</span></li>
+          </ul>
+        </article>
+
+        <article class="course-card">
+          <h3 class="course-subject">Physics &amp; Math</h3>
+          <ul class="course-list">
+            <li class="course-item"><span class="course-code">PHYS 160</span><span class="course-name">University Physics I</span></li>
+            <li class="course-item"><span class="course-code">PHYS 260</span><span class="course-name">University Physics II</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">MATH 105</span><span class="course-name">Precalculus Mathematics</span></li>
+            <li class="course-item"><span class="course-code">MATH 113</span><span class="course-name">Analytic Geometry and Calculus I</span></li>
+          </ul>
+        </article>
+
+        <article class="course-card">
+          <h3 class="course-subject">Neuroscience</h3>
+          <ul class="course-list">
+            <li class="course-item"><span class="course-code">NEUR 327</span><span class="course-name">Cellular Neuroscience</span></li>
+            <li class="course-item"><span class="course-code">NEUR 328</span><span class="course-name">Cellular Neuroscience Lab</span></li>
+            <li class="course-item"><span class="course-code">NEUR 335</span><span class="course-name">Developmental and Systems Neuroscience</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">NEUR 430</span><span class="course-name">Computational Neuroscience</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">NEUR 431</span><span class="course-name">Neuroinformatics</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">NEUR 461</span><span class="course-name">The Changing Brain: Evolution and Development</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">NEUR 461</span><span class="course-name">Computational Social Neuroscience</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">NEUR 473</span><span class="course-name">Current Neuroscience Research in Germany</span></li>
+          </ul>
+        </article>
+
+        <article class="course-card">
+          <h3 class="course-subject">Engineering &amp; Data</h3>
+          <ul class="course-list">
+            <li class="course-item"><span class="course-code">BENG 434</span><span class="course-name">Computational Modeling of Neurons and Networks</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">BENG 499</span><span class="course-name">Special Topics in Bioengineering</span></li>
+            <li class="course-item"><span class="course-code">CDS 303</span><span class="course-name">Scientific Data Mining</span><span class="course-status">Planned</span></li>
+            <li class="course-item"><span class="course-code">ENGR 107</span><span class="course-name">Introduction to Engineering</span></li>
+          </ul>
+        </article>
+
+        <article class="course-card">
+          <h3 class="course-subject">Psychology &amp; Humanities</h3>
+          <ul class="course-list">
+            <li class="course-item"><span class="course-code">PSYC 375</span><span class="course-name">Brain and Sensory Processes</span></li>
+            <li class="course-item"><span class="course-code">PHIL 100</span><span class="course-name">Introduction to Philosophy</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── CONTACT ───────────────────────────────── -->
   <section id="contact">
     <div class="contact-wrap">
       <div class="sec-head">
-        <span class="sec-num">02 //</span>
+        <span class="sec-num">03 //</span>
         <h2 class="sec-title">Contact</h2>
         <div class="sec-rule"></div>
       </div>
@@ -1468,6 +1782,18 @@
                 src="/resume-may-2026.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
                 title="Nicholas Johnson resume"
                 loading="lazy"></iframe>
+              <div class="resume-fallback" data-resume-fallback>
+                <div class="resume-fallback-card">
+                  <span class="resume-fallback-kicker">Resume PDF</span>
+                  <h3 class="resume-fallback-title">Open or Download</h3>
+                  <p class="resume-fallback-copy">
+                    Safari can sometimes unload embedded PDFs after tab switching. Use the controls above for the stable PDF file.
+                  </p>
+                  <a class="social-open-btn" href="/resume-may-2026.pdf" target="_blank" rel="noopener">
+                    <span class="btn-label">Open Resume PDF ↗</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2026,8 +2352,20 @@
     const PDF_URL = '/resume-may-2026.pdf';
     const STEPS   = [60, 75, 90, 100, 115, 135, 160, 190, 225];
     let stepIdx   = STEPS.indexOf(100);
+    let usingFallback = false;
+
+    function useResumeFallback() {
+      usingFallback = true;
+      shell.classList.add('uses-fallback');
+      [btnIn, btnOut, btnRst, btnFs].forEach(function (btn) {
+        if (btn) btn.disabled = true;
+      });
+      if (display) display.textContent = 'PDF';
+      if (btnFs) btnFs.title = 'Open the resume PDF in a new tab on Safari';
+    }
 
     function applyZoom() {
+      if (usingFallback) return;
       const z = STEPS[stepIdx];
       iframe.src = PDF_URL + '#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=' + z;
       iframe.style.width = z >= 100 ? (z + '%') : '100%';
@@ -2057,6 +2395,12 @@
     if (btnFs) btnFs.addEventListener('click', toggleFullscreen);
     document.addEventListener('fullscreenchange', syncFullscreenClass);
     document.addEventListener('webkitfullscreenchange', syncFullscreenClass);
+
+    const ua = navigator.userAgent || '';
+    const isAppleSafari = /(Macintosh|iPhone|iPad|iPod)/.test(ua)
+      && /Safari/.test(ua)
+      && !/(Chrome|CriOS|Chromium|Edg|FxiOS)/.test(ua);
+    if (isAppleSafari) useResumeFallback();
   })();
   </script>
 
