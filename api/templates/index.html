@@ -558,14 +558,14 @@
     .course-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1px;
-      border: 1px solid var(--border);
-      background: var(--border);
+      gap: 0.7rem;
+      background: transparent;
     }
 
     .course-card {
       min-width: 0;
       padding: 1.1rem;
+      border: 1px solid var(--border);
       background: var(--surface);
     }
 
@@ -1203,11 +1203,11 @@
 
     .course-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      border-color: var(--border);
-      background: var(--border);
+      background: transparent;
     }
 
     .course-card {
+      border-color: var(--border);
       background:
         linear-gradient(135deg, rgba(232, 222, 204, 0.045), transparent 66%),
         var(--surface);
