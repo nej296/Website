@@ -909,12 +909,12 @@
       width: 100%;
       aspect-ratio: 209 / 407;
       overflow: hidden;
-      border: 1px solid rgba(60, 90, 70, 0.45);
-      background: #eef2ee;
+      border: 1px solid rgba(0, 255, 65, 0.35);
+      background: #020a04;
       box-shadow:
-        0 0 0 1px rgba(0, 255, 80, 0.08),
-        0 0 22px rgba(0, 255, 70, 0.07),
-        inset 0 0 36px rgba(0, 0, 0, 0.14);
+        0 0 0 1px rgba(0, 255, 65, 0.12),
+        0 0 28px rgba(0, 255, 65, 0.14),
+        inset 0 0 42px rgba(0, 0, 0, 0.35);
     }
 
     .neuron-gif-wrap img {
@@ -929,79 +929,134 @@
 
     /* CRT / Matrix overlay — visual only; GIF size and playback unchanged */
     .neuron-gif-wrap::before,
-    .neuron-gif-wrap::after {
-      content: '';
+    .neuron-gif-wrap::after,
+    .matrix-overlay,
+    .crt-scanlines {
       position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 1;
     }
 
-    .neuron-gif-wrap::before {
-      opacity: 0.55;
+    .matrix-overlay {
+      z-index: 3;
+      opacity: 0.42;
+      mix-blend-mode: screen;
       background-image:
         repeating-linear-gradient(
           180deg,
-          rgba(0, 255, 70, 0) 0,
-          rgba(0, 255, 70, 0) 10px,
-          rgba(0, 255, 65, 0.14) 11px,
-          rgba(0, 255, 65, 0) 12px,
-          rgba(0, 255, 65, 0) 24px
+          rgba(0, 255, 65, 0) 0,
+          rgba(0, 255, 65, 0) 6px,
+          rgba(0, 255, 65, 0.55) 7px,
+          rgba(0, 255, 65, 0.08) 8px,
+          rgba(0, 255, 65, 0) 9px,
+          rgba(0, 255, 65, 0) 18px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(0, 255, 65, 0.03) 0,
+          rgba(0, 255, 65, 0.03) 1px,
+          transparent 1px,
+          transparent 10px
+        );
+      background-size: 12px 24px, 11px 100%;
+      animation: matrix-stream 0.75s linear infinite;
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+      mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+    }
+
+    .crt-scanlines {
+      z-index: 4;
+      opacity: 0.55;
+      mix-blend-mode: multiply;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0,
+          rgba(0, 0, 0, 0) 2px,
+          rgba(0, 0, 0, 0.22) 3px,
+          rgba(0, 0, 0, 0) 4px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 0,
+          rgba(255, 255, 255, 0) 3px,
+          rgba(255, 255, 255, 0.035) 4px
+        );
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+
+    .neuron-gif-wrap::before {
+      z-index: 1;
+      opacity: 0.72;
+      background-image:
+        repeating-linear-gradient(
+          180deg,
+          rgba(0, 255, 65, 0) 0,
+          rgba(0, 255, 65, 0) 8px,
+          rgba(0, 255, 65, 0.22) 9px,
+          rgba(0, 255, 65, 0) 10px,
+          rgba(0, 255, 65, 0) 20px
         ),
         repeating-linear-gradient(
           90deg,
           transparent 0,
-          transparent 7px,
-          rgba(0, 255, 80, 0.035) 7px,
-          rgba(0, 255, 80, 0.035) 8px
+          transparent 6px,
+          rgba(0, 255, 65, 0.06) 6px,
+          rgba(0, 255, 65, 0.06) 7px
         ),
         linear-gradient(
           180deg,
-          rgba(0, 255, 90, 0.07) 0%,
-          rgba(0, 60, 30, 0.1) 48%,
-          rgba(0, 255, 70, 0.06) 100%
+          rgba(0, 255, 65, 0.12) 0%,
+          rgba(0, 40, 18, 0.18) 45%,
+          rgba(0, 255, 65, 0.1) 100%
         ),
         linear-gradient(
           180deg,
           transparent 0%,
-          rgba(180, 255, 200, 0.07) 49.5%,
-          rgba(180, 255, 200, 0.14) 50%,
-          rgba(180, 255, 200, 0.07) 50.5%,
+          rgba(160, 255, 190, 0.08) 49.2%,
+          rgba(160, 255, 190, 0.22) 50%,
+          rgba(160, 255, 190, 0.08) 50.8%,
           transparent 100%
         );
-      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 220%;
-      animation: matrix-rain 1.15s linear infinite, crt-roll 5.5s linear infinite;
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 180%;
+      animation: matrix-rain 0.95s linear infinite, crt-roll 4.8s linear infinite;
       mix-blend-mode: soft-light;
     }
 
     .neuron-gif-wrap::after {
-      opacity: 0.95;
+      z-index: 2;
+      opacity: 1;
       background:
         repeating-linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0) 0,
           rgba(0, 0, 0, 0) 1px,
-          rgba(0, 0, 0, 0.11) 2px,
+          rgba(0, 0, 0, 0.16) 2px,
           rgba(0, 0, 0, 0) 3px
         ),
         repeating-linear-gradient(
           to right,
           rgba(255, 255, 255, 0) 0,
-          rgba(255, 255, 255, 0) 3px,
-          rgba(255, 255, 255, 0.015) 4px
+          rgba(255, 255, 255, 0) 2px,
+          rgba(255, 255, 255, 0.025) 3px
         ),
-        radial-gradient(ellipse at center, rgba(0, 255, 80, 0.06) 0%, transparent 52%),
-        radial-gradient(ellipse at center, transparent 54%, rgba(0, 0, 0, 0.38) 100%);
+        radial-gradient(ellipse at center, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.48) 100%);
       box-shadow:
-        inset 0 0 0 1px rgba(0, 255, 90, 0.22),
-        inset 0 0 34px rgba(0, 255, 70, 0.12),
-        inset 0 0 90px rgba(0, 20, 8, 0.22);
-      animation: crt-flicker 4.2s steps(1, end) infinite;
+        inset 0 0 0 1px rgba(0, 255, 65, 0.28),
+        inset 0 0 40px rgba(0, 255, 65, 0.16),
+        inset 0 0 100px rgba(0, 10, 4, 0.35);
+      animation: crt-flicker 3.8s steps(1, end) infinite;
+    }
+
+    @keyframes matrix-stream {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: 0 24px, 0 0; }
     }
 
     @keyframes matrix-rain {
       from { background-position: 0 0, 0 0, 0 0, 0 -120%; }
-      to   { background-position: 0 24px, 0 0, 0 0, 0 -120%; }
+      to   { background-position: 0 20px, 0 0, 0 0, 0 120%; }
     }
 
     @keyframes crt-roll {
@@ -1010,24 +1065,25 @@
     }
 
     @keyframes crt-flicker {
-      0%, 100% { opacity: 0.94; filter: brightness(1); }
-      6%       { opacity: 0.88; filter: brightness(0.97); }
-      7%       { opacity: 0.96; filter: brightness(1.02); }
-      8%       { opacity: 0.9;  filter: brightness(0.98); }
-      9%       { opacity: 0.95; filter: brightness(1); }
-      73%      { opacity: 0.96; filter: brightness(1.01); }
-      74%      { opacity: 0.86; filter: brightness(0.95); }
-      75%      { opacity: 0.95; filter: brightness(1); }
+      0%, 100% { opacity: 0.96; filter: brightness(1); }
+      4%       { opacity: 0.82; filter: brightness(0.94); }
+      5%       { opacity: 1;    filter: brightness(1.05); }
+      6%       { opacity: 0.88; filter: brightness(0.96); }
+      7%       { opacity: 0.98; filter: brightness(1); }
+      71%      { opacity: 0.97; filter: brightness(1.02); }
+      72%      { opacity: 0.8;  filter: brightness(0.92); }
+      73%      { opacity: 0.98; filter: brightness(1); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .neuron-gif-wrap::before,
-      .neuron-gif-wrap::after {
+      .neuron-gif-wrap::after,
+      .matrix-overlay {
         animation: none;
       }
     }
 
-    .neuron-label {
+        .neuron-label {
       margin: 0;
       text-align: center;
       color: var(--paper-dim);
@@ -1164,6 +1220,7 @@
     .hero-highlight.hero-neuron {
       right: clamp(6.5rem, 14vw, 16rem);
       top: calc(50vh - 19rem);
+      transform: translateX(-2.75rem);
     }
     .hero-highlight::before {
       content: '';
@@ -2061,6 +2118,8 @@
           <img
             src="/static/neuromorpho-neuron.gif"
             alt="Rotating 3D digital reconstruction of a human pyramidal neuron">
+          <span class="matrix-overlay" aria-hidden="true"></span>
+          <span class="crt-scanlines" aria-hidden="true"></span>
         </div>
         <figcaption class="neuron-label" id="neuron-label">
           Human Pyramidal Neuron <span class="neuron-label-sep" aria-hidden="true">|</span>
