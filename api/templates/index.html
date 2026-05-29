@@ -2102,11 +2102,14 @@
       #hero {
         display: flex;
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .hero-content {
         order: 1;
+        align-self: stretch;
         position: relative;
         top: auto;
         left: auto;
@@ -2119,34 +2122,25 @@
         margin-right: 0;
       }
 
-      .hero-highlight {
+      .hero-highlight.hero-neuron {
         order: 2;
-        position: relative;
-        inset: auto;
+        position: static;
         top: auto;
         right: auto;
         bottom: auto;
         left: auto;
         transform: none;
-        z-index: 1;
-      }
-
-      .hero-highlight.hero-neuron {
-        position: relative;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        left: 50%;
         align-self: center;
         width: min(100%, 280px);
         max-width: 280px;
-        margin: clamp(1.25rem, 5vw, 2rem) 0 0;
+        margin: clamp(1.25rem, 5vw, 2rem) auto 0;
         padding: 0;
-        transform: translateX(-50%);
+        flex-shrink: 0;
       }
 
       .hero-highlight.hero-neuron .neuron-figure {
         align-items: center;
+        width: 100%;
       }
 
       .scroll-cue {
