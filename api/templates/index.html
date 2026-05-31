@@ -238,6 +238,9 @@
       position: relative;
       min-height: 590px;
       padding: 1rem;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 0.75rem;
       background: #101613;
       border: 1px solid rgba(23, 24, 23, 0.18);
       border-radius: var(--radius);
@@ -288,18 +291,16 @@
     }
 
     .neuron-caption {
-      position: absolute;
-      inset: auto 1rem 1rem 1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.8rem 0.9rem;
-      background: rgba(16, 22, 19, 0.78);
-      border: 1px solid rgba(239, 236, 228, 0.16);
-      border-radius: 6px;
+      padding: 0 0.2rem;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
       color: rgba(255, 253, 250, 0.86);
-      backdrop-filter: blur(16px);
+      backdrop-filter: none;
     }
 
     .neuron-caption span {
@@ -315,7 +316,8 @@
     }
 
     .caption-title {
-      margin-top: 0.15rem;
+      margin-top: 0;
+      font-size: 0.78rem;
       font-weight: 600;
     }
 
@@ -704,11 +706,6 @@
         transform: translateY(0);
       }
 
-      .neuron-caption {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
       section {
         padding: 4rem 0;
       }
@@ -733,7 +730,7 @@
   <nav class="site-nav" aria-label="Primary navigation">
     <a class="nav-brand" href="#hero">Nicholas Johnson</a>
     <ul class="nav-links">
-      <li><a href="#work">Work</a></li>
+      <li><a href="#research">Research</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#coursework">Coursework</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -780,17 +777,17 @@
               src="/static/neuromorpho-neuron-spin-clean.gif"
               alt="Rotating digital reconstruction of a human pyramidal neuron">
           </div>
-          <div class="neuron-caption">
-            <span>
-              <span class="caption-title" id="neuron-title">Human pyramidal neuron morphology</span>
-            </span>
-            <a href="https://neuromorpho.org/neuron_info.jsp?neuron_name=0548_GH_100316_I_cell1" target="_blank" rel="noopener">NMO source</a>
-          </div>
+        </div>
+        <div class="neuron-caption">
+          <span>
+            <span class="caption-title" id="neuron-title">Human pyramidal neuron morphology</span>
+          </span>
+          <a href="https://neuromorpho.org/neuron_info.jsp?neuron_name=0548_GH_100316_I_cell1" target="_blank" rel="noopener">NMO source</a>
         </div>
       </aside>
     </header>
 
-    <section class="page-shell" id="work">
+    <section class="page-shell" id="research">
       <div class="section-head">
         <div>
           <span class="section-kicker">Research profile</span>
@@ -898,6 +895,16 @@
               <span class="tag">Single-cell model</span>
             </div>
           </article>
+
+          <article class="project-card">
+            <span class="project-eyebrow">Planned</span>
+            <h3>NEURON Simulator Python Scripted Neuronal Circuit Model</h3>
+            <div class="project-meta">
+              <span class="tag">NEURON</span>
+              <span class="tag">Python</span>
+              <span class="tag">Circuit model</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -923,11 +930,11 @@
             <li class="course-item"><span class="course-code">NEUR 335</span><span class="course-name">Developmental and Systems Neuroscience<span class="course-status">Planned</span></span></li>
             <li class="course-item"><span class="course-code">NEUR 430</span><span class="course-name">Computational Neuroscience<span class="course-status">Planned</span></span></li>
             <li class="course-item"><span class="course-code">NEUR 431</span><span class="course-name">Neuroinformatics<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 461</span><span class="course-name">The Changing Brain: Evolution and Development<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 461</span><span class="course-name">Computational Social Neuroscience<span class="course-status">Planned</span></span></li>
+            <li class="course-item"><span class="course-code">NEUR 471</span><span class="course-name">The Changing Brain: Evolution and Development<span class="course-status">Planned</span></span></li>
             <li class="course-item"><span class="course-code">NEUR 473</span><span class="course-name">Current Neuroscience Research in Germany</span></li>
             <li class="course-item"><span class="course-code">PSYC 375</span><span class="course-name">Brain and Sensory Processes<span class="course-status">Grade received: A</span></span></li>
-            <li class="course-item"><span class="course-code">PSYC 376/373</span><span class="course-name">Brain and Behavior<span class="course-status">Planned</span></span></li>
+            <li class="course-item"><span class="course-code">PSYC 376</span><span class="course-name">Brain and Behavior<span class="course-status">Planned</span></span></li>
+            <li class="course-item"><span class="course-code">PSYC 373</span><span class="course-name">Biopsychology Lab<span class="course-status">Planned</span></span></li>
           </ul>
         </article>
 
