@@ -255,7 +255,7 @@
 
     .hero-feature {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.48fr);
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
       gap: clamp(1.1rem, 2.5vw, 1.65rem);
       align-items: center;
       padding: clamp(1.25rem, 2.5vw, 1.7rem);
@@ -269,9 +269,9 @@
 
     .feature-copy h2 {
       margin: 0.8rem 0 0.9rem;
-      font-size: clamp(1.9rem, 3.15vw, 2.95rem);
+      font-size: clamp(1.72rem, 2.55vw, 2.45rem);
       font-weight: 700;
-      line-height: 0.98;
+      line-height: 1.02;
       letter-spacing: 0;
     }
 
@@ -382,8 +382,8 @@
 
     .landing-project-card {
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(310px, 1fr);
-      gap: 1rem;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
       align-items: start;
       padding: 1rem;
     }
@@ -404,7 +404,7 @@
 
     .landing-project-flow {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(170px, 1fr));
       gap: 0.6rem;
     }
 
@@ -429,8 +429,9 @@
     .flow-step strong {
       display: block;
       margin-top: 0.45rem;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       line-height: 1.28;
+      overflow-wrap: anywhere;
     }
 
     main > section {
@@ -743,6 +744,11 @@
       .feature-copy h2,
       .section-title {
         font-size: clamp(2rem, 11vw, 3rem);
+      }
+
+      .feature-copy h2 {
+        font-size: clamp(1.65rem, 8vw, 2.15rem);
+        line-height: 1.04;
       }
 
       .neuron-card {
