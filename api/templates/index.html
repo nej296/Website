@@ -718,8 +718,29 @@
     }
 
     @media (max-width: 560px) {
+      html,
+      body {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
       .shell {
         width: min(100% - 1rem, 1180px);
+      }
+
+      .topbar {
+        padding: 0.65rem 0.65rem 0.72rem;
+      }
+
+      .nav-links {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 0.1rem;
+        scrollbar-width: none;
+      }
+
+      .nav-links::-webkit-scrollbar {
+        display: none;
       }
 
       .profile-panel h1 {
@@ -741,9 +762,28 @@
         gap: 0.25rem;
       }
 
+      .button {
+        min-height: 34px;
+        padding: 0.5rem 0.48rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.04em;
+      }
+
+      .action-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.45rem;
+      }
+
+      .action-row .button {
+        width: 100%;
+        white-space: nowrap;
+      }
+
       .feature-copy h2,
       .section-title {
         font-size: clamp(2rem, 11vw, 3rem);
+        overflow-wrap: break-word;
       }
 
       .feature-copy h2 {
@@ -751,8 +791,25 @@
         line-height: 1.04;
       }
 
+      .landing-project-card h3,
+      .project-card h3,
+      .content-card h3,
+      .tag,
+      .dossier-value,
+      .course-name {
+        overflow-wrap: anywhere;
+      }
+
       .neuron-card {
-        min-height: 360px;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 0;
+        justify-self: stretch;
+      }
+
+      .neuron-window {
+        min-height: 245px;
       }
 
       .neuron-art {
@@ -760,11 +817,91 @@
       }
 
       .neuron-caption {
+        align-items: flex-start;
+        flex-wrap: wrap;
         font-size: 0.56rem;
       }
 
       .course-item {
         grid-template-columns: 70px minmax(0, 1fr);
+      }
+
+      .link-row {
+        align-items: flex-start;
+        min-width: 0;
+      }
+
+      .link-row span:first-child {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .resume-actions .button {
+        flex: 1 1 auto;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .shell {
+        width: min(100% - 0.5rem, 1180px);
+      }
+
+      .topbar {
+        padding-inline: 0.5rem;
+      }
+
+      .brand {
+        font-size: 0.62rem;
+      }
+
+      .nav-links {
+        gap: 0.62rem;
+      }
+
+      .nav-links a {
+        font-size: 0.52rem;
+        letter-spacing: 0.05em;
+      }
+
+      .profile-panel h1 {
+        font-size: clamp(2.35rem, 15vw, 3.1rem);
+      }
+
+      .profile-copy,
+      .feature-copy p,
+      .landing-project-card p,
+      .project-card p,
+      .content-card p,
+      .section-copy {
+        font-size: 0.84rem;
+      }
+
+      .kicker {
+        font-size: 0.58rem;
+      }
+
+      .button {
+        font-size: 0.54rem;
+        padding-inline: 0.28rem;
+      }
+
+      .feature-copy h2 {
+        font-size: clamp(1.5rem, 7.8vw, 1.9rem);
+      }
+
+      .landing-project-card h3,
+      .project-card h3 {
+        font-size: 1rem;
+      }
+
+      .flow-step {
+        min-height: 0;
+        padding: 0.65rem;
+      }
+
+      .course-item {
+        grid-template-columns: 62px minmax(0, 1fr);
+        gap: 0.5rem;
       }
     }
 
