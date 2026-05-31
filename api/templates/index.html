@@ -273,9 +273,16 @@
       overflow: hidden;
     }
 
+    .neuron-art {
+      width: min(86%, 360px);
+      overflow: visible;
+      transform: translateY(-4px);
+    }
+
     .neuron-window img {
-      width: min(98%, 560px);
-      max-height: 500px;
+      display: block;
+      width: 100%;
+      max-height: none;
       object-fit: contain;
       filter: drop-shadow(0 0 28px rgba(86, 209, 174, 0.22));
     }
@@ -642,6 +649,10 @@
         min-height: 468px;
       }
 
+      .neuron-art {
+        width: min(82%, 340px);
+      }
+
       .focus-grid,
       .course-grid {
         grid-template-columns: 1fr 1fr;
@@ -686,6 +697,11 @@
 
       .neuron-window {
         min-height: 398px;
+      }
+
+      .neuron-art {
+        width: min(78%, 260px);
+        transform: translateY(0);
       }
 
       .neuron-caption {
@@ -739,32 +755,33 @@
         <div class="hero-actions">
           <a class="button primary" href="#projects">View Projects</a>
           <a class="button" href="#contact">Contact</a>
-          <a class="button" href="/resume-may-2026.pdf" target="_blank" rel="noopener">Resume</a>
+          <a class="button" href="/Nicholas_Johnson_Computational_Neuroscience_Resume.pdf" target="_blank" rel="noopener">Resume</a>
         </div>
         <div class="hero-meta" aria-label="Profile highlights">
           <div class="meta-item">
             <span class="meta-label">Research</span>
-            <span class="meta-value">NeuroMorpho.org literature mining and metadata curation</span>
+            <span class="meta-value">NeuroMorpho.org Research Assistant</span>
           </div>
           <div class="meta-item">
             <span class="meta-label">Modeling</span>
-            <span class="meta-value">Hodgkin-Huxley simulation and NEURON validation</span>
+            <span class="meta-value">NEURON Simulator, Python, Hodgkin-Huxley modeling, and SWC morphology workflows</span>
           </div>
           <div class="meta-item">
             <span class="meta-label">Direction</span>
-            <span class="meta-value">Allen Cell Types, SWC morphology, and large neuroscience datasets</span>
+            <span class="meta-value">Senior project connecting NeuroMorpho.org, Allen Institute data, and NEURON simulations</span>
           </div>
         </div>
       </div>
 
       <aside class="neuron-panel" aria-labelledby="neuron-title">
         <div class="neuron-window">
-          <img
-            src="/static/neuromorpho-neuron-spin.gif"
-            alt="Rotating digital reconstruction of a human pyramidal neuron">
+          <div class="neuron-art">
+            <img
+              src="/static/neuromorpho-neuron-spin-clean.gif"
+              alt="Rotating digital reconstruction of a human pyramidal neuron">
+          </div>
           <div class="neuron-caption">
             <span>
-              <span class="caption-kicker">Front-page animation</span>
               <span class="caption-title" id="neuron-title">Human pyramidal neuron morphology</span>
             </span>
             <a href="https://neuromorpho.org/neuron_info.jsp?neuron_name=0548_GH_100316_I_cell1" target="_blank" rel="noopener">NMO source</a>
@@ -777,37 +794,42 @@
       <div class="section-head">
         <div>
           <span class="section-kicker">Research profile</span>
-          <h2 class="section-title">A practical neuroinformatics focus.</h2>
+          <h2 class="section-title">NeuroMorpho.org Research Assistant</h2>
         </div>
         <p class="section-copy">
-          My current work centers on the parts of neuroscience that become valuable when they are made structured,
-          reproducible, and computationally useful: literature evidence, morphology metadata, SWC files, and models.
+          I support NeuroMorpho.org through literature mining and neuroinformatics data curation for digitally
+          reconstructed neurons and glia, with emphasis on reconstruction evidence, tracing methods, metadata
+          quality, and data-source availability.
         </p>
       </div>
 
       <div class="focus-grid">
         <article class="focus-card">
           <span class="focus-index">01</span>
-          <h3>Literature mining and data provenance</h3>
+          <h3>Reconstruction Evidence</h3>
           <p>
-            Reviewing publications for neuronal and glial reconstructions, tracing systems, figures,
-            supplementary material, data links, and confidence levels for database inclusion.
+            Evaluated scientific articles for evidence of bifurcating, skeletonized neuronal or glial reconstructions.
+            Identified reconstruction and tracing methods including Neurolucida, Imaris Filament Tracer, Amira,
+            Vaa3D, Simple Neurite Tracer, and related tools.
           </p>
         </article>
         <article class="focus-card">
           <span class="focus-index">02</span>
-          <h3>Neuronal morphology and SWC workflows</h3>
+          <h3>Literature and Data Review</h3>
           <p>
-            Building fluency in morphology-focused datasets, bifurcating reconstructions, metadata quality,
-            and the structure of digital neuronal traces.
+            Reviewed figures, captions, supplementary materials, data availability statements, and repository links
+            to determine whether reconstruction data were accessible. Classified articles as positive, negative,
+            inaccessible, or shared-source based on reconstruction evidence and metadata standards.
           </p>
         </article>
         <article class="focus-card">
           <span class="focus-index">03</span>
-          <h3>Computational neuron modeling</h3>
+          <h3>Metadata Curation</h3>
           <p>
-            Using Hodgkin-Huxley style simulations and NEURON-oriented coursework to connect biophysical
-            model assumptions with measurable spike behavior.
+            Documented reconstruction details, tracing methods, confidence levels, DOI/PMID links, author information,
+            and data-source availability. Developed experience with neuroscience metadata curation,
+            morphology-focused literature review, scientific data provenance, and quality control for large-scale
+            neuroinformatics resources.
           </p>
         </article>
       </div>
@@ -826,47 +848,54 @@
       </div>
 
       <div class="projects-grid">
-        <a href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener" class="project-card featured">
-          <span class="project-eyebrow">Featured work</span>
-          <h3>Hodgkin-Huxley Neuron Simulator</h3>
+        <article class="project-card featured">
+          <span class="project-eyebrow">Featured planned senior project</span>
+          <h3>From Morphology to Excitability</h3>
           <p>
-            Built a biophysical neuron simulator using the Hodgkin-Huxley mathematical framework,
-            investigated how sodium and potassium conductance parameters shape spike behavior,
-            and validated outputs against NEURON for numerical and biological realism.
+            Planned senior-year project integrating NeuroMorpho.org neuronal reconstructions, Allen Institute
+            Cell Types morphology and electrophysiology data, and NEURON simulations to study how neuronal
+            structure relates to excitability.
           </p>
           <div class="project-meta">
-            <span class="tag">Computational neuroscience</span>
-            <span class="tag">Neuron modeling</span>
-            <span class="tag">NEURON validation</span>
+            <span class="tag">NeuroMorpho.org</span>
+            <span class="tag">Allen Institute</span>
+            <span class="tag">NEURON</span>
+            <span class="tag">SWC morphology</span>
           </div>
-        </a>
+        </article>
 
         <div class="project-stack">
-          <article class="project-card">
-            <span class="project-eyebrow">In development</span>
-            <h3>Large Neuroscience Datasets Workbench</h3>
+          <a href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener" class="project-card">
+            <span class="project-eyebrow">Project</span>
+            <h3>Hodgkin-Huxley Neuron Simulator</h3>
             <p>
-              A planned Python/Streamlit workflow for exploring large public neuroscience datasets
-              with clean figures, metadata summaries, and reproducible analysis notebooks.
+              Built a biophysical neuron simulator using the Hodgkin-Huxley mathematical framework,
+              investigated how sodium and potassium conductance parameters shape spike behavior,
+              and validated outputs against NEURON for numerical and biological realism.
             </p>
             <div class="project-meta">
-              <span class="tag">Python</span>
-              <span class="tag">Streamlit</span>
-              <span class="tag">Neuroinformatics</span>
+              <span class="tag">Computational neuroscience</span>
+              <span class="tag">Neuron modeling</span>
+              <span class="tag">NEURON validation</span>
+            </div>
+          </a>
+
+          <article class="project-card">
+            <span class="project-eyebrow">Planned</span>
+            <h3>NEURON Simulator GUI Single Cell Model</h3>
+            <div class="project-meta">
+              <span class="tag">NEURON GUI</span>
+              <span class="tag">Single-cell model</span>
             </div>
           </article>
 
           <article class="project-card">
-            <span class="project-eyebrow">Planned coursework project</span>
-            <h3>Single Cell Neuron Model</h3>
-            <p>
-              NEURON-based single-cell modeling project intended to connect morphology,
-              current injection, voltage traces, and excitability measures.
-            </p>
+            <span class="project-eyebrow">Planned</span>
+            <h3>NEURON Simulator Python Scripted Single Cell Model</h3>
             <div class="project-meta">
-              <span class="tag">Python</span>
               <span class="tag">NEURON</span>
-              <span class="tag">SWC morphology</span>
+              <span class="tag">Python</span>
+              <span class="tag">Single-cell model</span>
             </div>
           </article>
         </div>
@@ -891,9 +920,14 @@
           <ul class="course-list">
             <li class="course-item"><span class="course-code">NEUR 327</span><span class="course-name">Cellular Neuroscience<span class="course-status">Grade received: A</span></span></li>
             <li class="course-item"><span class="course-code">NEUR 328</span><span class="course-name">Cellular Neuroscience Lab<span class="course-status">Grade received: B</span></span></li>
+            <li class="course-item"><span class="course-code">NEUR 335</span><span class="course-name">Developmental and Systems Neuroscience<span class="course-status">Planned</span></span></li>
             <li class="course-item"><span class="course-code">NEUR 430</span><span class="course-name">Computational Neuroscience<span class="course-status">Planned</span></span></li>
             <li class="course-item"><span class="course-code">NEUR 431</span><span class="course-name">Neuroinformatics<span class="course-status">Planned</span></span></li>
+            <li class="course-item"><span class="course-code">NEUR 461</span><span class="course-name">The Changing Brain: Evolution and Development<span class="course-status">Planned</span></span></li>
+            <li class="course-item"><span class="course-code">NEUR 461</span><span class="course-name">Computational Social Neuroscience<span class="course-status">Planned</span></span></li>
+            <li class="course-item"><span class="course-code">NEUR 473</span><span class="course-name">Current Neuroscience Research in Germany</span></li>
             <li class="course-item"><span class="course-code">PSYC 375</span><span class="course-name">Brain and Sensory Processes<span class="course-status">Grade received: A</span></span></li>
+            <li class="course-item"><span class="course-code">PSYC 376/373</span><span class="course-name">Brain and Behavior<span class="course-status">Planned</span></span></li>
           </ul>
         </article>
 
@@ -953,11 +987,11 @@
         <div class="resume-panel">
           <img
             class="resume-preview"
-            src="/static/Nicholas_Johnson_Resume_preview.png"
+            src="/static/Nicholas_Johnson_Computational_Neuroscience_Resume_preview.png"
             alt="Preview of Nicholas Johnson resume">
           <div class="resume-actions">
-            <a class="button primary" href="/resume-may-2026.pdf" target="_blank" rel="noopener">Open Resume</a>
-            <a class="button" href="/resume-may-2026.pdf" download="Nicholas_Johnson_Resume.pdf">Download PDF</a>
+            <a class="button primary" href="/Nicholas_Johnson_Computational_Neuroscience_Resume.pdf" target="_blank" rel="noopener">Open Resume</a>
+            <a class="button" href="/Nicholas_Johnson_Computational_Neuroscience_Resume.pdf" download="Nicholas Johnson Computational Neuroscience Resume.pdf">Download PDF</a>
           </div>
         </div>
       </div>

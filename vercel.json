@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/Nicholas_Johnson_Resume.pdf", "destination": "/api/index" },
+    { "source": "/Nicholas_Johnson_Computational_Neuroscience_Resume.pdf", "destination": "/api/index" },
     { "source": "/resume-may-2026.pdf", "destination": "/api/index" },
     { "source": "/api/gemini", "destination": "/api/index" },
     { "source": "/tool", "destination": "/api/index" },
