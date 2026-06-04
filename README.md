@@ -4,7 +4,7 @@ Personal portfolio website for Nicholas Johnson, a Neuroscience student at Georg
 
 **Live site:** [nicholas-johnson-website.vercel.app](https://nicholas-johnson-website.vercel.app) | **Tool:** [nicholas-johnson-website.vercel.app/tool](https://nicholas-johnson-website.vercel.app/tool) | **NEUR 327:** [nicholas-johnson-website.vercel.app/neur327](https://nicholas-johnson-website.vercel.app/neur327) | **HH Simulator:** [nicholas-johnson-website.vercel.app/hodgkin-huxley](https://nicholas-johnson-website.vercel.app/hodgkin-huxley)
 
-**Resume (PDF, always on GitHub):** [resume_may_2026.pdf](https://github.com/nej296/Website/raw/main/api/private/resume_may_2026.pdf)
+**Resume (PDF, always on GitHub):** [Nicholas_Johnson_Resume.pdf](https://github.com/nej296/Website/raw/main/api/private/Nicholas_Johnson_Resume.pdf)
 
 ---
 

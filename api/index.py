@@ -39,22 +39,16 @@ def hodgkin_huxley():
 
 
 @app.route('/Nicholas_Johnson_Resume.pdf')
+@app.route('/resume-june-2026.pdf')
 @app.route('/resume-may-2026.pdf')
 @app.route('/Nicholas_Johnson_Computational_Neuroscience_Resume.pdf')
 def resume_pdf():
     """Not under api/static so Vercel never serves a stale edge-only PDF for this file."""
-    extra = (
-        {'download_name': 'Nicholas Johnson Computational Neuroscience Resume.pdf'}
-        if request.path == '/Nicholas_Johnson_Computational_Neuroscience_Resume.pdf'
-        else {'download_name': 'Nicholas_Johnson_Resume.pdf'}
-        if request.path == '/Nicholas_Johnson_Resume.pdf'
-        else {}
-    )
     return send_from_directory(
         PRIVATE_DIR,
-        'Nicholas_Johnson_Computational_Neuroscience_Resume.pdf',
+        'Nicholas_Johnson_Resume.pdf',
         mimetype='application/pdf',
-        **extra,
+        download_name='Nicholas Johnson Resume.pdf',
     )
 
 
