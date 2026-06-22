@@ -2,32 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1200">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nicholas Johnson - Computational Neuroscience</title>
+  <meta
+    name="description"
+    content="Nicholas Johnson is a George Mason University neuroscience student focused on computational neuroscience, neuroinformatics, neuronal morphology, and NEURON modeling.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700;800;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #eef2ef;
-      --ink: #111816;
-      --muted: #66736d;
-      --muted-2: #88948e;
+      --bg: #f4f4f4;
       --surface: #ffffff;
-      --surface-2: #f7faf8;
-      --line: #cbd5cf;
-      --line-soft: #dce4df;
-      --dark: #172824;
-      --dark-2: #101b18;
-      --green: #1f7a61;
-      --green-soft: #e7f2ee;
-      --blue: #254f75;
+      --surface-alt: #fafafa;
+      --ink: #3c3b3b;
+      --text: #646464;
+      --muted: #9a9a9a;
+      --line: rgba(160, 160, 160, 0.32);
+      --line-strong: rgba(160, 160, 160, 0.48);
+      --accent: #2a9d8f;
+      --accent-dark: #1d6f65;
       --gold: #a66d21;
-      --shadow: 0 16px 44px rgba(24, 40, 36, 0.09);
-      --radius: 8px;
-      --font-sans: "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --font-serif: "IBM Plex Serif", Georgia, serif;
-      --font-mono: "IBM Plex Mono", Consolas, monospace;
+      --font-heading: "Raleway", Helvetica, sans-serif;
+      --font-body: "Source Sans 3", Helvetica, sans-serif;
     }
 
     * {
@@ -40,20 +37,24 @@
 
     body {
       margin: 0;
-      background:
-        linear-gradient(90deg, rgba(17, 24, 22, 0.024) 1px, transparent 1px),
-        linear-gradient(180deg, rgba(17, 24, 22, 0.024) 1px, transparent 1px),
-        var(--bg);
-      background-size: 38px 38px;
-      color: var(--ink);
-      font-family: var(--font-sans);
-      line-height: 1.55;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.65;
       overflow-x: hidden;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+      transition: color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--accent);
     }
 
     img {
@@ -61,847 +62,803 @@
       max-width: 100%;
     }
 
-    .topbar {
+    p {
+      margin: 0 0 1.45rem;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1.45rem 1.25rem;
+      padding: 0;
+    }
+
+    li {
+      padding-left: 0.25rem;
+    }
+
+    #site-header {
       position: fixed;
-      inset: 0 0 auto 0;
-      z-index: 100;
-      min-height: 58px;
+      inset: 0 0 auto;
+      z-index: 20;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
-      padding: 0.85rem clamp(1rem, 4vw, 3rem);
-      background: rgba(23, 40, 36, 0.94);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      color: #e9f1ec;
-      backdrop-filter: blur(18px);
+      min-height: 3.55rem;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
     }
 
-    .brand {
-      font-family: var(--font-mono);
-      font-size: 0.74rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+    #site-header h1 {
+      display: flex;
+      align-items: center;
+      min-height: inherit;
+      margin: 0;
+      padding: 0 1.45rem;
+      border-right: 1px solid var(--line);
+      color: var(--ink);
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      line-height: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
       text-transform: uppercase;
       white-space: nowrap;
     }
 
-    .nav-links {
+    .primary-nav {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      padding-left: 1.35rem;
+    }
+
+    .primary-nav ul,
+    .header-actions ul {
       display: flex;
       align-items: center;
-      gap: clamp(0.8rem, 2vw, 1.65rem);
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
-    .nav-links a {
-      color: rgba(233, 241, 236, 0.76);
-      font-family: var(--font-mono);
+    .primary-nav li {
+      border-left: 1px solid var(--line);
+      line-height: 1;
+      padding: 0 0 0 1rem;
+      margin-left: 1rem;
+    }
+
+    .primary-nav li:first-child {
+      border-left: 0;
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    .primary-nav a,
+    .header-actions a {
+      color: #6c6c6c;
+      font-family: var(--font-heading);
       font-size: 0.68rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      transition: color 160ms ease;
+      white-space: nowrap;
     }
 
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
-      color: #9ee6cb;
+    .header-actions {
+      min-height: inherit;
+      border-left: 1px solid var(--line);
     }
 
-    .shell {
-      width: min(1120px, calc(100% - 2rem));
+    .header-actions li {
+      display: flex;
+      align-items: center;
+      min-height: inherit;
+      border-left: 1px solid var(--line);
+      padding: 0 1rem;
+    }
+
+    .header-actions li:first-child {
+      border-left: 0;
+    }
+
+    #wrapper {
+      display: grid;
+      grid-template-columns: minmax(17rem, 22rem) minmax(0, 1fr);
+      gap: 3rem;
+      width: min(92rem, calc(100% - 4.5rem));
       margin: 0 auto;
+      padding: 7rem 0 4rem;
+    }
+
+    #sidebar {
+      min-width: 0;
+    }
+
+    #sidebar > section {
+      border-top: 1px solid var(--line);
+      margin-top: 2.75rem;
+      padding-top: 2.75rem;
+    }
+
+    #sidebar > section:first-child {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .sidebar-grid > section {
+      border-top: 1px solid var(--line);
+      margin-top: 2.75rem;
+      padding-top: 2.75rem;
+    }
+
+    .sidebar-grid > section:first-child {
+      margin-top: 0;
+    }
+
+    #main {
+      min-width: 0;
+    }
+
+    article,
+    #top {
+      scroll-margin-top: 5rem;
+    }
+
+    .intro .portrait {
+      display: inline-block;
+      width: 4.5rem;
+      height: 4.5rem;
+      margin: 0 0 1rem;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: var(--surface);
+    }
+
+    .intro .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 18%;
+    }
+
+    .intro h2 {
+      margin: 0 0 0.65rem;
+      color: var(--ink);
+      font-family: var(--font-heading);
+      font-size: clamp(1.85rem, 3.5vw, 2.55rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .intro p,
+    .sidebar-copy {
+      color: #777777;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .sidebar-title,
+    .post h2,
+    .project-title,
+    .link-card h3,
+    .detail-list dt {
+      color: var(--ink);
+      font-family: var(--font-heading);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    .sidebar-title {
+      margin: 0 0 1.25rem;
+      font-size: 0.78rem;
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 1rem;
+      margin: 0;
+    }
+
+    .detail-list div {
+      border-top: 1px dotted var(--line-strong);
+      padding-top: 1rem;
+    }
+
+    .detail-list div:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .detail-list dt {
+      margin: 0 0 0.25rem;
+      color: var(--accent-dark);
+      font-size: 0.64rem;
+    }
+
+    .detail-list dd {
+      margin: 0;
+      color: #686868;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.35rem 0 0;
     }
 
     .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 38px;
-      padding: 0.62rem 0.86rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--surface);
+      min-height: 2.85rem;
+      padding: 0 1.3rem;
+      border: 1px solid var(--line-strong);
+      background: transparent;
       color: var(--ink);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-family: var(--font-heading);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      line-height: 1;
       text-transform: uppercase;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
-    }
-
-    .button.primary {
-      background: var(--green);
-      border-color: var(--green);
-      color: white;
+      white-space: nowrap;
     }
 
     .button:hover,
     .button:focus-visible {
-      transform: translateY(-2px);
-      border-color: var(--green);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+      color: var(--accent);
     }
 
-    .button.primary:hover,
-    .button.primary:focus-visible {
-      background: #155d49;
+    .post {
+      margin: 0 0 3rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
     }
 
-    .kicker {
-      color: var(--green);
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.11em;
+    .post > header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(12rem, 17rem);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .post-title {
+      padding: 2.4rem 2.6rem;
+    }
+
+    .post-title p {
+      margin: 0.65rem 0 0;
+      color: var(--muted);
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      line-height: 1.5;
       text-transform: uppercase;
     }
 
-    .hero {
-      min-height: auto;
-      display: grid;
-      grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
-      gap: 1rem;
-      align-items: start;
-      padding-top: 5.5rem;
-      padding-bottom: 3rem;
+    .post h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.6vw, 2rem);
+      letter-spacing: 0.16em;
     }
 
-    .profile-panel,
-    .hero-feature,
-    .landing-project-card,
-    .content-card,
-    .contact-card,
-    .resume-card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .profile-panel {
+    .post-meta {
       display: flex;
       flex-direction: column;
-      min-height: 520px;
-      padding: clamp(1.2rem, 2.4vw, 1.65rem);
+      justify-content: center;
+      gap: 0.55rem;
+      border-left: 1px solid var(--line);
+      padding: 2rem 2rem;
+      text-align: right;
     }
 
-    .profile-panel h1 {
-      margin: 0.75rem 0 1.1rem;
-      font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 5.4vw, 4.35rem);
-      font-weight: 600;
-      line-height: 0.95;
-      letter-spacing: 0;
-    }
-
-    .profile-copy {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.62;
-    }
-
-    .profile-copy strong {
+    .post-meta span {
       color: var(--ink);
-      font-weight: 700;
-    }
-
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      margin-top: 1.25rem;
-    }
-
-    .dossier-lines {
-      display: grid;
-      gap: 0;
-      margin-top: auto;
-      padding-top: 1.45rem;
-    }
-
-    .dossier-line {
-      display: grid;
-      grid-template-columns: 100px minmax(0, 1fr);
-      gap: 1rem;
-      padding: 0.72rem 0;
-      border-top: 1px solid var(--line-soft);
-    }
-
-    .dossier-label {
-      color: var(--green);
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.09em;
+      font-family: var(--font-heading);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
     }
 
-    .dossier-value {
-      color: var(--ink);
-      font-size: 0.86rem;
-      font-weight: 600;
+    .post-meta small {
+      color: var(--muted);
+      font-size: 0.78rem;
       line-height: 1.35;
     }
 
-    .hero-right {
-      display: grid;
-      grid-template-rows: auto auto;
-      gap: 1rem;
+    .post-body {
+      padding: 2.4rem 2.6rem 2.6rem;
     }
 
-    .hero-feature {
+    .feature-image {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
-      gap: clamp(1.1rem, 2.5vw, 1.65rem);
-      align-items: center;
-      padding: clamp(1.25rem, 2.5vw, 1.7rem);
+      place-items: center;
+      margin: 0 0 1.9rem;
+      height: clamp(22rem, 44vw, 34rem);
+      min-height: 23rem;
       overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        #0b1311;
+      background-size: 32px 32px;
     }
 
-    .feature-copy {
-      align-self: center;
-      max-width: 520px;
+    .feature-image img {
+      width: auto;
+      height: clamp(17rem, 33vw, 30rem);
+      max-width: 84%;
+      filter: drop-shadow(0 0 22px rgba(42, 157, 143, 0.24));
     }
 
-    .feature-copy h2 {
-      margin: 0.8rem 0 0.9rem;
-      font-size: clamp(1.72rem, 2.55vw, 2.45rem);
-      font-weight: 700;
-      line-height: 1.02;
-      letter-spacing: 0;
-    }
-
-    .feature-copy p {
-      max-width: 640px;
-      margin: 0;
+    .image-note {
+      margin-top: -1.35rem;
+      margin-bottom: 1.7rem;
       color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.62;
+      font-size: 0.72rem;
+      line-height: 1.45;
     }
 
-    .tag-row {
+    .post-body a:not(.button):not(.project-link) {
+      border-bottom: 1px dotted var(--line-strong);
+      color: var(--accent-dark);
+    }
+
+    .post-body a:not(.button):not(.project-link):hover,
+    .post-body a:not(.button):not(.project-link):focus-visible {
+      border-bottom-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 0 0 3rem;
+      padding: 0;
+      list-style: none;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      margin: 1.75rem 0 0;
+      border: 1px solid var(--line);
+      border-right: 0;
+      border-bottom: 0;
+    }
+
+    .link-card {
+      min-height: 10rem;
+      padding: 1.2rem;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-alt);
+    }
+
+    .link-card h3 {
+      margin: 0 0 0.55rem;
+      font-size: 0.76rem;
+    }
+
+    .link-card p {
+      color: #747474;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .link-card:hover,
+    .link-card:focus-visible {
+      color: inherit;
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .split-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.75rem;
+    }
+
+    .mini-panel {
+      border-top: 1px dotted var(--line-strong);
+      padding-top: 1rem;
+    }
+
+    .mini-panel h3 {
+      margin: 0 0 0.65rem;
+      color: var(--ink);
+      font-family: var(--font-heading);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .mini-panel p,
+    .mini-panel li {
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 0;
+      margin-top: 1.6rem;
+      border-top: 1px dotted var(--line-strong);
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      padding: 1.15rem 0;
+      border-bottom: 1px dotted var(--line-strong);
+    }
+
+    .project-title {
+      margin: 0 0 0.35rem;
+      font-size: 0.8rem;
+    }
+
+    .project-item p {
+      color: #717171;
+      font-size: 0.94rem;
+      line-height: 1.5;
+    }
+
+    .project-link {
+      align-self: start;
+      color: var(--accent-dark);
+      font-family: var(--font-heading);
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .tag-list {
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
-      margin-top: 1.25rem;
+      margin-top: 0.8rem;
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
-      min-height: 26px;
-      padding: 0.25rem 0.55rem;
-      border-radius: 999px;
-      background: var(--green-soft);
-      color: var(--green);
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-    }
-
-    .neuron-card {
-      align-self: center;
-      justify-self: end;
-      width: 100%;
-      max-width: 340px;
-      height: 420px;
-      min-height: 0;
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 0.65rem;
-      padding: 0.85rem;
-      background: var(--dark-2);
-      border: 1px solid rgba(31, 122, 97, 0.35);
-      border-radius: var(--radius);
-      color: rgba(255, 255, 255, 0.88);
-    }
-
-    .neuron-window {
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.11);
-      background:
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
-        #09120f;
-      background-size: 28px 28px;
-      border-radius: 6px;
-    }
-
-    .neuron-art {
-      width: min(76%, 250px);
-    }
-
-    .neuron-art img {
-      width: 100%;
-      filter: drop-shadow(0 0 24px rgba(82, 216, 167, 0.24));
-    }
-
-    .neuron-caption {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.85rem;
-      color: rgba(255, 255, 255, 0.72);
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      line-height: 1.25;
-    }
-
-    .neuron-caption a {
-      color: #86dfc3;
+      min-height: 1.5rem;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid rgba(42, 157, 143, 0.24);
+      color: var(--accent-dark);
+      font-family: var(--font-heading);
+      font-size: 0.58rem;
       font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .content-card {
-      min-height: auto;
-      padding: 1rem;
-    }
-
-    .content-card h3 {
-      margin: 0.75rem 0 0.5rem;
-      font-size: 1.05rem;
-      line-height: 1.25;
-    }
-
-    .content-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-
-    .landing-project-card {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.9rem;
-      align-items: start;
-      padding: 1rem;
-    }
-
-    .landing-project-card h3 {
-      margin: 0.65rem 0 0.45rem;
-      font-size: clamp(1.25rem, 2vw, 1.65rem);
-      line-height: 1.18;
-    }
-
-    .landing-project-card p {
-      max-width: 620px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.58;
-    }
-
-    .landing-project-flow {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(170px, 1fr));
-      gap: 0.6rem;
-    }
-
-    .flow-step {
-      min-height: 92px;
-      padding: 0.75rem;
-      border: 1px solid var(--line-soft);
-      border-radius: 6px;
-      background: var(--surface-2);
-    }
-
-    .flow-step span {
-      display: block;
-      color: var(--green);
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
+      line-height: 1.1;
       text-transform: uppercase;
     }
 
-    .flow-step strong {
-      display: block;
-      margin-top: 0.45rem;
-      font-size: 0.8rem;
-      line-height: 1.28;
-      overflow-wrap: anywhere;
-    }
-
-    main > section {
-      padding: 3.35rem 0;
-      scroll-margin-top: 78px;
-    }
-
-    .section-head {
-      display: grid;
-      grid-template-columns: minmax(220px, 0.5fr) minmax(0, 0.72fr);
-      gap: clamp(1.25rem, 4vw, 3rem);
-      align-items: end;
-      margin-bottom: 1.25rem;
-    }
-
-    .section-title {
-      margin: 0.45rem 0 0;
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 3.4vw, 3.3rem);
-      font-weight: 600;
-      line-height: 1.02;
-      letter-spacing: 0;
-    }
-
-    .section-copy {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.72;
-    }
-
-    .research-grid {
+    .course-columns {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
     }
 
-    .projects-layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.85rem;
-      align-items: start;
-    }
-
-    .project-feature {
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      background:
-        linear-gradient(135deg, rgba(31, 122, 97, 0.12), transparent 42%),
-        rgba(255, 255, 255, 0.9);
-    }
-
-    .project-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.85rem;
-    }
-
-    .project-card {
-      padding: 1rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 12px 32px rgba(24, 40, 36, 0.07);
-      transition: transform 160ms ease, border-color 160ms ease;
-    }
-
-    a.project-card:hover,
-    a.project-card:focus-visible {
-      transform: translateY(-3px);
-      border-color: rgba(31, 122, 97, 0.45);
-    }
-
-    .project-card h3 {
-      margin: 0.65rem 0 0.45rem;
-      font-size: clamp(1.08rem, 2vw, 1.35rem);
-      line-height: 1.24;
-    }
-
-    .project-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-    }
-
-    .project-feature .tag-row {
-      margin-top: 1.15rem;
-      padding-top: 0;
-    }
-
-    .course-grid,
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
-      align-items: start;
-    }
-
-    .course-card {
-      min-height: 0;
-    }
-
-    .course-card h3 {
-      margin-top: 0;
-      color: var(--dark);
+    .course-columns h3 {
+      margin: 0 0 0.9rem;
+      color: var(--ink);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
     .course-list {
-      display: grid;
-      gap: 0.45rem;
       margin: 0;
-      padding: 0;
       list-style: none;
     }
 
-    .course-item {
-      display: grid;
-      grid-template-columns: 76px minmax(0, 1fr);
-      gap: 0.65rem;
-      padding-top: 0.45rem;
-      border-top: 1px solid var(--line-soft);
-      align-items: baseline;
+    .course-list li {
+      border-top: 1px dotted var(--line-strong);
+      padding: 0.62rem 0 0.62rem 0;
+      color: #707070;
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .course-list li:first-child {
+      border-top: 0;
+      padding-top: 0;
     }
 
     .course-code {
+      display: inline-block;
+      min-width: 4.6rem;
       color: var(--gold);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .course-name {
-      color: var(--muted);
-      font-size: 0.86rem;
-      line-height: 1.4;
-    }
-
-    .course-status {
-      display: block;
-      margin-top: 0.12rem;
-      color: var(--muted-2);
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.05em;
+      font-family: var(--font-heading);
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
-    .contact-grid {
-      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+    .status {
+      display: block;
+      margin-top: 0.16rem;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(14rem, 0.55fr) minmax(0, 1fr);
+      gap: 2rem;
       align-items: start;
     }
 
-    .contact-card,
-    .resume-card {
-      padding: 1rem;
+    .contact-photo {
+      border: 1px solid var(--line);
+      background: var(--surface-alt);
     }
 
-    .headshot {
+    .contact-photo img {
       width: 100%;
       aspect-ratio: 4 / 3;
       object-fit: cover;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--surface-2);
+      object-position: center 22%;
     }
 
-    .contact-card p {
-      margin: 1rem 0 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .link-stack {
+    .contact-links {
       display: grid;
-      margin-top: 1rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px dotted var(--line-strong);
     }
 
-    .link-row {
+    .contact-links li {
+      padding: 0;
+      border-bottom: 1px dotted var(--line-strong);
+    }
+
+    .contact-links a {
       display: flex;
       justify-content: space-between;
       gap: 1rem;
-      padding: 0.78rem 0;
-      border-top: 1px solid var(--line-soft);
-      color: var(--ink);
-      font-weight: 600;
+      padding: 0.85rem 0;
+      color: #626262;
+      font-size: 0.94rem;
     }
 
-    .link-row span:last-child {
-      color: var(--green);
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+    .contact-links span:last-child {
+      color: var(--accent-dark);
+      font-family: var(--font-heading);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       white-space: nowrap;
     }
 
     .resume-preview {
       width: 100%;
-      max-height: 620px;
+      max-height: 32rem;
       object-fit: cover;
       object-position: top center;
       border: 1px solid var(--line);
-      border-radius: 6px;
       background: white;
     }
 
-    .resume-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.7rem;
-      margin-top: 1rem;
-    }
-
-    .footer {
-      padding: 1.25rem 0 2rem;
+    #site-footer {
       border-top: 1px solid var(--line);
-      color: var(--muted-2);
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.08em;
+      padding: 1.5rem 0 0;
+      color: var(--muted);
+      font-family: var(--font-heading);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      line-height: 1.5;
       text-transform: uppercase;
     }
 
-    @media (max-width: 1050px) {
-      .hero,
-      .hero-feature,
-      .landing-project-card,
-      .projects-layout,
-      .contact-grid,
-      .section-head {
-        grid-template-columns: 1fr;
+    @media (max-width: 1120px) {
+      #wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
       }
 
-      .hero {
-        min-height: auto;
+      #sidebar {
+        order: -1;
       }
 
-      .profile-panel {
-        min-height: auto;
+      .intro {
+        text-align: center;
       }
 
-      .hero-feature {
-        grid-template-columns: 1fr;
+      .intro .portrait {
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .neuron-card {
-        min-height: 430px;
+      #sidebar > section {
+        margin-top: 2rem;
+        padding-top: 2rem;
       }
 
-      .project-list {
-        grid-template-columns: 1fr;
+      .sidebar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.5rem;
+      }
+
+      .sidebar-grid > section {
+        border-top: 1px solid var(--line);
+        margin-top: 0;
+        padding-top: 1.5rem;
       }
     }
 
-    @media (max-width: 820px) {
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 0.72rem;
+    @media (max-width: 880px) {
+      #site-header {
+        align-items: stretch;
       }
 
-      .nav-links {
-        width: 100%;
-        justify-content: space-between;
-        gap: 0.45rem;
+      #site-header h1 {
+        max-width: 52vw;
       }
 
-      .nav-links a {
+      .primary-nav {
+        display: none;
+      }
+
+      .header-actions li {
+        padding: 0 0.8rem;
+      }
+
+      .header-actions a {
         font-size: 0.58rem;
+        letter-spacing: 0.14em;
       }
 
-      .hero {
-        padding-top: 8.75rem;
+      #wrapper {
+        width: min(100% - 2rem, 58rem);
+        padding-top: 5.25rem;
       }
 
-      .landing-project-flow,
-      .research-grid,
-      .course-grid {
+      .post > header,
+      .contact-layout,
+      .split-list,
+      .course-columns,
+      .sidebar-grid {
         grid-template-columns: 1fr;
+      }
+
+      .post-meta {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+        padding: 1.25rem 2rem;
+        text-align: left;
+      }
+
+      .link-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-image {
+        min-height: 18rem;
       }
     }
 
     @media (max-width: 560px) {
-      html,
       body {
-        max-width: 100%;
-        overflow-x: hidden;
+        font-size: 15px;
       }
 
-      .shell {
-        width: min(100% - 1rem, 1180px);
+      #site-header h1 {
+        max-width: 48vw;
+        padding: 0 0.8rem;
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
       }
 
-      .topbar {
-        padding: 0.65rem 0.65rem 0.72rem;
+      .header-actions li {
+        padding: 0 0.55rem;
       }
 
-      .nav-links {
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding-bottom: 0.1rem;
-        scrollbar-width: none;
+      .header-actions a {
+        font-size: 0.52rem;
+        letter-spacing: 0.1em;
       }
 
-      .nav-links::-webkit-scrollbar {
+      #wrapper {
+        width: min(100% - 1rem, 42rem);
+        padding-top: 4.75rem;
+      }
+
+      .sidebar-grid {
         display: none;
       }
 
-      .profile-panel h1 {
-        font-size: clamp(2.75rem, 16vw, 4rem);
+      .post {
+        margin-bottom: 2rem;
       }
 
-      .profile-panel,
-      .hero-feature,
-      .landing-project-card,
-      .content-card,
-      .project-card,
-      .contact-card,
-      .resume-card {
-        padding: 1rem;
+      .post-title,
+      .post-body {
+        padding: 1.45rem;
       }
 
-      .dossier-line {
-        grid-template-columns: 1fr;
-        gap: 0.25rem;
+      .post-meta {
+        padding: 1.1rem 1.45rem;
       }
 
-      .button {
-        min-height: 34px;
-        padding: 0.5rem 0.48rem;
-        font-size: 0.6rem;
-        letter-spacing: 0.04em;
+      .post h2 {
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
       }
 
-      .action-row {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.45rem;
-      }
-
-      .action-row .button {
-        width: 100%;
-        white-space: nowrap;
-      }
-
-      .feature-copy h2,
-      .section-title {
-        font-size: clamp(2rem, 11vw, 3rem);
-        overflow-wrap: break-word;
-      }
-
-      .feature-copy h2 {
-        font-size: clamp(1.65rem, 8vw, 2.15rem);
-        line-height: 1.04;
-      }
-
-      .landing-project-card h3,
-      .project-card h3,
-      .content-card h3,
-      .tag,
-      .dossier-value,
-      .course-name {
-        overflow-wrap: anywhere;
-      }
-
-      .neuron-card {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        min-height: 0;
-        justify-self: stretch;
-      }
-
-      .neuron-window {
-        min-height: 245px;
-      }
-
-      .neuron-art {
-        width: min(78%, 260px);
-      }
-
-      .neuron-caption {
-        align-items: flex-start;
-        flex-wrap: wrap;
-        font-size: 0.56rem;
-      }
-
-      .course-item {
-        grid-template-columns: 70px minmax(0, 1fr);
-      }
-
-      .link-row {
-        align-items: flex-start;
-        min-width: 0;
-      }
-
-      .link-row span:first-child {
-        min-width: 0;
-        overflow-wrap: anywhere;
-      }
-
-      .resume-actions .button {
-        flex: 1 1 auto;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .shell {
-        width: min(100% - 0.5rem, 1180px);
-      }
-
-      .topbar {
-        padding-inline: 0.5rem;
-      }
-
-      .brand {
+      .post-title p {
         font-size: 0.62rem;
+        letter-spacing: 0.14em;
       }
 
-      .nav-links {
-        gap: 0.62rem;
+      .feature-image {
+        height: 18rem;
+        min-height: 14rem;
       }
 
-      .nav-links a {
-        font-size: 0.52rem;
-        letter-spacing: 0.05em;
+      .feature-image img {
+        width: auto;
+        height: 15rem;
+        max-width: 88%;
       }
 
-      .profile-panel h1 {
-        font-size: clamp(2.35rem, 15vw, 3.1rem);
-      }
-
-      .profile-copy,
-      .feature-copy p,
-      .landing-project-card p,
-      .project-card p,
-      .content-card p,
-      .section-copy {
-        font-size: 0.84rem;
-      }
-
-      .kicker {
-        font-size: 0.58rem;
+      .actions,
+      .button-row {
+        display: grid;
+        grid-template-columns: 1fr;
       }
 
       .button {
-        font-size: 0.54rem;
-        padding-inline: 0.28rem;
+        width: 100%;
       }
 
-      .feature-copy h2 {
-        font-size: clamp(1.5rem, 7.8vw, 1.9rem);
+      .project-item {
+        grid-template-columns: 1fr;
       }
 
-      .landing-project-card h3,
-      .project-card h3 {
-        font-size: 1rem;
-      }
-
-      .flow-step {
-        min-height: 0;
-        padding: 0.65rem;
-      }
-
-      .course-item {
-        grid-template-columns: 62px minmax(0, 1fr);
-        gap: 0.5rem;
+      .contact-links a {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.25rem;
       }
     }
 
@@ -917,340 +874,344 @@
   </style>
 </head>
 <body>
-  <nav class="topbar" aria-label="Primary navigation">
-    <a class="brand" href="#hero">Nicholas Johnson</a>
-    <ul class="nav-links">
-      <li><a href="#research">Research</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#coursework">Coursework</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="https://github.com/nej296" target="_blank" rel="noopener">GitHub</a></li>
-    </ul>
-  </nav>
+  <header id="site-header">
+    <h1><a href="#top">Nicholas Johnson</a></h1>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <ul>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#coursework">Coursework</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="header-actions" aria-label="Profile links">
+      <ul>
+        <li><a href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+        <li><a href="https://github.com/nej296" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <main>
-    <header class="shell hero" id="hero">
-      <aside class="profile-panel">
-        <span class="kicker">Computational neuroscience dossier</span>
-        <h1>Nicholas Johnson</h1>
-        <p class="profile-copy">
-          Neuroscience student at George Mason University focused on <strong>neuroinformatics</strong>,
-          <strong>neuronal morphology</strong>, and <strong>computational neuron modeling</strong>.
-          I support NeuroMorpho.org through literature mining and morphology metadata curation,
-          and I am building toward NEURON-based projects that connect structure with function.
-        </p>
-        <div class="action-row">
-          <a class="button primary" href="#projects">View Projects</a>
-          <a class="button" href="#contact">Contact</a>
-          <a class="button" href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">Resume</a>
-        </div>
+  <div id="wrapper">
+    <aside id="sidebar" aria-label="Profile summary">
+      <section class="intro" id="top">
+        <a class="portrait" href="#contact" aria-label="Contact Nicholas Johnson">
+          <img src="/static/nicholas-contact-headshot-black-2026.png" alt="Nicholas Johnson portrait">
+        </a>
+        <header>
+          <h2>Nicholas Johnson</h2>
+          <p>Neuroscience student, computational neuroscience concentration, George Mason University.</p>
+        </header>
+      </section>
 
-        <div class="dossier-lines" aria-label="Profile highlights">
-          <div class="dossier-line">
-            <span class="dossier-label">Research</span>
-            <span class="dossier-value">NeuroMorpho.org Research Assistant</span>
+      <div class="sidebar-grid">
+        <section>
+          <h2 class="sidebar-title">About</h2>
+          <p class="sidebar-copy">
+            I work at the intersection of neuroinformatics, neuronal morphology, and biophysical modeling.
+            My current direction is building research and software experience around NeuroMorpho.org data,
+            Allen Institute cell data, and NEURON simulations.
+          </p>
+          <div class="button-row">
+            <a class="button" href="#research">Learn More</a>
           </div>
-          <div class="dossier-line">
-            <span class="dossier-label">Modeling</span>
-            <span class="dossier-value">NEURON Simulator, Python, Hodgkin-Huxley modeling, and SWC morphology workflows</span>
-          </div>
-          <div class="dossier-line">
-            <span class="dossier-label">Direction</span>
-            <span class="dossier-value">Senior project connecting NeuroMorpho.org, Allen Institute data, and NEURON simulations</span>
-          </div>
-          <div class="dossier-line">
-            <span class="dossier-label">Coursework</span>
-            <span class="dossier-value">Neuroinformatics, computational neuroscience, scientific data mining, and neural modeling</span>
-          </div>
-        </div>
-      </aside>
-
-      <div class="hero-right">
-        <section class="hero-feature" aria-labelledby="feature-title">
-          <div class="feature-copy">
-            <span class="kicker">Featured senior project</span>
-            <h2 id="feature-title">Morphological Determinants of Neuronal Excitability</h2>
-            <p>
-              Planned senior-year project integrating NeuroMorpho.org neuronal reconstructions, Allen Institute
-              Cell Types morphology and electrophysiology data, and NEURON simulations to study how neuronal
-              structure relates to excitability.
-            </p>
-            <div class="tag-row">
-              <span class="tag">NeuroMorpho.org</span>
-              <span class="tag">Allen Institute</span>
-              <span class="tag">NEURON</span>
-              <span class="tag">SWC morphology</span>
-            </div>
-          </div>
-
-          <aside class="neuron-card" aria-labelledby="neuron-title">
-            <div class="neuron-window">
-              <div class="neuron-art">
-                <img
-                  src="/static/neuromorpho-neuron-spin-clean.gif"
-                  alt="Rotating digital reconstruction of a human pyramidal neuron">
-              </div>
-            </div>
-            <div class="neuron-caption">
-              <span id="neuron-title">Human pyramidal neuron morphology</span>
-              <a href="https://neuromorpho.org/neuron_info.jsp?neuron_name=0548_GH_100316_I_cell1" target="_blank" rel="noopener">NMO source</a>
-            </div>
-          </aside>
         </section>
 
-        <article class="landing-project-card">
-          <div>
-            <span class="kicker">Featured planned senior project</span>
-            <h3>Morphological Determinants of Neuronal Excitability</h3>
-            <p>
-              A planned senior-year project connecting morphology curation, public Allen Institute cell data,
-              and NEURON simulations into one computational neuroscience portfolio piece.
-            </p>
-            <div class="tag-row">
-              <span class="tag">NeuroMorpho.org</span>
-              <span class="tag">Allen Institute</span>
-              <span class="tag">NEURON</span>
-              <span class="tag">SWC morphology</span>
+        <section>
+          <h2 class="sidebar-title">Details</h2>
+          <dl class="detail-list">
+            <div>
+              <dt>Affiliation</dt>
+              <dd>George Mason University, Neuroscience</dd>
             </div>
+            <div>
+              <dt>Research</dt>
+              <dd>NeuroMorpho.org research assistant focused on literature mining and morphology metadata curation.</dd>
+            </div>
+            <div>
+              <dt>Tools</dt>
+              <dd>Python, NEURON Simulator, SWC morphology workflows, scientific data review, and Flask.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section id="site-footer">
+          <p>Computational neuroscience, neuroinformatics, neuronal morphology, and modeling.</p>
+        </section>
+      </div>
+    </aside>
+
+    <main id="main">
+      <ul class="actions" aria-label="Featured links">
+        <li><a class="button" href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">My Resume</a></li>
+        <li><a class="button" href="https://github.com/nej296" target="_blank" rel="noopener">GitHub Profile</a></li>
+        <li><a class="button" href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+
+      <article class="post" id="research">
+        <header>
+          <div class="post-title">
+            <h2>Computational Neuroscience</h2>
+            <p>Neuroinformatics, morphology, and neuron modeling</p>
           </div>
-          <div class="landing-project-flow" aria-label="Featured project workflow">
-            <div class="flow-step">
-              <span>Data source</span>
-              <strong>NeuroMorpho.org reconstructions</strong>
-            </div>
-            <div class="flow-step">
-              <span>Comparison</span>
-              <strong>Allen Institute cell morphology and physiology</strong>
-            </div>
-            <div class="flow-step">
-              <span>Modeling</span>
-              <strong>NEURON simulations of excitability</strong>
-            </div>
+          <div class="post-meta">
+            <span>Current Focus</span>
+            <small>George Mason University neuroscience student</small>
           </div>
-        </article>
-      </div>
-    </header>
-
-    <section class="shell" id="research">
-      <div class="section-head">
-        <div>
-          <span class="kicker">Research profile</span>
-          <h2 class="section-title">NeuroMorpho.org Research Assistant</h2>
-        </div>
-        <p class="section-copy">
-          I support NeuroMorpho.org through literature mining and neuroinformatics data curation for digitally
-          reconstructed neurons and glia, with emphasis on reconstruction evidence, tracing methods, metadata
-          quality, and data-source availability.
-        </p>
-      </div>
-
-      <div class="research-grid">
-        <article class="content-card">
-          <span class="kicker">01</span>
-          <h3>Reconstruction Evidence</h3>
-          <p>
-            Evaluated scientific articles for evidence of bifurcating, skeletonized neuronal or glial reconstructions.
-            Identified reconstruction and tracing methods including Neurolucida, Imaris Filament Tracer, Amira,
-            Vaa3D, Simple Neurite Tracer, and related tools.
+        </header>
+        <div class="post-body">
+          <figure class="feature-image">
+            <img src="/static/neuromorpho-neuron-spin-clean.gif" alt="Rotating digital reconstruction of a human pyramidal neuron">
+          </figure>
+          <p class="image-note">
+            Neuronal morphology rendered from a NeuroMorpho.org reconstruction. The site uses this as a visual anchor for the computational neuroscience work below.
           </p>
-        </article>
-        <article class="content-card">
-          <span class="kicker">02</span>
-          <h3>Literature and Data Review</h3>
           <p>
-            Reviewed figures, captions, supplementary materials, data availability statements, and repository links
-            to determine whether reconstruction data were accessible. Classified articles as positive, negative,
-            inaccessible, or shared-source based on reconstruction evidence and metadata standards.
+            I am focused on using computers, data curation, and mathematical models to study neurons.
+            My work and projects emphasize digitally reconstructed neuronal morphologies, scientific literature review,
+            public neuroscience datasets, and NEURON-based simulation workflows.
           </p>
-        </article>
-        <article class="content-card">
-          <span class="kicker">03</span>
-          <h3>Metadata Curation</h3>
           <p>
-            Documented reconstruction details, tracing methods, confidence levels, DOI/PMID links, author information,
-            and data-source availability. Developed experience with neuroscience metadata curation,
-            morphology-focused literature review, scientific data provenance, and quality control for large-scale
-            neuroinformatics resources.
+            My planned senior project, <strong>Morphological Determinants of Neuronal Excitability</strong>,
+            is designed to connect NeuroMorpho.org reconstructions, Allen Institute morphology and electrophysiology data,
+            and NEURON simulations to study how neuronal structure relates to excitability.
           </p>
-        </article>
-      </div>
-    </section>
 
-    <section class="shell" id="projects">
-      <div class="section-head">
-        <div>
-          <span class="kicker">Selected work</span>
-          <h2 class="section-title">Selected computational neuroscience work.</h2>
-        </div>
-        <p class="section-copy">
-          The project section emphasizes work that supports my target direction: computational neuroscience,
-          scientific data analysis, NEURON modeling, and neuroinformatics.
-        </p>
-      </div>
-
-      <div class="projects-layout">
-        <article class="project-card project-feature">
-          <span class="kicker">Featured planned senior project</span>
-          <h3>Morphological Determinants of Neuronal Excitability</h3>
-          <p>
-            Planned senior-year project integrating NeuroMorpho.org neuronal reconstructions, Allen Institute
-            Cell Types morphology and electrophysiology data, and NEURON simulations to study how neuronal
-            structure relates to excitability.
-          </p>
-          <div class="tag-row">
-            <span class="tag">NeuroMorpho.org</span>
-            <span class="tag">Allen Institute</span>
-            <span class="tag">NEURON</span>
-            <span class="tag">SWC morphology</span>
-          </div>
-        </article>
-
-        <div class="project-list">
-          <a href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener" class="project-card">
-            <span class="kicker">Project</span>
-            <h3>Hodgkin-Huxley Neuron Simulator</h3>
-            <p>
-              Built a biophysical neuron simulator using the Hodgkin-Huxley mathematical framework,
-              investigated how sodium and potassium conductance parameters shape spike behavior,
-              and validated outputs against NEURON for numerical and biological realism.
-            </p>
-            <div class="tag-row">
-              <span class="tag">Computational neuroscience</span>
-              <span class="tag">Neuron modeling</span>
-              <span class="tag">NEURON validation</span>
-            </div>
-          </a>
-
-          <article class="project-card">
-            <span class="kicker">Planned</span>
-            <h3>NEURON Simulator GUI Single Cell Model</h3>
-            <div class="tag-row">
-              <span class="tag">NEURON GUI</span>
-              <span class="tag">Single-cell model</span>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <span class="kicker">Planned</span>
-            <h3>NEURON Simulator Python Scripted Single Cell Model</h3>
-            <div class="tag-row">
-              <span class="tag">NEURON</span>
-              <span class="tag">Python</span>
-              <span class="tag">Single-cell model</span>
-            </div>
-          </article>
-
-          <article class="project-card">
-            <span class="kicker">Planned</span>
-            <h3>NEURON Simulator Python Scripted Neuronal Circuit Model</h3>
-            <div class="tag-row">
-              <span class="tag">NEURON</span>
-              <span class="tag">Python</span>
-              <span class="tag">Circuit model</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="shell" id="coursework" aria-labelledby="coursework-title">
-      <div class="section-head">
-        <div>
-          <span class="kicker">Coursework</span>
-          <h2 class="section-title" id="coursework-title">Relevant academic preparation.</h2>
-        </div>
-        <p class="section-copy">
-          A neuroscience foundation with increasing emphasis on data mining, computational modeling,
-          and neuroinformatics.
-        </p>
-      </div>
-
-      <div class="course-grid">
-        <article class="content-card course-card">
-          <h3>Neuroscience</h3>
-          <ul class="course-list">
-            <li class="course-item"><span class="course-code">NEUR 327</span><span class="course-name">Cellular Neuroscience<span class="course-status">Grade received: A</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 328</span><span class="course-name">Cellular Neuroscience Lab<span class="course-status">Grade received: B</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 335</span><span class="course-name">Developmental and Systems Neuroscience<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 430</span><span class="course-name">Computational Neuroscience<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 431</span><span class="course-name">Neuroinformatics<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 471</span><span class="course-name">The Changing Brain: Evolution and Development<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">NEUR 473</span><span class="course-name">Current Neuroscience Research in Germany</span></li>
-            <li class="course-item"><span class="course-code">PSYC 375</span><span class="course-name">Brain and Sensory Processes<span class="course-status">Grade received: A</span></span></li>
-            <li class="course-item"><span class="course-code">PSYC 376</span><span class="course-name">Brain and Behavior<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">PSYC 373</span><span class="course-name">Biopsychology Lab<span class="course-status">Planned</span></span></li>
-          </ul>
-        </article>
-
-        <article class="content-card course-card">
-          <h3>Engineering and Data</h3>
-          <ul class="course-list">
-            <li class="course-item"><span class="course-code">BENG 434</span><span class="course-name">Computational Modeling of Neurons and Networks<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">CDS 303</span><span class="course-name">Scientific Data Mining<span class="course-status">Planned</span></span></li>
-            <li class="course-item"><span class="course-code">BENG 499</span><span class="course-name">Special Topics in Bioengineering</span></li>
-            <li class="course-item"><span class="course-code">ENGR 107</span><span class="course-name">Introduction to Engineering</span></li>
-          </ul>
-        </article>
-
-        <article class="content-card course-card">
-          <h3>Biology, Math, and Physics</h3>
-          <ul class="course-list">
-            <li class="course-item"><span class="course-code">BIOL 213</span><span class="course-name">Cell Structure and Function</span></li>
-            <li class="course-item"><span class="course-code">BIOL 214</span><span class="course-name">Biostatistics for Biology Majors</span></li>
-            <li class="course-item"><span class="course-code">BIOL 311</span><span class="course-name">General Genetics</span></li>
-            <li class="course-item"><span class="course-code">MATH 113</span><span class="course-name">Analytic Geometry and Calculus I</span></li>
-            <li class="course-item"><span class="course-code">PHYS 160</span><span class="course-name">University Physics I</span></li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="shell" id="contact">
-      <div class="section-head">
-        <div>
-          <span class="kicker">Contact</span>
-          <h2 class="section-title">Open to research and technical opportunities.</h2>
-        </div>
-        <p class="section-copy">
-          I am interested in computational neuroscience, neuroinformatics, morphology data,
-          scientific data curation, and neuroscience modeling roles.
-        </p>
-      </div>
-
-      <div class="contact-grid">
-        <aside class="contact-card">
-          <img
-            class="headshot"
-            src="/static/nicholas-contact-headshot-black-2026.png"
-            alt="Nicholas Johnson portrait">
-          <p>
-            Reach out for research collaborations, internship opportunities, or projects involving
-            neuroscience data, computational modeling, and neuroinformatics.
-          </p>
-          <div class="link-stack">
-            <a href="mailto:njohns59@gmu.edu" class="link-row"><span>njohns59@gmu.edu</span><span>Email</span></a>
-            <a href="tel:+17033802204" class="link-row"><span>(703) 380-2204</span><span>Phone</span></a>
-            <a href="https://github.com/nej296" target="_blank" rel="noopener" class="link-row"><span>github.com/nej296</span><span>GitHub</span></a>
-            <a href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener" class="link-row"><span>linkedin.com/in/johnsonlink</span><span>LinkedIn</span></a>
-          </div>
-        </aside>
-
-        <div class="resume-card">
-          <img
-            class="resume-preview"
-            src="/static/Nicholas_Johnson_Resume_preview.png"
-            alt="Preview of Nicholas Johnson resume">
-          <div class="resume-actions">
-            <a class="button primary" href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">Open Resume</a>
-            <a class="button" href="/Nicholas_Johnson_Resume.pdf" download="Nicholas Johnson Resume.pdf">Download PDF</a>
+          <div class="link-grid" aria-label="Portfolio sections">
+            <a class="link-card" href="#research-assistant">
+              <h3>Research</h3>
+              <p>Literature mining, reconstruction evidence review, and morphology metadata curation for NeuroMorpho.org.</p>
+            </a>
+            <a class="link-card" href="#projects">
+              <h3>Projects</h3>
+              <p>Hodgkin-Huxley modeling, NEURON simulation plans, and scientific article tooling.</p>
+            </a>
+            <a class="link-card" href="#coursework">
+              <h3>Coursework</h3>
+              <p>Neuroscience, computational modeling, scientific data mining, biology, math, and physics preparation.</p>
+            </a>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </article>
 
-  <footer class="shell footer">
-    <span>George Mason University - Neuroscience - Computational Neuroscience</span>
-  </footer>
+      <article class="post" id="research-assistant">
+        <header>
+          <div class="post-title">
+            <h2>NeuroMorpho.org Research Assistant</h2>
+            <p>Literature review and data curation</p>
+          </div>
+          <div class="post-meta">
+            <span>Research Profile</span>
+            <small>Neuronal and glial reconstruction metadata</small>
+          </div>
+        </header>
+        <div class="post-body">
+          <p>
+            I support NeuroMorpho.org through literature mining and neuroinformatics curation for digitally
+            reconstructed neurons and glia. The work requires careful review of papers, figures, captions,
+            supplementary files, repository links, tracing methods, and data availability statements.
+          </p>
+          <div class="split-list">
+            <section class="mini-panel">
+              <h3>Reconstruction Evidence</h3>
+              <p>
+                Evaluate articles for evidence of bifurcating, skeletonized neuronal or glial reconstructions
+                and identify tracing methods such as Neurolucida, Imaris Filament Tracer, Amira, Vaa3D,
+                and Simple Neurite Tracer.
+              </p>
+            </section>
+            <section class="mini-panel">
+              <h3>Data Review</h3>
+              <p>
+                Review figures, captions, supplementary materials, data statements, and repository links to
+                determine whether morphology data are available, inaccessible, shared-source, or absent.
+              </p>
+            </section>
+            <section class="mini-panel">
+              <h3>Metadata Curation</h3>
+              <p>
+                Document reconstruction details, tracing methods, confidence levels, DOI and PMID links,
+                author information, data-source availability, and scientific data provenance.
+              </p>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <article class="post" id="projects">
+        <header>
+          <div class="post-title">
+            <h2>Selected Work</h2>
+            <p>Projects and planned computational neuroscience work</p>
+          </div>
+          <div class="post-meta">
+            <span>Portfolio</span>
+            <small>Modeling, tools, and research software</small>
+          </div>
+        </header>
+        <div class="post-body">
+          <p>
+            These projects support my target direction: computational neuroscience, neuroinformatics, scientific data
+            analysis, NEURON modeling, and user-facing tools for neuroscience learning and research workflows.
+          </p>
+
+          <div class="project-list">
+            <section class="project-item">
+              <div>
+                <h3 class="project-title">Morphological Determinants of Neuronal Excitability</h3>
+                <p>
+                  Planned senior-year project integrating NeuroMorpho.org neuronal reconstructions, Allen Institute
+                  Cell Types morphology and electrophysiology data, and NEURON simulations.
+                </p>
+                <div class="tag-list">
+                  <span class="tag">NeuroMorpho.org</span>
+                  <span class="tag">Allen Institute</span>
+                  <span class="tag">NEURON</span>
+                  <span class="tag">SWC</span>
+                </div>
+              </div>
+              <span class="project-link">Planned</span>
+            </section>
+
+            <section class="project-item">
+              <div>
+                <h3 class="project-title">Hodgkin-Huxley Neuron Simulator</h3>
+                <p>
+                  Biophysical neuron simulator using the Hodgkin-Huxley mathematical framework, with experiments
+                  on sodium and potassium conductance parameters and validation against NEURON behavior.
+                </p>
+                <div class="tag-list">
+                  <span class="tag">Modeling</span>
+                  <span class="tag">Python</span>
+                  <span class="tag">NEURON validation</span>
+                </div>
+              </div>
+              <a class="project-link" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">GitHub</a>
+            </section>
+
+            <section class="project-item">
+              <div>
+                <h3 class="project-title">Scientific Article Tool</h3>
+                <p>
+                  Flask-hosted research paper analysis tool that accepts pasted text or uploaded PDFs and returns
+                  structured summaries for paper review workflows.
+                </p>
+                <div class="tag-list">
+                  <span class="tag">Flask</span>
+                  <span class="tag">PDF parsing</span>
+                  <span class="tag">Research workflow</span>
+                </div>
+              </div>
+              <a class="project-link" href="/tool">Open</a>
+            </section>
+
+            <section class="project-item">
+              <div>
+                <h3 class="project-title">NEURON Simulator Single-Cell and Circuit Models</h3>
+                <p>
+                  Planned NEURON GUI and Python-scripted modeling work, beginning with single-cell models and
+                  extending toward neuronal circuit simulations.
+                </p>
+                <div class="tag-list">
+                  <span class="tag">NEURON GUI</span>
+                  <span class="tag">Python</span>
+                  <span class="tag">Circuit modeling</span>
+                </div>
+              </div>
+              <span class="project-link">Planned</span>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <article class="post" id="coursework">
+        <header>
+          <div class="post-title">
+            <h2>Coursework</h2>
+            <p>Academic preparation for computational neuroscience</p>
+          </div>
+          <div class="post-meta">
+            <span>George Mason</span>
+            <small>Neuroscience, biology, engineering, data, and math</small>
+          </div>
+        </header>
+        <div class="post-body">
+          <p>
+            My academic work combines neuroscience with computational modeling, data mining, biology, mathematics,
+            and physics. The course list below emphasizes the classes most relevant to computational neuroscience
+            and neuroinformatics.
+          </p>
+          <div class="course-columns">
+            <section>
+              <h3>Neuroscience</h3>
+              <ul class="course-list">
+                <li><span class="course-code">NEUR 327</span> Cellular Neuroscience <span class="status">Grade received: A</span></li>
+                <li><span class="course-code">NEUR 328</span> Cellular Neuroscience Lab <span class="status">Grade received: B</span></li>
+                <li><span class="course-code">NEUR 335</span> Developmental and Systems Neuroscience <span class="status">Planned</span></li>
+                <li><span class="course-code">NEUR 430</span> Computational Neuroscience <span class="status">Planned</span></li>
+                <li><span class="course-code">NEUR 431</span> Neuroinformatics <span class="status">Planned</span></li>
+                <li><span class="course-code">PSYC 375</span> Brain and Sensory Processes <span class="status">Grade received: A</span></li>
+              </ul>
+            </section>
+            <section>
+              <h3>Engineering and Data</h3>
+              <ul class="course-list">
+                <li><span class="course-code">BENG 434</span> Computational Modeling of Neurons and Networks <span class="status">Planned</span></li>
+                <li><span class="course-code">CDS 303</span> Scientific Data Mining <span class="status">Planned</span></li>
+                <li><span class="course-code">BENG 499</span> Special Topics in Bioengineering</li>
+                <li><span class="course-code">ENGR 107</span> Introduction to Engineering</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Biology, Math, and Physics</h3>
+              <ul class="course-list">
+                <li><span class="course-code">BIOL 213</span> Cell Structure and Function</li>
+                <li><span class="course-code">BIOL 214</span> Biostatistics for Biology Majors</li>
+                <li><span class="course-code">BIOL 311</span> General Genetics</li>
+                <li><span class="course-code">MATH 113</span> Analytic Geometry and Calculus I</li>
+                <li><span class="course-code">PHYS 160</span> University Physics I</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <article class="post" id="contact">
+        <header>
+          <div class="post-title">
+            <h2>Contact</h2>
+            <p>Research, internships, and technical opportunities</p>
+          </div>
+          <div class="post-meta">
+            <span>Available For</span>
+            <small>Computational neuroscience and neuroinformatics roles</small>
+          </div>
+        </header>
+        <div class="post-body">
+          <div class="contact-layout">
+            <aside class="contact-photo">
+              <img src="/static/nicholas-contact-headshot-black-2026.png" alt="Nicholas Johnson portrait">
+            </aside>
+            <section>
+              <p>
+                Reach out for research collaborations, internship opportunities, or projects involving neuroscience
+                data, computational modeling, neuronal morphology, and neuroinformatics.
+              </p>
+              <ul class="contact-links">
+                <li><a href="mailto:njohns59@gmu.edu"><span>njohns59@gmu.edu</span><span>Email</span></a></li>
+                <li><a href="tel:+17033802204"><span>(703) 380-2204</span><span>Phone</span></a></li>
+                <li><a href="https://github.com/nej296" target="_blank" rel="noopener"><span>github.com/nej296</span><span>GitHub</span></a></li>
+                <li><a href="https://www.linkedin.com/in/johnsonlink/" target="_blank" rel="noopener"><span>linkedin.com/in/johnsonlink</span><span>LinkedIn</span></a></li>
+              </ul>
+              <div class="button-row">
+                <a class="button" href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">Open Resume</a>
+                <a class="button" href="/Nicholas_Johnson_Resume.pdf" download="Nicholas Johnson Resume.pdf">Download PDF</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </article>
+    </main>
+  </div>
 </body>
 </html>
