@@ -2,13 +2,10 @@
 
 {% block main %}
   <article class="post landing-post">
-    <header>
+    <header class="single-heading">
       <div class="post-title">
         <h2>Computational Neuroscience</h2>
         <p>Neuroinformatics, morphology, and neuron modeling</p>
-      </div>
-      <div class="post-meta">
-        <span>Computational Neuroscience, Neuroinformatics, and Morphology</span>
       </div>
     </header>
     <div class="post-body">
@@ -24,21 +21,20 @@
         and NEURON simulations to study how neuronal structure relates to excitability.
       </p>
 
-      <figure class="feature-image landing-feature">
-        <img src="/static/neuromorpho-neuron-spin-clean.gif" alt="Rotating digital reconstruction of a human pyramidal neuron">
-      </figure>
-      <p class="image-note">
-        Neuronal morphology rendered from a NeuroMorpho.org reconstruction. This visual anchors the computational neuroscience direction of the portfolio.
-      </p>
+      <div class="landing-bottom">
+        <nav class="for-more" aria-label="More portfolio sections">
+          <h3>For more:</h3>
+          <ul>
+            <li><a href="/research">Research</a></li>
+            <li><a href="/project-demos">Project Demos</a></li>
+            <li><a href="/about">About me</a></li>
+          </ul>
+        </nav>
 
-      <nav class="for-more" aria-label="More portfolio sections">
-        <h3>For more:</h3>
-        <ul>
-          <li><a href="/research">Research</a></li>
-          <li><a href="/project-demos">Project Demos</a></li>
-          <li><a href="/about">About me</a></li>
-        </ul>
-      </nav>
+        <figure class="landing-feature">
+          <img src="/static/neuromorpho-neuron-spin-clean.gif" alt="Rotating digital reconstruction of a human pyramidal neuron">
+        </figure>
+      </div>
     </div>
   </article>
 {% endblock %}
