@@ -149,23 +149,6 @@ li {
   color: var(--accent);
 }
 
-.header-actions {
-  min-height: inherit;
-  border-left: 1px solid var(--line);
-}
-
-.header-actions li {
-  display: flex;
-  align-items: center;
-  min-height: inherit;
-  border-left: 1px solid var(--line);
-  padding: 0 1rem;
-}
-
-.header-actions li:first-child {
-  border-left: 0;
-}
-
 #wrapper {
   display: grid;
   grid-template-columns: minmax(17rem, 22rem) minmax(0, 1fr);
@@ -199,12 +182,13 @@ li {
 
 .intro .portrait {
   display: inline-block;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 5.35rem;
+  height: 5.35rem;
   margin: 0 0 1rem;
   overflow: hidden;
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
 }
 
 .intro .portrait img {
@@ -390,10 +374,10 @@ li {
 }
 
 .for-more {
-  margin: 1.8rem 0 2.2rem;
-  padding: 1.25rem 1.35rem 1rem;
-  border: 1px solid var(--line);
-  background: var(--surface-alt);
+  margin: 2rem 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 .for-more h3 {
@@ -420,6 +404,18 @@ li {
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
     #0b1311;
   background-size: 32px 32px;
+}
+
+.landing-feature {
+  height: 28rem;
+  min-height: 0;
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+.landing-feature img {
+  height: 23rem;
+  filter: none;
 }
 
 .feature-image img {
@@ -797,6 +793,15 @@ li {
     width: auto;
     height: 15rem;
     max-width: 88%;
+  }
+
+  .landing-feature {
+    height: 16rem;
+    min-height: 0;
+  }
+
+  .landing-feature img {
+    height: 13.5rem;
   }
 
   .button-row {
