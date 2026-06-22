@@ -1,31 +1,20 @@
 {% extends "base.html" %}
 
 {% block title %}Research - Nicholas Johnson{% endblock %}
-{% block description %}Research profile for Nicholas Johnson, including NeuroMorpho.org literature mining, morphology metadata curation, and planned NEURON simulation work.{% endblock %}
+{% block description %}Research work by Nicholas Johnson, focused on NeuroMorpho.org literature mining and morphology metadata curation.{% endblock %}
 
 {% block main %}
   <article class="post">
-    <header>
+    <header class="single-heading">
       <div class="post-title">
         <h2>Research</h2>
-        <p>NeuroMorpho.org, neuronal morphology, and simulation planning</p>
-      </div>
-      <div class="post-meta">
-        <span>Research Profile</span>
-        <small>Literature review and morphology data curation</small>
       </div>
     </header>
     <div class="post-body">
       <p>
-        My research direction is centered on neuroinformatics and computational neuroscience. I support
-        NeuroMorpho.org through literature mining and metadata curation, and I am building toward projects
-        that connect reconstructed neuronal structure with electrophysiology and simulation.
-      </p>
-      <figure class="feature-image compact-feature">
-        <img src="/static/neuromorpho-neuron-spin-clean.gif" alt="Rotating digital reconstruction of a human pyramidal neuron">
-      </figure>
-      <p class="image-note">
-        A neuronal reconstruction used as the visual reference for morphology-focused work.
+        My research work is centered on NeuroMorpho.org, with a focus on literature mining,
+        morphology metadata curation, and careful review of digitally reconstructed neuronal
+        and glial data.
       </p>
     </div>
   </article>
@@ -74,29 +63,4 @@
     </div>
   </article>
 
-  <article class="post">
-    <header>
-      <div class="post-title">
-        <h2>Morphological Determinants of Neuronal Excitability</h2>
-        <p>Planned senior project</p>
-      </div>
-      <div class="post-meta">
-        <span>Planned</span>
-        <small>NeuroMorpho.org, Allen Institute, and NEURON</small>
-      </div>
-    </header>
-    <div class="post-body">
-      <p>
-        This planned senior-year project will integrate NeuroMorpho.org neuronal reconstructions,
-        Allen Institute Cell Types morphology and electrophysiology data, and NEURON simulations to
-        study how neuronal structure relates to excitability.
-      </p>
-      <div class="tag-list">
-        <span class="tag">NeuroMorpho.org</span>
-        <span class="tag">Allen Institute</span>
-        <span class="tag">NEURON</span>
-        <span class="tag">SWC morphology</span>
-      </div>
-    </div>
-  </article>
 {% endblock %}
