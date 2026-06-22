@@ -618,7 +618,7 @@ li {
 .course-code {
   display: inline-block;
   min-width: 4.6rem;
-  color: var(--gold);
+  color: #000000;
   font-family: var(--font-heading);
   font-size: 0.64rem;
   font-weight: 800;
