@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}Project Demos - Nicholas Johnson{% endblock %}
-{% block description %}Project demos and computational neuroscience tools by Nicholas Johnson, including Hodgkin-Huxley modeling, research paper analysis, and NEURON simulation plans.{% endblock %}
+{% block description %}Project demos and computational neuroscience work by Nicholas Johnson, including the Hodgkin-Huxley simulator and senior project planning.{% endblock %}
 
 {% block main %}
   <article class="post">
@@ -11,88 +11,26 @@
       </div>
     </header>
     <div class="post-body">
-      <p>
-        These projects support my target direction: computational neuroscience, neuroinformatics, scientific data
-        analysis, NEURON modeling, and user-facing tools for neuroscience learning and research workflows.
-      </p>
-
       <div class="project-list">
         <section class="project-item">
           <div>
             <h3 class="project-title">Hodgkin-Huxley Neuron Simulator</h3>
             <p>
-              Biophysical neuron simulator using the Hodgkin-Huxley mathematical framework, with experiments
-              on sodium and potassium conductance parameters and validation against NEURON behavior.
+              A Python desktop app for changing Hodgkin-Huxley model parameters and visualizing how they affect
+              membrane voltage, injected current, and action-potential metrics.
             </p>
-            <div class="tag-list">
-              <span class="tag">Modeling</span>
-              <span class="tag">Python</span>
-              <span class="tag">NEURON validation</span>
-            </div>
           </div>
-          <a class="project-link" href="/hodgkin-huxley">Demo</a>
+          <a class="project-link" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Download from Github</a>
         </section>
 
         <section class="project-item">
           <div>
-            <h3 class="project-title">Scientific Article Tool</h3>
+            <h3 class="project-title">Senior Project</h3>
             <p>
-              Flask-hosted research paper analysis tool that accepts pasted text or uploaded PDFs and returns
-              structured summaries for paper review workflows.
+              My senior project will focus on the NEURON Simulator, Allen Institute Cell Types, and NeuroMorpho.org
+              databases to study computational neuroscience questions with curated cell data.
             </p>
-            <div class="tag-list">
-              <span class="tag">Flask</span>
-              <span class="tag">PDF parsing</span>
-              <span class="tag">Research workflow</span>
-            </div>
           </div>
-          <a class="project-link" href="/tool">Open</a>
-        </section>
-
-        <section class="project-item">
-          <div>
-            <h3 class="project-title">NEUR 327 Presentation</h3>
-            <p>
-              Interactive cellular neuroscience presentation on BiPOLES with slide navigation and browser-based
-              presentation controls.
-            </p>
-            <div class="tag-list">
-              <span class="tag">Neuroscience</span>
-              <span class="tag">Presentation</span>
-              <span class="tag">Interactive</span>
-            </div>
-          </div>
-          <a class="project-link" href="/neur327">Open</a>
-        </section>
-
-        <section class="project-item">
-          <div>
-            <h3 class="project-title">NEURON Simulator Single-Cell and Circuit Models</h3>
-            <p>
-              Planned NEURON GUI and Python-scripted modeling work, beginning with single-cell models and
-              extending toward neuronal circuit simulations.
-            </p>
-            <div class="tag-list">
-              <span class="tag">NEURON GUI</span>
-              <span class="tag">Python</span>
-              <span class="tag">Circuit modeling</span>
-            </div>
-          </div>
-          <span class="project-link">Planned</span>
-        </section>
-
-        <section class="project-item">
-          <div>
-            <h3 class="project-title">Hodgkin-Huxley Source Code</h3>
-            <p>
-              Repository for the standalone Hodgkin-Huxley simulation work and modeling experiments.
-            </p>
-            <div class="tag-list">
-              <span class="tag">GitHub</span>
-              <span class="tag">Computational neuroscience</span>
-            </div>
-          </div>
-          <a class="project-link" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">GitHub</a>
         </section>
       </div>
     </div>

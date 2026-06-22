@@ -20,7 +20,6 @@ def avoid_stale_html_cache(response):
         'about',
         'tool',
         'neur327',
-        'hodgkin_huxley',
         'resume_pdf',
     ):
         response.headers['Cache-Control'] = 'no-store, max-age=0, must-revalidate'
@@ -60,11 +59,6 @@ def tool():
 @app.route('/neur327')
 def neur327():
     return render_template('neur327.html')
-
-
-@app.route('/hodgkin-huxley')
-def hodgkin_huxley():
-    return render_template('hodgkin-huxley.html')
 
 
 @app.route('/Nicholas_Johnson_Resume.pdf')
