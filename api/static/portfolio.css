@@ -262,6 +262,28 @@ li {
   color: var(--accent);
 }
 
+.institute-address {
+  margin: 1.15rem 0 0;
+  color: #777777;
+  font-size: 0.9rem;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0 0 3rem;
+  padding: 0;
+  list-style: none;
+}
+
+.actions li {
+  padding-left: 0;
+}
+
 .post {
   margin: 0 0 3rem;
   background: var(--surface);
@@ -385,19 +407,26 @@ li {
 }
 
 .landing-feature {
+  position: relative;
+  align-self: end;
   justify-self: end;
-  width: min(100%, 28rem);
-  margin: 0;
+  width: min(100%, 23rem);
+  height: clamp(15rem, 28vw, 19rem);
+  margin: 0 -1.8rem -1.8rem 0;
+  overflow: hidden;
   background: transparent;
   border: 0;
 }
 
 .landing-feature img {
+  position: absolute;
+  right: -1.15rem;
+  bottom: -1.15rem;
   width: auto;
-  height: min(28vw, 22rem);
-  max-height: 22rem;
-  max-width: 100%;
+  height: clamp(18rem, 32vw, 24rem);
+  max-width: none;
   filter: none;
+  clip-path: inset(0 0 12% 26%);
   mix-blend-mode: multiply;
 }
 
@@ -674,15 +703,18 @@ li {
 
   .landing-bottom {
     grid-template-columns: 1fr;
-    align-items: start;
+    align-items: end;
   }
 
   .landing-feature {
-    justify-self: start;
+    justify-self: end;
+    width: min(100%, 18rem);
+    height: 14.5rem;
+    margin: -0.5rem -1rem -1.25rem 0;
   }
 
   .landing-feature img {
-    height: 16rem;
+    height: 18rem;
   }
 }
 
@@ -740,7 +772,12 @@ li {
   }
 
   .landing-feature img {
-    height: 12rem;
+    height: 14.5rem;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .button-row {
