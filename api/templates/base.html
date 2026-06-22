@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Nicholas Johnson - Computational Neuroscience{% endblock %}</title>
+  <meta
+    name="description"
+    content="{% block description %}Nicholas Johnson is a George Mason University neuroscience student focused on computational neuroscience, neuroinformatics, neuronal morphology, and NEURON modeling.{% endblock %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700;800;900&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/portfolio.css">
+</head>
+<body>
+  <header id="site-header">
+    <h1><a href="/">Nicholas Johnson</a></h1>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <ul>
+        <li><a href="/research" class="{% if request.path in ['/research', '/research.html'] %}active{% endif %}">Research</a></li>
+        <li><a href="/project-demos" class="{% if request.path in ['/project-demos', '/project-demos.html', '/projects', '/demos'] %}active{% endif %}">Project Demos</a></li>
+        <li><a href="/about" class="{% if request.path in ['/about', '/about.html'] %}active{% endif %}">About Me</a></li>
+      </ul>
+    </nav>
+    <nav class="header-actions" aria-label="Profile links">
+      <ul>
+        <li><a href="/Nicholas_Johnson_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+        <li><a href="https://github.com/nej296" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div id="wrapper">
+    <aside id="sidebar" aria-label="Profile summary">
+      <section class="intro" id="top">
+        <a class="portrait" href="/about" aria-label="About Nicholas Johnson">
+          <img src="/static/nicholas-contact-headshot-black-2026.png" alt="Nicholas Johnson portrait">
+        </a>
+        <header>
+          <h2>Nicholas Johnson</h2>
+          <p>Neuroscience student, computational neuroscience concentration, George Mason University.</p>
+        </header>
+      </section>
+
+      <div class="sidebar-grid">
+        <section>
+          <h2 class="sidebar-title">About</h2>
+          <p class="sidebar-copy">
+            I work at the intersection of neuroinformatics, neuronal morphology, and biophysical modeling.
+            My current direction is building research and software experience around NeuroMorpho.org data,
+            Allen Institute cell data, and NEURON simulations.
+          </p>
+          <div class="button-row">
+            <a class="button" href="/about">Learn More</a>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="sidebar-title">Details</h2>
+          <dl class="detail-list">
+            <div>
+              <dt>Affiliation</dt>
+              <dd>George Mason University, Neuroscience</dd>
+            </div>
+            <div>
+              <dt>Research</dt>
+              <dd>NeuroMorpho.org research assistant focused on literature mining and morphology metadata curation.</dd>
+            </div>
+            <div>
+              <dt>Tools</dt>
+              <dd>Python, NEURON Simulator, SWC morphology workflows, scientific data review, and Flask.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section id="site-footer">
+          <p>Computational neuroscience, neuroinformatics, neuronal morphology, and modeling.</p>
+        </section>
+      </div>
+    </aside>
+
+    <main id="main">
+      {% block main %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>

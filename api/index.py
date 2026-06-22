@@ -13,7 +13,16 @@ app = Flask(__name__, template_folder=TEMPLATE_DIR)
 @app.after_request
 def avoid_stale_html_cache(response):
     """So updates to templates show up instead of a cached older deployment HTML."""
-    if request.endpoint in ('home', 'tool', 'neur327', 'hodgkin_huxley', 'resume_pdf'):
+    if request.endpoint in (
+        'home',
+        'research',
+        'project_demos',
+        'about',
+        'tool',
+        'neur327',
+        'hodgkin_huxley',
+        'resume_pdf',
+    ):
         response.headers['Cache-Control'] = 'no-store, max-age=0, must-revalidate'
     return response
 
@@ -21,6 +30,26 @@ def avoid_stale_html_cache(response):
 @app.route('/')
 def home():
     return render_template('index.html')
+
+
+@app.route('/research')
+@app.route('/research.html')
+def research():
+    return render_template('research.html')
+
+
+@app.route('/project-demos')
+@app.route('/project-demos.html')
+@app.route('/projects')
+@app.route('/demos')
+def project_demos():
+    return render_template('project_demos.html')
+
+
+@app.route('/about')
+@app.route('/about.html')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/tool')
