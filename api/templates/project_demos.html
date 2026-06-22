@@ -4,35 +4,40 @@
 {% block description %}Project demos and computational neuroscience work by Nicholas Johnson, including the Hodgkin-Huxley simulator and senior project planning.{% endblock %}
 
 {% block main %}
-  <article class="post">
+  <article class="post demo-post">
     <header class="single-heading">
       <div class="post-title">
-        <h2>Project Demos</h2>
+        <h2>Hodgkin-Huxley Neuron Simulator</h2>
+        <p>A Python desktop app for exploring Hodgkin-Huxley membrane dynamics.</p>
       </div>
     </header>
     <div class="post-body">
-      <div class="project-list">
-        <section class="project-item">
-          <div>
-            <h3 class="project-title">Hodgkin-Huxley Neuron Simulator</h3>
-            <p>
-              A Python desktop app for changing Hodgkin-Huxley model parameters and visualizing how they affect
-              membrane voltage, injected current, and action-potential metrics.
-            </p>
-          </div>
-          <a class="project-link" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Download from Github</a>
-        </section>
+      <figure class="demo-media">
+        <video src="/static/hh-video-demo.mp4" controls preload="metadata" playsinline></video>
+      </figure>
 
-        <section class="project-item">
-          <div>
-            <h3 class="project-title">Senior Project</h3>
-            <p>
-              My senior project will focus on the NEURON Simulator, Allen Institute Cell Types, and NeuroMorpho.org
-              databases to study computational neuroscience questions with curated cell data.
-            </p>
-          </div>
-        </section>
+      <p>
+        The simulator lets users adjust Hodgkin-Huxley parameters and visualize membrane voltage,
+        injected current, and action-potential metrics in the desktop Python app.
+      </p>
+
+      <div class="button-row">
+        <a class="button" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Download it on Github</a>
       </div>
+    </div>
+  </article>
+
+  <article class="post">
+    <header class="single-heading">
+      <div class="post-title">
+        <h2>Senior Project</h2>
+      </div>
+    </header>
+    <div class="post-body">
+      <p>
+        My senior project will focus on the NEURON Simulator, Allen Institute Cell Types,
+        and NeuroMorpho.org databases to study computational neuroscience questions with curated cell data.
+      </p>
     </div>
   </article>
 {% endblock %}
