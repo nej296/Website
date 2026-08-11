@@ -46,97 +46,22 @@
         </span>
         <span class="contact-profile-arrow" aria-hidden="true">↗</span>
       </a>
+
+      <a
+        class="contact-profile"
+        href="mailto:njohns59@gmu.edu"
+        aria-label="Email Nicholas Johnson at njohns59@gmu.edu">
+        <span class="contact-profile-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 5h18v14H3V5Zm2 2v.5l7 5.1 7-5.1V7H5Zm14 10v-7l-7 5-7-5v7h14Z"/>
+          </svg>
+        </span>
+        <span class="contact-profile-copy">
+          <strong>Email</strong>
+          <small>njohns59@gmu.edu</small>
+        </span>
+        <span class="contact-profile-arrow" aria-hidden="true">↗</span>
+      </a>
     </div>
-
-    <section class="message-panel" aria-labelledby="message-title">
-      <header>
-        <h3 id="message-title">Send a message</h3>
-      </header>
-      <form class="contact-form" id="contact-form" action="https://formsubmit.co/ajax/njohns59@gmu.edu" method="POST">
-        <input type="hidden" name="_subject" value="Portfolio contact form message">
-        <input type="hidden" name="_captcha" value="false">
-        <input class="form-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" hidden aria-hidden="true">
-
-        <div class="form-row">
-          <label>
-            <span>Name</span>
-            <input type="text" name="name" autocomplete="name" required>
-          </label>
-          <label>
-            <span>Email</span>
-            <input type="email" name="email" autocomplete="email" required>
-          </label>
-        </div>
-
-        <label>
-          <span>Message</span>
-          <textarea name="message" rows="7" required></textarea>
-        </label>
-
-        <p class="form-error" id="form-error" role="alert" hidden></p>
-        <button type="submit"><span>Send message</span></button>
-      </form>
-    </section>
   </article>
-
-  <div class="contact-toast" id="contact-toast" role="status" aria-live="polite" hidden>
-    <span class="contact-toast-icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="m7 12 3.2 3.2L17.5 8"/></svg>
-    </span>
-    <div>
-      <strong>Success!</strong>
-      <p>Your message has been sent successfully. I'll get back to you soon!</p>
-    </div>
-  </div>
-
-  <script>
-    (() => {
-      const form = document.getElementById("contact-form");
-      const button = form.querySelector("button");
-      const buttonLabel = button.querySelector("span");
-      const toast = document.getElementById("contact-toast");
-      const errorMessage = document.getElementById("form-error");
-      let toastTimer;
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        button.disabled = true;
-        buttonLabel.textContent = "Sending…";
-        errorMessage.hidden = true;
-
-        try {
-          const response = await fetch(form.action, {
-            method: "POST",
-            headers: {
-              "Accept": "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(Object.fromEntries(new FormData(form)))
-          });
-          const result = await response.json();
-
-          if (!response.ok || String(result.success) === "false") {
-            throw new Error("Message delivery failed");
-          }
-
-          form.reset();
-          window.clearTimeout(toastTimer);
-          toast.hidden = false;
-          window.requestAnimationFrame(() => toast.classList.add("is-visible"));
-          toastTimer = window.setTimeout(() => {
-            toast.classList.remove("is-visible");
-            window.setTimeout(() => {
-              toast.hidden = true;
-            }, 200);
-          }, 6500);
-        } catch (error) {
-          errorMessage.textContent = "Your message could not be sent. Please try again.";
-          errorMessage.hidden = false;
-        } finally {
-          button.disabled = false;
-          buttonLabel.textContent = "Send message";
-        }
-      });
-    })();
-  </script>
 {% endblock %}
