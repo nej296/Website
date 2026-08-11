@@ -1,6 +1,6 @@
 import os
 import requests as http_requests
-from flask import Flask, render_template, request, jsonify, Response, send_from_directory
+from flask import Flask, render_template, request, jsonify, Response, redirect, send_from_directory
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -17,7 +17,7 @@ def avoid_stale_html_cache(response):
         'home',
         'research',
         'project_demos',
-        'about',
+        'contact',
         'tool',
         'neur327',
         'resume_pdf',
@@ -45,10 +45,16 @@ def project_demos():
     return render_template('project_demos.html')
 
 
+@app.route('/contact')
+@app.route('/contact.html')
+def contact():
+    return render_template('contact.html')
+
+
 @app.route('/about')
 @app.route('/about.html')
-def about():
-    return render_template('about.html')
+def legacy_about():
+    return redirect('/contact', code=301)
 
 
 @app.route('/tool')
