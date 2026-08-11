@@ -12,81 +12,45 @@
       </div>
     </header>
     <div class="post-body">
-      <p class="document-intro">
+      <p class="simple-page-intro">
         I develop computational tools that connect biological questions to explicit equations,
         inspectable outputs, and reproducible validation.
       </p>
 
-      <section class="project-record">
-        <header class="record-header">
-          <div class="record-number">01</div>
-          <div class="record-title">
-            <span class="record-status">Released · v1.0.0</span>
-            <h3>Hodgkin–Huxley Simulator</h3>
-          </div>
-          <div class="record-platform">Windows · macOS · Linux</div>
+      <section class="simple-entry">
+        <header>
+          <span class="simple-entry-label">Released · Windows, macOS, and Linux</span>
+          <h3>Hodgkin–Huxley Simulator</h3>
         </header>
-
-        <div class="record-body">
-          <div class="record-narrative">
-            <p class="record-lede">
-              A cross-platform Python desktop application for exploring action-potential generation
-              and single-compartment membrane dynamics in real time.
-            </p>
-            <p>
-              The simulator implements the Hodgkin–Huxley equations and exposes membrane voltage,
-              injected and ionic currents, sodium, potassium, and leak conductances, and the
-              <em>m</em>, <em>h</em>, and <em>n</em> gating variables.
-            </p>
-            <p>
-              Outputs were validated against the NEURON Simulator and documented in a research-style manuscript
-              covering methods, error analysis, biological interpretation, and future extensions.
-            </p>
-            <div class="project-actions">
-              <a class="button button-primary" href="https://hhsimulator.com/" target="_blank" rel="noopener">Open hhsimulator.com</a>
-              <a class="button" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Source code</a>
-            </div>
-          </div>
-
-          <dl class="record-details">
-            <div><dt>Core model</dt><dd>Hodgkin–Huxley, 1952</dd></div>
-            <div><dt>Validation</dt><dd>NEURON Simulator</dd></div>
-            <div><dt>Implementation</dt><dd>Python · Tkinter</dd></div>
-            <div><dt>Scope</dt><dd>Single-compartment dynamics</dd></div>
-          </dl>
+        <p class="simple-entry-lede">
+          A cross-platform Python desktop application for exploring action-potential generation
+          and single-compartment membrane dynamics in real time.
+        </p>
+        <p>
+          The simulator exposes membrane voltage, injected and ionic currents, conductances, and gating variables.
+          I validated its output against the NEURON Simulator and documented the methods, error analysis,
+          and biological interpretation in a research-style manuscript.
+        </p>
+        <div class="project-actions">
+          <a class="button button-primary" href="https://hhsimulator.com/" target="_blank" rel="noopener">Open hhsimulator.com</a>
+          <a class="button" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Source code</a>
         </div>
       </section>
 
-      <section class="project-record project-record-active">
-        <header class="record-header">
-          <div class="record-number">02</div>
-          <div class="record-title">
-            <span class="record-status">In development · Senior project</span>
-            <h3>Hippocampal Network Model</h3>
-          </div>
-          <div class="record-platform">Python · NEURON</div>
+      <section class="simple-entry">
+        <header>
+          <span class="simple-entry-label">In development · Senior project</span>
+          <h3>Hippocampal Network Model</h3>
         </header>
-
-        <div class="record-body">
-          <div class="record-narrative">
-            <p class="record-lede">
-              A biophysically grounded network model connecting curated neuronal morphologies
-              to emergent hippocampal network behavior.
-            </p>
-            <p>
-              The project will integrate public morphology and cell-type data into a reproducible NEURON workflow.
-              Current work focuses on selecting source data, preparing morphologies, defining model architecture,
-              and establishing validation criteria before network experiments begin.
-            </p>
-          </div>
-
-          <dl class="record-details">
-            <div><dt>Region</dt><dd>Hippocampus</dd></div>
-            <div><dt>Data</dt><dd>Public morphology and cell types</dd></div>
-            <div><dt>Environment</dt><dd>Python · NEURON</dd></div>
-            <div><dt>Stage</dt><dd>Architecture and data preparation</dd></div>
-          </dl>
-        </div>
+        <p class="simple-entry-lede">
+          A biophysically grounded model connecting curated neuronal morphologies
+          to hippocampal network behavior.
+        </p>
+        <p>
+          The project uses Python and NEURON to integrate public morphology and cell-type data.
+          Current work focuses on source-data selection, morphology preparation, model architecture,
+          and validation criteria.
+        </p>
       </section>
     </div>
   </article>
