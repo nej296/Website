@@ -1,66 +1,112 @@
 {% extends "base.html" %}
 
 {% block title %}Research - Nicholas Johnson{% endblock %}
-{% block description %}Research work by Nicholas Johnson, focused on NeuroMorpho.org literature mining and morphology metadata curation.{% endblock %}
+{% block description %}Research by Nicholas Johnson in neuronal morphology curation, literature mining, neuroinformatics, and anatomy and physiology education.{% endblock %}
 
 {% block main %}
-  <article class="post">
+  <article class="post research-intro">
     <header class="single-heading">
       <div class="post-title">
         <h2>Research</h2>
+        <p>Neuroinformatics · Morphology · Scientific data curation</p>
       </div>
     </header>
     <div class="post-body">
-      <p>
-        My research work is centered on NeuroMorpho.org, with a focus on literature mining,
-        morphology metadata curation, and careful review of digitally reconstructed neuronal
-        and glial data.
-      </p>
+      <div class="research-overview">
+        <p class="research-lede">
+          My research centers on making neuronal morphology data findable, structurally valid, and reusable.
+          I work across scientific literature, public repositories, reconstruction software, and quality-control
+          pipelines to prepare neuron data for NeuroMorpho.Org.
+        </p>
+        <div class="research-metric" aria-label="240 edited neuron reconstructions contributed">
+          <strong>240</strong>
+          <span>edited neuron reconstructions contributed</span>
+        </div>
+      </div>
     </div>
   </article>
 
-  <article class="post">
+  <article class="post research-role">
     <header>
       <div class="post-title">
-        <h2>NeuroMorpho.org Research Assistant</h2>
-        <p>Literature mining and morphology metadata curation</p>
+        <h2>NeuroMorpho.Org</h2>
+        <p>Research Assistant → Research Intern</p>
       </div>
       <div class="post-meta">
-        <span>Current Work</span>
-        <small>Neuronal and glial reconstruction evidence</small>
+        <span>June 2026—Present</span>
+        <small>Krasnow Institute for Advanced Study</small>
       </div>
     </header>
     <div class="post-body">
-      <p>
-        I support NeuroMorpho.org through literature mining and neuroinformatics curation for digitally
-        reconstructed neurons and glia. The work requires careful review of papers, figures, captions,
-        supplementary files, repository links, tracing methods, and data availability statements.
-      </p>
-      <div class="split-list">
-        <section class="mini-panel">
-          <h3>Reconstruction Evidence</h3>
-          <p>
-            Evaluate articles for evidence of bifurcating, skeletonized neuronal or glial reconstructions
-            and identify tracing methods such as Neurolucida, Imaris Filament Tracer, Amira, Vaa3D,
-            and Simple Neurite Tracer.
-          </p>
+      <div class="research-workstreams">
+        <section class="research-workstream">
+          <span class="workstream-index">01</span>
+          <div>
+            <h3>Literature mining</h3>
+            <p>
+              Identify neuronal and glial reconstructions in the literature using tracing-system evidence from
+              Neurolucida, Imaris, Amira, Vaa3D, Simple Neurite Tracer, and CATMAID.
+            </p>
+          </div>
         </section>
-        <section class="mini-panel">
-          <h3>Data Review</h3>
-          <p>
-            Review figures, captions, supplementary materials, data statements, and repository links to
-            determine whether morphology data are available, inaccessible, shared-source, or absent.
-          </p>
+        <section class="research-workstream">
+          <span class="workstream-index">02</span>
+          <div>
+            <h3>Data and metadata review</h3>
+            <p>
+              Verify reconstruction counts, figure evidence, supplementary files, data availability, DOI and PMID
+              references, and downloadable records across GitHub, Dryad, Figshare, Zenodo, and Dataverse.
+            </p>
+          </div>
         </section>
-        <section class="mini-panel">
-          <h3>Metadata Curation</h3>
-          <p>
-            Document reconstruction details, tracing methods, confidence levels, DOI and PMID links,
-            author information, data-source availability, and scientific data provenance.
-          </p>
+        <section class="research-workstream">
+          <span class="workstream-index">03</span>
+          <div>
+            <h3>Morphology editing</h3>
+            <p>
+              Convert lab-submitted files to standardized SWC, then repair somas, broken segments, long connections,
+              topology errors, and neurite labels using Fiji, Neuromantic, CVAPP, and NeuTube.
+            </p>
+          </div>
+        </section>
+        <section class="research-workstream">
+          <span class="workstream-index">04</span>
+          <div>
+            <h3>Quality control</h3>
+            <p>
+              Run each reconstruction through automated checks, resolve every flagged structural issue, and repeat
+              validation until the morphology is clean and ready for publication in the database.
+            </p>
+          </div>
         </section>
       </div>
     </div>
   </article>
 
+  <article class="post research-role">
+    <header>
+      <div class="post-title">
+        <h2>Anatomy &amp; Physiology Education Research</h2>
+        <p>Undergraduate Research Assistant</p>
+      </div>
+      <div class="post-meta">
+        <span>Jan.—May 2026</span>
+        <small>George Mason University</small>
+      </div>
+    </header>
+    <div class="post-body">
+      <div class="research-secondary">
+        <p>
+          Collaborated on manuscript preparation for a comparative anatomy and physiology education study.
+          Contributed to data interpretation and developed publication figures in Google Colab.
+        </p>
+        <div class="tag-list" aria-label="Research methods">
+          <span class="tag">Manuscript preparation</span>
+          <span class="tag">Data interpretation</span>
+          <span class="tag">Scientific figures</span>
+          <span class="tag">Google Colab</span>
+        </div>
+      </div>
+    </div>
+  </article>
 {% endblock %}

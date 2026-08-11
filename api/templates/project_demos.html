@@ -1,42 +1,75 @@
 {% extends "base.html" %}
 
-{% block title %}Project Demos - Nicholas Johnson{% endblock %}
-{% block description %}Project demos and computational neuroscience work by Nicholas Johnson, including the Hodgkin-Huxley simulator and senior project planning.{% endblock %}
+{% block title %}Projects - Nicholas Johnson{% endblock %}
+{% block description %}Computational neuroscience projects by Nicholas Johnson, including the cross-platform Hodgkin-Huxley Simulator and a developing hippocampal network model.{% endblock %}
 
 {% block main %}
-  <article class="post demo-post">
+  <article class="post projects-intro">
     <header class="single-heading">
       <div class="post-title">
-        <h2>Hodgkin-Huxley Neuron Simulator</h2>
-        <p>A Python desktop app for exploring Hodgkin-Huxley membrane dynamics.</p>
+        <h2>Projects</h2>
+        <p>Scientific software and biophysical models</p>
       </div>
     </header>
     <div class="post-body">
-      <figure class="demo-media">
-        <video src="/static/hh-video-demo.mp4" controls preload="metadata" playsinline></video>
-      </figure>
-
       <p>
-        The simulator lets users adjust Hodgkin-Huxley parameters and visualize membrane voltage,
-        injected current, and action-potential metrics in the desktop Python app.
+        I build computational tools that make neuronal dynamics inspectable, testable, and easier to learn.
+        Each project connects a biological question to transparent equations, reproducible code, and validation.
       </p>
+    </div>
+  </article>
 
-      <div class="button-row">
-        <a class="button" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Download it on Github</a>
+  <article class="post project-showcase">
+    <header class="single-heading">
+      <div class="post-title">
+        <span class="project-status">Released · v1.0.0</span>
+        <h2>Hodgkin–Huxley Simulator</h2>
+        <p>Windows · macOS · Linux</p>
+      </div>
+    </header>
+    <div class="post-body">
+      <div class="project-summary">
+        <div>
+          <p class="project-lede">
+            A cross-platform Python desktop application implementing the Hodgkin–Huxley equations to model
+            action-potential generation and single-compartment membrane dynamics in real time.
+          </p>
+          <p>
+            The application exposes membrane voltage, injected and ionic currents, sodium, potassium, and leak
+            conductances, and the <em>m</em>, <em>h</em>, and <em>n</em> gating variables. Outputs were validated
+            against the NEURON Simulator and documented with methods, error analysis, and biological interpretation.
+          </p>
+          <div class="project-actions">
+            <a class="button button-primary" href="https://hhsimulator.com/" target="_blank" rel="noopener">Visit hhsimulator.com</a>
+            <a class="button" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">View source</a>
+          </div>
+        </div>
+        <dl class="project-specs">
+          <div><dt>Model</dt><dd>Hodgkin–Huxley, 1952</dd></div>
+          <div><dt>Validation</dt><dd>NEURON Simulator</dd></div>
+          <div><dt>Interface</dt><dd>Python / Tkinter</dd></div>
+          <div><dt>Analysis</dt><dd>Matplotlib · R</dd></div>
+        </dl>
       </div>
     </div>
   </article>
 
-  <article class="post">
+  <article class="post project-showcase project-in-development">
     <header class="single-heading">
       <div class="post-title">
-        <h2>Senior Project</h2>
+        <span class="project-status">In development · Senior project</span>
+        <h2>Hippocampal Network Model</h2>
+        <p>Python · NEURON · Public morphology data</p>
       </div>
     </header>
     <div class="post-body">
+      <p class="project-lede">
+        A biophysically grounded network model of the hippocampus built in Python and NEURON.
+      </p>
       <p>
-        My senior project will focus on the NEURON Simulator, Allen Institute Cell Types,
-        and NeuroMorpho.org databases to study computational neuroscience questions with curated cell data.
+        The project will combine curated neuronal morphologies and public cell-type data to investigate how
+        single-cell membrane properties scale into network behavior. Development currently focuses on data
+        selection, morphology preparation, model architecture, and reproducible simulation workflows.
       </p>
     </div>
   </article>
