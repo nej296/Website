@@ -1,56 +1,43 @@
 {% extends "base.html" %}
 
 {% block title %}Projects - Nicholas Johnson{% endblock %}
-{% block description %}Computational neuroscience projects by Nicholas Johnson, including the cross-platform Hodgkin-Huxley Simulator and a developing hippocampal network model.{% endblock %}
+{% block description %}The cross-platform Hodgkin-Huxley Simulator developed by Nicholas Johnson.{% endblock %}
 
 {% block main %}
   <article class="post portfolio-document projects-document">
     <header class="single-heading">
       <div class="post-title">
         <h2>Projects</h2>
-        <p>Scientific software and biophysical models</p>
       </div>
     </header>
     <div class="post-body">
-      <p class="simple-page-intro">
-        I develop computational tools that connect biological questions to explicit equations,
-        inspectable outputs, and reproducible validation.
-      </p>
-
       <section class="simple-entry">
         <header>
           <span class="simple-entry-label">Released · Windows, macOS, and Linux</span>
           <h3>Hodgkin–Huxley Simulator</h3>
         </header>
         <p class="simple-entry-lede">
-          A cross-platform Python desktop application for exploring action-potential generation
-          and single-compartment membrane dynamics in real time.
+          A cross-platform Python desktop application for exploring single-compartment membrane dynamics
+          using the HH equations.
         </p>
-        <p>
-          The simulator exposes membrane voltage, injected and ionic currents, conductances, and gating variables.
-          I validated its output against the NEURON Simulator and documented the methods, error analysis,
-          and biological interpretation in a research-style manuscript.
-        </p>
+        <ul class="resume-bullets">
+          <li>
+            Built a cross-platform desktop application (Windows, macOS, Linux) implementing the Hodgkin–Huxley
+            equations to model action potential generation and membrane dynamics in real time.
+          </li>
+          <li>
+            Simulates single-compartment membrane dynamics with live visualization of membrane voltage,
+            injected current, net ionic current, conductances (Na+, K+, leak), and gating variables (m, h, n).
+          </li>
+          <li>
+            Validated outputs against the NEURON Simulator; authored a research-style manuscript covering
+            methods, error analysis, biological interpretation, and future extensions.
+          </li>
+        </ul>
         <div class="project-actions">
           <a class="button button-primary" href="https://hhsimulator.com/" target="_blank" rel="noopener">Open hhsimulator.com</a>
           <a class="button" href="https://github.com/nej296/Hodgkin-Huxley-Simulator" target="_blank" rel="noopener">Source code</a>
         </div>
-      </section>
-
-      <section class="simple-entry">
-        <header>
-          <span class="simple-entry-label">In development · Senior project</span>
-          <h3>Hippocampal Network Model</h3>
-        </header>
-        <p class="simple-entry-lede">
-          A biophysically grounded model connecting curated neuronal morphologies
-          to hippocampal network behavior.
-        </p>
-        <p>
-          The project uses Python and NEURON to integrate public morphology and cell-type data.
-          Current work focuses on source-data selection, morphology preparation, model architecture,
-          and validation criteria.
-        </p>
       </section>
     </div>
   </article>
