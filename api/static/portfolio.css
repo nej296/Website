@@ -1301,11 +1301,11 @@ li {
   }
 
   .landing-feature img {
-    transform: translateX(2rem);
+    transform: translateX(4.25rem);
   }
 
   .landing-feature .patch-clamp {
-    transform: translate(0.5rem, 0.75rem);
+    transform: translate(3rem, 0.75rem);
   }
 
   .for-more {
@@ -1490,7 +1490,15 @@ li {
   }
 
   .landing-feature {
-    width: 100%;
+    width: min(calc(100vw - 2.5rem), 20rem);
+  }
+
+  .landing-feature img {
+    transform: translateX(calc(4.25rem + 50vw - 180px));
+  }
+
+  .landing-feature .patch-clamp {
+    transform: translate(calc(3rem + 50vw - 180px), 0.75rem);
   }
 
   .simple-entry h3 {
