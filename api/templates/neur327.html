@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1920">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BiPOLES — NEUR 327 Group 6 Presentation</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,6 +30,13 @@
     overflow: hidden;
     font-family: var(--ff-d);
     color: var(--text);
+  }
+
+  @media (max-width: 1200px), (max-height: 800px) {
+    body {
+      width: 100vw;
+      height: 100dvh;
+    }
   }
 
   /* ── Slide System ─────────────────────────────── */
@@ -1343,22 +1350,34 @@ function toggleFS() {
 
 function scaleDeck() {
   const deck = document.getElementById('deck');
-  const scaleX = window.innerWidth / 1920;
-  const scaleY = window.innerHeight / 1080;
+  const viewportWidth = window.visualViewport?.width || window.innerWidth;
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  const scaleX = viewportWidth / 1920;
+  const scaleY = viewportHeight / 1080;
   const scale = Math.min(scaleX, scaleY);
   deck.style.transform = `scale(${scale})`;
   deck.style.transformOrigin = 'top left';
-  const offsetX = (window.innerWidth - 1920 * scale) / 2;
-  const offsetY = (window.innerHeight - 1080 * scale) / 2;
-  deck.style.marginLeft = offsetX + 'px';
-  deck.style.marginTop = offsetY + 'px';
+  const offsetX = (viewportWidth - 1920 * scale) / 2;
+  const offsetY = (viewportHeight - 1080 * scale) / 2;
+  deck.style.position = 'fixed';
+  deck.style.left = offsetX + 'px';
+  deck.style.top = offsetY + 'px';
+  deck.style.marginLeft = '0';
+  deck.style.marginTop = '0';
+  document.body.style.width = viewportWidth + 'px';
+  document.body.style.height = viewportHeight + 'px';
 }
 
 function resetDeck() {
   const deck = document.getElementById('deck');
   deck.style.transform = '';
+  deck.style.position = '';
+  deck.style.left = '';
+  deck.style.top = '';
   deck.style.marginLeft = '';
   deck.style.marginTop = '';
+  document.body.style.width = '';
+  document.body.style.height = '';
 }
 
 document.addEventListener('fullscreenchange', () => {
@@ -1379,6 +1398,41 @@ document.addEventListener('fullscreenchange', () => {
     window.removeEventListener('resize', scaleDeck);
   }
 });
+
+function fitDeckToViewport() {
+  if (document.fullscreenElement) return;
+  const viewportWidth = window.visualViewport?.width || window.innerWidth;
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  if (viewportWidth < 1920 || viewportHeight < 1080) {
+    scaleDeck();
+  } else {
+    resetDeck();
+  }
+}
+
+let touchStartX = 0;
+let touchStartY = 0;
+const touchDeck = document.getElementById('deck');
+
+touchDeck.addEventListener('touchstart', event => {
+  const touch = event.changedTouches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}, { passive: true });
+
+touchDeck.addEventListener('touchend', event => {
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - touchStartX;
+  const deltaY = touch.clientY - touchStartY;
+  if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
+    go(deltaX < 0 ? 1 : -1);
+  }
+}, { passive: true });
+
+window.addEventListener('resize', fitDeckToViewport);
+window.addEventListener('orientationchange', fitDeckToViewport);
+window.visualViewport?.addEventListener('resize', fitDeckToViewport);
+fitDeckToViewport();
 
 /* ── Canvas Neuron Animation (Slide 1) ──────────── */
 const canvas = document.getElementById('c');

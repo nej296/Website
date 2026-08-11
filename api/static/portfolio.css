@@ -1053,21 +1053,147 @@ li {
 }
 
 @media (max-width: 880px) {
+  html {
+    scroll-padding-top: 7rem;
+  }
+
+  body {
+    background: var(--surface);
+    font-size: 16px;
+  }
+
   #site-header {
+    display: grid;
+    grid-template-columns: 1fr;
     align-items: stretch;
+    min-height: 0;
+    background: rgba(255, 255, 255, 0.98);
   }
 
   #site-header h1 {
-    max-width: 45vw;
+    justify-content: center;
+    width: 100%;
+    min-height: 3rem;
+    max-width: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0 1rem;
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    text-align: center;
+  }
+
+  #site-header h1 a {
+    display: flex;
+    align-items: center;
+    min-height: inherit;
   }
 
   .primary-nav {
-    display: none;
+    display: block;
+    width: 100%;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .primary-nav ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-height: 3rem;
+  }
+
+  .primary-nav li,
+  .primary-nav li:first-child {
+    display: flex;
+    margin: 0;
+    border: 0;
+    border-left: 1px solid var(--line);
+    padding: 0;
+  }
+
+  .primary-nav li:first-child {
+    border-left: 0;
+  }
+
+  .primary-nav a {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
   }
 
   #wrapper {
-    width: min(100% - 2rem, 58rem);
-    padding-top: 5.25rem;
+    display: flex;
+    width: 100%;
+    padding: 7.15rem 0 1.5rem;
+    gap: 0;
+  }
+
+  #sidebar {
+    width: 100%;
+    padding: 0 1rem 1.15rem;
+  }
+
+  .intro {
+    display: grid;
+    grid-template-columns: 3.75rem minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: center;
+    text-align: left;
+  }
+
+  .intro .portrait {
+    width: 3.75rem;
+    height: 3.75rem;
+    margin: 0;
+  }
+
+  .intro h2 {
+    margin: 0 0 0.28rem;
+    font-size: 1.12rem;
+    letter-spacing: 0.07em;
+    line-height: 1.08;
+  }
+
+  .intro p {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  #main {
+    width: 100%;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: calc(100% - 2rem);
+    max-width: none;
+    gap: 0.5rem;
+    margin: 0 1rem 1rem;
+  }
+
+  .actions .button {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0 0.35rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.11em;
+  }
+
+  .post,
+  .landing-post,
+  .portfolio-document,
+  .contact-post {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 1rem;
+    border-right: 0;
+    border-left: 0;
   }
 
   .post > header,
@@ -1078,131 +1204,236 @@ li {
     grid-template-columns: 1fr;
   }
 
+  .post-title,
+  .post-body {
+    padding: 1.25rem;
+  }
+
+  .portfolio-document .post-body {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .post h2 {
+    font-size: 1.3rem;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+  }
+
+  .post-title p {
+    margin-top: 0.5rem;
+    font-size: 0.61rem;
+    letter-spacing: 0.13em;
+    line-height: 1.55;
+  }
+
   .post-meta {
     border-top: 1px solid var(--line);
     border-left: 0;
-    padding: 1.25rem 2rem;
+    padding: 1rem 1.25rem;
     text-align: left;
   }
 
-  .feature-image {
-    min-height: 18rem;
+  .landing-institute {
+    margin: -1.25rem -1.25rem 1.55rem;
+  }
+
+  .landing-institute img {
+    display: block;
+    height: clamp(10.5rem, 48vw, 13rem);
+    max-height: none;
+    object-position: center;
+  }
+
+  .landing-institute figcaption {
+    padding: 0.55rem 1rem 0;
+    font-size: 0.62rem;
+    line-height: 1.35;
+  }
+
+  .landing-about > h3 {
+    margin-bottom: 0.7rem;
+  }
+
+  .landing-about > p {
+    margin-bottom: 1.6rem;
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .stack-flow {
+    gap: 1.7rem;
+  }
+
+  .stack-group {
+    padding-top: 0.9rem;
+  }
+
+  .tool-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .tool-mark {
+    min-height: 5.1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.75rem;
+    font-size: 0.62rem;
+    line-height: 1.3;
+  }
+
+  .tool-mark img,
+  .science-mark {
+    width: 1.65rem;
+    height: 1.65rem;
   }
 
   .landing-bottom {
-    grid-template-columns: 1fr;
-    align-items: end;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1.75rem;
   }
 
   .landing-feature {
-    justify-self: end;
-    width: min(100%, 18rem);
-    height: 14.5rem;
-    margin: -0.5rem 1rem -1.25rem 0;
+    order: -1;
+    justify-self: center;
+    width: min(calc(100vw - 2.5rem), 20rem);
+    height: 15.5rem;
+    margin: -0.25rem auto -0.75rem;
   }
 
   .landing-feature img {
     height: 18rem;
   }
 
-  .tool-grid {
+  .landing-feature img,
+  .landing-feature .patch-clamp {
+    transform: translateX(2rem);
+  }
+
+  .for-more {
+    border-top: 1px solid var(--line-strong);
+    padding-top: 1rem;
+  }
+
+  .for-more ul {
+    display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  body {
-    font-size: 15px;
+    gap: 0.5rem;
+    margin: 0;
+    list-style: none;
   }
 
-  #site-header h1 {
-    max-width: 48vw;
-    padding: 0 0.8rem;
+  .for-more li {
+    padding: 0;
+  }
+
+  .for-more a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    border: 1px solid var(--line);
+    font-family: var(--font-heading);
     font-size: 0.58rem;
-    letter-spacing: 0.14em;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
-  #wrapper {
-    width: min(100% - 1rem, 42rem);
-    padding-top: 4.75rem;
+  .simple-entry {
+    width: 100%;
+    max-width: none;
+    padding: 1.7rem 0;
   }
 
-  .post {
-    margin-bottom: 2rem;
+  .simple-entry header {
+    margin-bottom: 1rem;
   }
 
-  .post-title,
-  .post-body {
-    padding: 1.45rem;
+  .simple-entry h3 {
+    font-size: 1.2rem;
+    letter-spacing: 0.07em;
+    overflow-wrap: anywhere;
   }
 
-  .post-meta {
-    padding: 1.1rem 1.45rem;
+  .simple-entry-lede {
+    font-size: 1rem;
   }
 
-  .post h2 {
-    font-size: 1.1rem;
-    letter-spacing: 0.1em;
+  .resume-bullets {
+    gap: 0.75rem;
+    padding-left: 1rem;
+    font-size: 0.94rem;
+    line-height: 1.58;
   }
 
-  .post-title p {
+  .research-columns {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 1.6rem;
+  }
+
+  .research-columns h4 {
+    font-size: 0.64rem;
+  }
+
+  .project-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .project-actions .button,
+  .button-row .button {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0 0.65rem;
     font-size: 0.62rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
+  }
+
+  .contact-directory {
+    padding: 1.25rem;
+  }
+
+  .contact-profile {
+    grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+    gap: 0.8rem;
+    min-height: 4.8rem;
+    padding: 0.9rem 0;
+  }
+
+  .contact-profile-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .contact-profile-copy small {
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
   }
 
   .feature-image,
   .compact-feature {
-    height: 18rem;
+    height: 17rem;
     min-height: 14rem;
   }
 
   .feature-image img,
   .compact-feature img {
     width: auto;
-    height: 15rem;
-    max-width: 88%;
-  }
-
-  .landing-feature img {
-    height: 14.5rem;
-  }
-
-  .actions {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .tool-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .contact-directory {
-    padding: 1.45rem;
-  }
-
-  .research-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-profile {
-    grid-template-columns: 2.75rem minmax(0, 1fr) auto;
-  }
-
-  .contact-profile-copy small {
-    font-size: 0.75rem;
-  }
-
-  .project-actions {
-    display: grid;
+    height: 14rem;
+    max-width: 90%;
   }
 
   .button-row {
     display: grid;
     grid-template-columns: 1fr;
-  }
-
-  .button {
-    width: 100%;
   }
 
   .project-item {
@@ -1213,6 +1444,73 @@ li {
     align-items: flex-start;
     flex-direction: column;
     gap: 0.25rem;
+  }
+}
+
+@media (max-width: 360px) {
+  #wrapper {
+    padding-top: 6.95rem;
+  }
+
+  #sidebar {
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+  }
+
+  .actions {
+    width: calc(100% - 1.6rem);
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .actions .button {
+    padding: 0 0.2rem;
+    font-size: 0.54rem;
+    letter-spacing: 0.08em;
+  }
+
+  .post-title,
+  .post-body {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .portfolio-document .post-body {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .landing-institute {
+    margin-right: -1rem;
+    margin-left: -1rem;
+  }
+
+  .tool-grid {
+    gap: 0.5rem;
+  }
+
+  .tool-mark {
+    min-height: 4.85rem;
+    padding: 0.65rem;
+    font-size: 0.58rem;
+  }
+
+  .landing-feature {
+    width: 100%;
+  }
+
+  .simple-entry h3 {
+    font-size: 1.08rem;
+  }
+}
+
+@media (hover: none) {
+  .tool-mark:hover,
+  .project-actions .button:hover,
+  .intro .portrait:hover {
+    box-shadow: none;
+    transform: none;
   }
 }
 
