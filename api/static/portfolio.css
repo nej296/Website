@@ -730,19 +730,21 @@ li {
   margin-top: 1.7rem;
 }
 
-.button-primary {
-  border-color: #111111;
-  background: #111111;
-  color: #ffffff;
+.project-actions .button {
+  border-color: var(--line);
+  background: var(--surface);
+  color: #5d5d5d;
+  transform-origin: center;
+  transition: border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-.button-primary:hover,
-.button-primary:focus-visible {
-  border-color: #333333;
-  background: #333333;
-  color: #ffffff;
+.project-actions .button:hover,
+.project-actions .button:focus-visible {
+  border-color: rgba(42, 157, 143, 0.46);
+  box-shadow: 0 0.35rem 0.9rem rgba(32, 67, 62, 0.08);
+  color: var(--ink);
+  transform: scale(1.035);
 }
-
 
 .split-list {
   display: grid;
