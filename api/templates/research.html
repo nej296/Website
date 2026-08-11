@@ -4,7 +4,7 @@
 {% block description %}Research by Nicholas Johnson in neuronal morphology curation, literature mining, neuroinformatics, and anatomy and physiology education.{% endblock %}
 
 {% block main %}
-  <article class="post research-intro">
+  <article class="post portfolio-document research-document">
     <header class="single-heading">
       <div class="post-title">
         <h2>Research</h2>
@@ -12,101 +12,81 @@
       </div>
     </header>
     <div class="post-body">
-      <div class="research-overview">
-        <p class="research-lede">
+      <section class="research-brief">
+        <p class="document-intro">
           My research centers on making neuronal morphology data findable, structurally valid, and reusable.
           I work across scientific literature, public repositories, reconstruction software, and quality-control
           pipelines to prepare neuron data for NeuroMorpho.Org.
         </p>
-        <div class="research-metric" aria-label="240 edited neuron reconstructions contributed">
-          <strong>240</strong>
-          <span>edited neuron reconstructions contributed</span>
+        <div class="contribution-note">
+          <span>Contribution record</span>
+          <strong>240 edited neuron reconstructions added to the public database</strong>
         </div>
-      </div>
-    </div>
-  </article>
+      </section>
 
-  <article class="post research-role">
-    <header>
-      <div class="post-title">
-        <h2>NeuroMorpho.Org</h2>
-        <p>Research Assistant → Research Intern</p>
-      </div>
-      <div class="post-meta">
-        <span>June 2026—Present</span>
-        <small>Krasnow Institute for Advanced Study</small>
-      </div>
-    </header>
-    <div class="post-body">
-      <div class="research-workstreams">
-        <section class="research-workstream">
-          <span class="workstream-index">01</span>
+      <section class="experience-record">
+        <header class="experience-header">
           <div>
-            <h3>Literature mining</h3>
-            <p>
-              Identify neuronal and glial reconstructions in the literature using tracing-system evidence from
-              Neurolucida, Imaris, Amira, Vaa3D, Simple Neurite Tracer, and CATMAID.
-            </p>
+            <span class="experience-type">Current research</span>
+            <h3>NeuroMorpho.Org</h3>
+            <p>Research Assistant → Research Intern</p>
           </div>
-        </section>
-        <section class="research-workstream">
-          <span class="workstream-index">02</span>
-          <div>
-            <h3>Data and metadata review</h3>
-            <p>
-              Verify reconstruction counts, figure evidence, supplementary files, data availability, DOI and PMID
-              references, and downloadable records across GitHub, Dryad, Figshare, Zenodo, and Dataverse.
-            </p>
+          <div class="experience-meta">
+            <span>June 2026—Present</span>
+            <small>Krasnow Institute for Advanced Study</small>
           </div>
-        </section>
-        <section class="research-workstream">
-          <span class="workstream-index">03</span>
-          <div>
-            <h3>Morphology editing</h3>
-            <p>
-              Convert lab-submitted files to standardized SWC, then repair somas, broken segments, long connections,
-              topology errors, and neurite labels using Fiji, Neuromantic, CVAPP, and NeuTube.
-            </p>
-          </div>
-        </section>
-        <section class="research-workstream">
-          <span class="workstream-index">04</span>
-          <div>
-            <h3>Quality control</h3>
-            <p>
-              Run each reconstruction through automated checks, resolve every flagged structural issue, and repeat
-              validation until the morphology is clean and ready for publication in the database.
-            </p>
-          </div>
-        </section>
-      </div>
-    </div>
-  </article>
+        </header>
 
-  <article class="post research-role">
-    <header>
-      <div class="post-title">
-        <h2>Anatomy &amp; Physiology Education Research</h2>
-        <p>Undergraduate Research Assistant</p>
-      </div>
-      <div class="post-meta">
-        <span>Jan.—May 2026</span>
-        <small>George Mason University</small>
-      </div>
-    </header>
-    <div class="post-body">
-      <div class="research-secondary">
+        <div class="research-pipeline" aria-label="Neuron curation workflow">
+          <div><span>01</span><strong>Find</strong><small>Literature and repositories</small></div>
+          <div><span>02</span><strong>Convert</strong><small>Source files to SWC</small></div>
+          <div><span>03</span><strong>Repair</strong><small>Somas, branches, topology</small></div>
+          <div><span>04</span><strong>Validate</strong><small>Automated quality control</small></div>
+        </div>
+
+        <div class="research-scope">
+          <section>
+            <h4>Literature and data review</h4>
+            <p>
+              Identify neuronal and glial reconstructions using tracing-system evidence from Neurolucida, Imaris,
+              Amira, Vaa3D, Simple Neurite Tracer, and CATMAID.
+            </p>
+            <p>
+              Verify article details, reconstruction counts, figures, supplementary files, data availability,
+              DOI and PMID references, and records in GitHub, Dryad, Figshare, Zenodo, and Dataverse.
+            </p>
+          </section>
+          <section>
+            <h4>Morphology preparation</h4>
+            <p>
+              Convert files submitted by laboratories worldwide into standardized SWC using automated processing,
+              Fiji, and Neuromantic.
+            </p>
+            <p>
+              Use CVAPP to mark and reposition somas, reconnect segments, repair topology and long connections,
+              and label apical dendrites, basal dendrites, and axons before final quality control.
+            </p>
+          </section>
+        </div>
+      </section>
+
+      <section class="experience-record experience-record-compact">
+        <header class="experience-header">
+          <div>
+            <span class="experience-type">Previous research</span>
+            <h3>Anatomy &amp; Physiology Education Research</h3>
+            <p>Undergraduate Research Assistant</p>
+          </div>
+          <div class="experience-meta">
+            <span>January—May 2026</span>
+            <small>George Mason University</small>
+          </div>
+        </header>
         <p>
           Collaborated on manuscript preparation for a comparative anatomy and physiology education study.
           Contributed to data interpretation and developed publication figures in Google Colab.
         </p>
-        <div class="tag-list" aria-label="Research methods">
-          <span class="tag">Manuscript preparation</span>
-          <span class="tag">Data interpretation</span>
-          <span class="tag">Scientific figures</span>
-          <span class="tag">Google Colab</span>
-        </div>
-      </div>
+      </section>
     </div>
   </article>
 {% endblock %}
