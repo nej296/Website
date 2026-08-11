@@ -1305,7 +1305,7 @@ li {
   }
 
   .landing-feature .patch-clamp {
-    transform: translate(3rem, 0.75rem);
+    transform: translate(3.125rem, 0.75rem);
   }
 
   .for-more {
@@ -1498,7 +1498,7 @@ li {
   }
 
   .landing-feature .patch-clamp {
-    transform: translate(calc(3rem + 50vw - 180px), 0.75rem);
+    transform: translate(calc(3.125rem + 50vw - 180px), 0.75rem);
   }
 
   .simple-entry h3 {
