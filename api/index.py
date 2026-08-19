@@ -21,6 +21,7 @@ def avoid_stale_html_cache(response):
         'tool',
         'neur327',
         'resume_pdf',
+        'morphology_contributions_pdf',
     ):
         response.headers['Cache-Control'] = 'no-store, max-age=0, must-revalidate'
     return response
@@ -78,6 +79,17 @@ def resume_pdf():
         'Nicholas_Johnson_Resume.pdf',
         mimetype='application/pdf',
         download_name='Nicholas Johnson Resume.pdf',
+    )
+
+
+@app.route('/Morphology_Contributions.pdf')
+def morphology_contributions_pdf():
+    """Serve Nicholas Johnson's NeuroMorpho.org contribution index."""
+    return send_from_directory(
+        PRIVATE_DIR,
+        'Morphology_Contributions.pdf',
+        mimetype='application/pdf',
+        download_name='Nicholas Johnson - NeuroMorpho.org Contributions.pdf',
     )
 
 
